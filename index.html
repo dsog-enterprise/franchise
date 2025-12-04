@@ -3,28 +3,1349 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=0.8, maximum-scale=1.0, user-scalable=no">
-    <title>Men's Collection - DSOG STORES</title>
+    <title>DSOG Franchise | Luxury Fashion Store</title>
     
-    <!-- Unified CSS -->
-    <link rel="stylesheet" href="dsog-styles.css">
+    <!-- Main DSOG Theme Colors -->
+    <style>
+        :root {
+            --primary-red: #B22222;
+            --primary-black: #000000;
+            --primary-gold: #D4AF37;
+            --secondary-red: #8B0000;
+            --secondary-black: #1a1a1a;
+            --light-red: #FF6B6B;
+            --dark-red: #8B0000;
+            --light: #F5F5F5;
+            --gray: #777777;
+            --white: #FFFFFF;
+            --text-primary: #222222;
+            --text-secondary: #5a5a5a;
+            --bg-primary: #ffffff;
+            --bg-secondary: #f8f8f8;
+            --border-color: #e0e0e0;
+            --shadow-color: rgba(178, 34, 34, 0.08);
+            --card-bg: #ffffff;
+            --success: #25D366;
+            --whatsapp-green: #25D366;
+            --whatsapp-dark: #128C7E;
+            --shadow-sm: 0 2px 8px rgba(0,0,0,0.05);
+            --shadow-md: 0 4px 12px rgba(178, 34, 34, 0.1);
+            --shadow-lg: 0 10px 25px rgba(178, 34, 34, 0.15);
+            --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            -webkit-tap-highlight-color: transparent;
+        }
+        
+        body {
+            background: var(--bg-secondary);
+            color: var(--text-primary);
+            line-height: 1.6;
+            overflow-x: hidden;
+            padding-bottom: 80px; /* Space for bottom nav */
+        }
+        
+        /* Enhanced Header with DSOG Theme */
+        header {
+            background: var(--primary-black);
+            padding: 1rem 1.5rem;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 20px rgba(0,0,0,0.2);
+            border-bottom: 3px solid var(--primary-red);
+        }
+        
+        .header-content {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            height: 35px;
+            filter: drop-shadow(0 2px 4px rgba(212, 175, 55, 0.3));
+        }
+        
+        /* Hamburger Menu */
+        .hamburger {
+            display: none;
+            flex-direction: column;
+            cursor: pointer;
+            background: none;
+            border: none;
+            padding: 8px;
+            position: relative;
+            z-index: 1001;
+            transition: var(--transition);
+        }
+        
+        .hamburger span {
+            width: 25px;
+            height: 2px;
+            background: var(--white);
+            margin: 4px 0;
+            transition: var(--transition);
+            border-radius: 2px;
+        }
+        
+        .hamburger.active span:nth-child(1) {
+            transform: rotate(-45deg) translate(-6px, 6px);
+            background: var(--primary-red);
+        }
+        
+        .hamburger.active span:nth-child(2) {
+            opacity: 0;
+        }
+        
+        .hamburger.active span:nth-child(3) {
+            transform: rotate(45deg) translate(-6px, -6px);
+            background: var(--primary-red);
+        }
+        
+        /* Desktop Navigation */
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            align-items: center;
+        }
+        
+        .nav-links a {
+            color: var(--white);
+            text-decoration: none;
+            font-weight: 500;
+            transition: var(--transition);
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            position: relative;
+            padding: 0.4rem 0;
+        }
+        
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--primary-red);
+            transition: var(--transition);
+        }
+        
+        .nav-links a:hover {
+            color: var(--primary-red);
+        }
+        
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+        
+        .nav-links a.active {
+            color: var(--primary-red);
+        }
+        
+        .nav-links a.active::after {
+            width: 100%;
+        }
+        
+        /* Mobile Menu */
+        .mobile-menu {
+            position: fixed;
+            top: 0;
+            right: -100%;
+            width: 280px;
+            height: 100vh;
+            background: var(--primary-black);
+            padding: 5rem 2rem 2rem;
+            transition: var(--transition);
+            z-index: 999;
+            box-shadow: -5px 0 25px rgba(0,0,0,0.3);
+            overflow-y: auto;
+        }
+        
+        .mobile-menu.active {
+            right: 0;
+        }
+        
+        .mobile-nav-links {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+        
+        .mobile-nav-links a {
+            color: var(--white);
+            text-decoration: none;
+            font-size: 1.1rem;
+            padding: 1rem 0;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+            transition: var(--transition);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        
+        .mobile-nav-links a:hover {
+            color: var(--primary-red);
+            padding-left: 10px;
+        }
+        
+        .menu-backdrop {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.5);
+            z-index: 998;
+            opacity: 0;
+            visibility: hidden;
+            transition: var(--transition);
+        }
+        
+        .menu-backdrop.active {
+            opacity: 1;
+            visibility: visible;
+        }
+        
+        .close-menu {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            background: none;
+            border: none;
+            color: var(--white);
+            font-size: 1.5rem;
+            cursor: pointer;
+            transition: var(--transition);
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+        }
+        
+        .close-menu:hover {
+            background: var(--primary-red);
+            transform: rotate(90deg);
+        }
+        
+        /* DSOG Hero Slideshow */
+        .hero {
+            height: 50vh;
+            min-height: 300px;
+            position: relative;
+            overflow: hidden;
+            background: linear-gradient(135deg, #0c0c0c 0%, #1a1a1a 100%);
+        }
+        
+        .hero-slides {
+            width: 100%;
+            height: 100%;
+            position: relative;
+        }
+        
+        .hero-slide {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            opacity: 0;
+            transition: opacity 1s ease;
+        }
+        
+        .hero-slide.active {
+            opacity: 1;
+        }
+        
+        .hero-slide img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        
+        .hero-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(to bottom, rgba(0,0,0,0.3), rgba(0,0,0,0.7));
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            color: var(--white);
+            padding: 2rem;
+        }
+        
+        .hero-title {
+            font-size: clamp(2rem, 4vw, 3rem);
+            font-weight: 900;
+            margin-bottom: 1rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            color: var(--primary-gold);
+            text-shadow: 0 2px 10px rgba(0,0,0,0.5);
+        }
+        
+        .hero-subtitle {
+            font-size: clamp(1rem, 2vw, 1.2rem);
+            max-width: 600px;
+            opacity: 0.9;
+            line-height: 1.5;
+        }
+        
+        .hero-dots {
+            position: absolute;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 10px;
+            z-index: 10;
+        }
+        
+        .dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: rgba(255,255,255,0.5);
+            cursor: pointer;
+            transition: var(--transition);
+            border: 2px solid transparent;
+        }
+        
+        .dot.active {
+            background: var(--primary-red);
+            transform: scale(1.2);
+            border-color: var(--primary-gold);
+        }
+        
+        /* DSOG Products Section */
+        .products {
+            max-width: 1400px;
+            margin: 3rem auto;
+            padding: 0 1.5rem;
+        }
+        
+        .section-title {
+            text-align: center;
+            margin-bottom: 2.5rem;
+            position: relative;
+            display: inline-block;
+            width: 100%;
+        }
+        
+        .section-title h2 {
+            font-size: clamp(1.6rem, 3.5vw, 2.2rem);
+            color: var(--text-primary);
+            margin-bottom: 0.8rem;
+            font-weight: 700;
+            position: relative;
+            display: inline-block;
+        }
+        
+        .section-title h2::after {
+            content: '';
+            position: absolute;
+            bottom: -8px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 60px;
+            height: 3px;
+            background: var(--primary-red);
+        }
+        
+        .section-title p {
+            color: var(--gray);
+            max-width: 500px;
+            margin: 0 auto;
+            font-size: 0.9rem;
+            line-height: 1.6;
+        }
+        
+        .products-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.5rem;
+        }
+        
+        .product-card {
+            background: var(--card-bg);
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: var(--shadow-sm);
+            transition: var(--transition);
+            cursor: pointer;
+            border: 1px solid var(--border-color);
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+        }
+        
+        .product-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-md);
+            border-color: var(--primary-red);
+        }
+        
+        .product-image {
+            width: 100%;
+            height: 250px;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+        
+        .product-card:hover .product-image {
+            transform: scale(1.05);
+        }
+        
+        .product-info {
+            padding: 1.5rem;
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .product-badge {
+            background: var(--primary-red);
+            color: var(--white);
+            padding: 0.3rem 0.8rem;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            align-self: flex-start;
+            margin-bottom: 0.8rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        
+        .product-title {
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            color: var(--text-primary);
+            line-height: 1.3;
+        }
+        
+        .product-price {
+            font-size: 1.25rem;
+            font-weight: bold;
+            color: var(--primary-red);
+            margin-bottom: 1rem;
+        }
+        
+        .product-description {
+            color: var(--gray);
+            font-size: 0.9rem;
+            margin-bottom: 1.5rem;
+            line-height: 1.5;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+            flex-grow: 1;
+        }
+        
+        .whatsapp-btn {
+            background: var(--whatsapp-green);
+            color: var(--white);
+            border: none;
+            padding: 0.8rem 1.5rem;
+            border-radius: 0;
+            font-weight: 600;
+            cursor: pointer;
+            width: 100%;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        
+        .whatsapp-btn:hover {
+            background: var(--whatsapp-dark);
+            transform: translateY(-2px);
+        }
+        
+        /* Collections Section */
+        .collections {
+            max-width: 1400px;
+            margin: 4rem auto;
+            padding: 0 1.5rem;
+        }
+        
+        .collections-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+            margin-top: 2rem;
+        }
+        
+        .collection-card {
+            position: relative;
+            height: 300px;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: var(--shadow-md);
+            transition: var(--transition);
+            cursor: pointer;
+            border: 2px solid transparent;
+            text-decoration: none;
+            display: block;
+        }
+        
+        .collection-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-lg);
+            border-color: var(--primary-red);
+        }
+        
+        .collection-image {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.6s ease;
+        }
+        
+        .collection-card:hover .collection-image {
+            transform: scale(1.05);
+        }
+        
+        .collection-overlay {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: linear-gradient(transparent, rgba(178, 34, 34, 0.8));
+            color: white;
+            padding: 1.5rem;
+        }
+        
+        .collection-title {
+            font-size: 1.4rem;
+            margin-bottom: 0.4rem;
+            font-weight: 600;
+        }
+        
+        .collection-description {
+            opacity: 0.9;
+            font-size: 0.85rem;
+        }
+        
+        /* Gifts Section */
+        .gifts {
+            max-width: 1400px;
+            margin: 4rem auto;
+            padding: 0 1.5rem;
+        }
+        
+        .gifts-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.5rem;
+            margin-top: 2rem;
+        }
+        
+        .gift-card {
+            background: var(--card-bg);
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: var(--shadow-sm);
+            transition: var(--transition);
+            cursor: pointer;
+            border: 1px solid var(--border-color);
+            text-align: center;
+            padding: 2rem;
+        }
+        
+        .gift-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-md);
+            border-color: var(--primary-gold);
+        }
+        
+        .gift-icon {
+            font-size: 2.5rem;
+            color: var(--primary-gold);
+            margin-bottom: 1rem;
+        }
+        
+        .gift-title {
+            font-size: 1.2rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            color: var(--text-primary);
+        }
+        
+        .gift-description {
+            color: var(--gray);
+            font-size: 0.9rem;
+            margin-bottom: 1.5rem;
+            line-height: 1.5;
+        }
+        
+        /* Product Modal */
+        .product-modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.95);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 2000;
+            opacity: 0;
+            visibility: hidden;
+            transition: var(--transition);
+            padding: 1rem;
+        }
+        
+        .product-modal.active {
+            opacity: 1;
+            visibility: visible;
+        }
+        
+        .modal-content {
+            background: var(--white);
+            border-radius: 0;
+            max-width: 1000px;
+            width: 100%;
+            max-height: 90vh;
+            overflow-y: auto;
+            position: relative;
+            animation: modalSlideIn 0.3s ease;
+            border: 2px solid var(--primary-red);
+        }
+        
+        @keyframes modalSlideIn {
+            from {
+                opacity: 0;
+                transform: scale(0.9) translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1) translateY(0);
+            }
+        }
+        
+        .modal-close {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            background: var(--primary-red);
+            color: var(--white);
+            border: none;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 10;
+            transition: var(--transition);
+        }
+        
+        .modal-close:hover {
+            background: var(--secondary-red);
+            transform: rotate(90deg);
+        }
+        
+        .modal-body {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+            padding: 2rem;
+        }
+        
+        /* Enhanced Image Section with Zoom */
+        .modal-image-section {
+            position: relative;
+        }
+        
+        .modal-image-container {
+            width: 100%;
+            height: 400px;
+            border-radius: 8px;
+            overflow: hidden;
+            position: relative;
+            cursor: zoom-in;
+            background: var(--bg-secondary);
+            border: 1px solid var(--border-color);
+        }
+        
+        .modal-image {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            transition: transform 0.3s ease;
+        }
+        
+        .modal-image.zoomed {
+            cursor: zoom-out;
+            transform: scale(1.5);
+        }
+        
+        .zoom-hint {
+            position: absolute;
+            bottom: 10px;
+            right: 10px;
+            background: rgba(0,0,0,0.7);
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            backdrop-filter: blur(5px);
+        }
+        
+        .modal-image-container:hover .zoom-hint {
+            opacity: 1;
+        }
+        
+        .image-gallery {
+            display: flex;
+            gap: 0.5rem;
+            margin-top: 1rem;
+            overflow-x: auto;
+            padding: 0.5rem 0;
+        }
+        
+        .gallery-thumbnail {
+            width: 60px;
+            height: 60px;
+            border-radius: 8px;
+            overflow: hidden;
+            cursor: pointer;
+            border: 2px solid transparent;
+            transition: var(--transition);
+            flex-shrink: 0;
+            background: var(--bg-secondary);
+        }
+        
+        .gallery-thumbnail.active {
+            border-color: var(--primary-red);
+        }
+        
+        .gallery-thumbnail img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        
+        .modal-details {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+        
+        .modal-title {
+            font-size: 1.8rem;
+            font-weight: 600;
+            color: var(--text-primary);
+            line-height: 1.3;
+        }
+        
+        .modal-price {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: var(--primary-red);
+        }
+        
+        .modal-category {
+            background: var(--primary-red);
+            color: var(--white);
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            align-self: flex-start;
+            font-weight: 600;
+        }
+        
+        .modal-description {
+            color: var(--text-secondary);
+            line-height: 1.6;
+            font-size: 1rem;
+            margin: 1rem 0;
+        }
+        
+        .modal-whatsapp-btn {
+            background: var(--whatsapp-green);
+            color: var(--white);
+            border: none;
+            padding: 1rem 2rem;
+            border-radius: 0;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            font-size: 1rem;
+            margin-top: 1rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        
+        .modal-whatsapp-btn:hover {
+            background: var(--whatsapp-dark);
+            transform: translateY(-2px);
+        }
+        
+        /* Loading State */
+        .loading {
+            text-align: center;
+            padding: 3rem;
+            color: var(--gray);
+            grid-column: 1 / -1;
+        }
+        
+        .loading-spinner {
+            width: 40px;
+            height: 40px;
+            border: 4px solid var(--bg-secondary);
+            border-top: 4px solid var(--primary-red);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 1rem;
+        }
+        
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
+        /* Enhanced Bottom Navigation */
+        .bottom-nav {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            background: var(--primary-black);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border-top: 1px solid rgba(212, 175, 55, 0.2);
+            z-index: 1000;
+            box-shadow: 0 -10px 40px rgba(0, 0, 0, 0.4);
+            padding: 0.5rem 0;
+        }
+        
+        .bottom-nav-container {
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            padding: 0 0.5rem;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        
+        /* Navigation Items */
+        .nav-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-decoration: none;
+            color: var(--gray);
+            padding: 0.5rem 0.6rem;
+            border-radius: 12px;
+            transition: var(--transition);
+            position: relative;
+            flex: 1;
+            max-width: 70px;
+            background: transparent;
+            border: 2px solid transparent;
+            cursor: pointer;
+            outline: none;
+        }
+        
+        .nav-item.active {
+            color: var(--white);
+            background: linear-gradient(135deg, var(--primary-red) 0%, var(--secondary-red) 100%);
+            border-color: var(--primary-gold);
+            transform: translateY(-5px);
+            box-shadow: 0 5px 15px rgba(178, 34, 34, 0.3);
+        }
+        
+        .nav-item:hover:not(.active) {
+            color: var(--white);
+            background: rgba(255, 255, 255, 0.05);
+            transform: translateY(-2px);
+        }
+        
+        /* Navigation Icons */
+        .nav-icon {
+            position: relative;
+            width: 36px;
+            height: 36px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.1rem;
+            margin-bottom: 0.3rem;
+            transition: var(--transition);
+            z-index: 1;
+        }
+        
+        .nav-item.active .nav-icon {
+            transform: scale(1.1);
+            color: var(--primary-gold);
+        }
+        
+        /* Badges */
+        .nav-badge {
+            position: absolute;
+            top: -5px;
+            right: -5px;
+            background: var(--primary-gold);
+            color: var(--primary-black);
+            font-size: 0.6rem;
+            font-weight: 800;
+            min-width: 16px;
+            height: 16px;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 2px solid var(--primary-black);
+            z-index: 2;
+            animation: pulse 2s infinite;
+        }
+        
+        @keyframes pulse {
+            0%, 100% {
+                box-shadow: 0 0 0 0 rgba(212, 175, 55, 0.7);
+            }
+            50% {
+                box-shadow: 0 0 0 6px rgba(212, 175, 55, 0);
+            }
+        }
+        
+        /* Active Indicator */
+        .nav-indicator {
+            position: absolute;
+            top: -6px;
+            width: 6px;
+            height: 6px;
+            background: var(--primary-gold);
+            border-radius: 50%;
+            animation: glow 1.5s ease-in-out infinite alternate;
+            z-index: 1;
+        }
+        
+        @keyframes glow {
+            from {
+                box-shadow: 0 0 5px var(--primary-gold);
+            }
+            to {
+                box-shadow: 0 0 15px var(--primary-gold);
+            }
+        }
+        
+        /* Navigation Labels */
+        .nav-label {
+            font-size: 0.65rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            transition: var(--transition);
+            z-index: 1;
+            white-space: nowrap;
+        }
+        
+        /* WhatsApp Chat Bot with Franchisee Name */
+        .whatsapp-chat-bot {
+            position: fixed;
+            bottom: 90px;
+            right: 20px;
+            z-index: 999;
+        }
+        
+        .chat-bot-toggle {
+            background: var(--whatsapp-green);
+            color: white;
+            border: none;
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px 20px rgba(37, 211, 102, 0.3);
+            transition: var(--transition);
+            font-size: 1.5rem;
+            border: 2px solid white;
+        }
+        
+        .chat-bot-toggle:hover {
+            background: var(--whatsapp-dark);
+            transform: scale(1.1);
+        }
+        
+        .chat-bot-container {
+            position: absolute;
+            bottom: 70px;
+            right: 0;
+            width: 320px;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            display: none;
+            flex-direction: column;
+            overflow: hidden;
+            border: 2px solid var(--primary-red);
+        }
+        
+        .chat-bot-container.active {
+            display: flex;
+        }
+        
+        .chat-bot-header {
+            background: var(--primary-black);
+            color: white;
+            padding: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            border-bottom: 2px solid var(--primary-red);
+        }
+        
+        .chat-bot-avatar {
+            width: 40px;
+            height: 40px;
+            background: var(--whatsapp-green);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+            border: 2px solid white;
+        }
+        
+        .chat-bot-header h4 {
+            font-weight: 600;
+            margin: 0;
+            font-size: 1rem;
+        }
+        
+        .franchisee-name {
+            font-size: 0.8rem;
+            opacity: 0.9;
+            color: var(--primary-gold);
+            font-weight: 500;
+        }
+        
+        .chat-bot-status {
+            font-size: 0.7rem;
+            opacity: 0.8;
+            display: flex;
+            align-items: center;
+            gap: 0.3rem;
+        }
+        
+        .chat-bot-status::before {
+            content: '';
+            width: 8px;
+            height: 8px;
+            background: #4CAF50;
+            border-radius: 50%;
+        }
+        
+        .chat-bot-messages {
+            flex: 1;
+            padding: 1rem;
+            overflow-y: auto;
+            max-height: 300px;
+            display: flex;
+            flex-direction: column;
+            gap: 0.8rem;
+        }
+        
+        .chat-message {
+            padding: 0.8rem;
+            border-radius: 12px;
+            max-width: 80%;
+            animation: fadeIn 0.3s ease;
+            font-size: 0.9rem;
+            line-height: 1.4;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .bot-message {
+            background: var(--bg-secondary);
+            align-self: flex-start;
+            border-bottom-left-radius: 4px;
+        }
+        
+        .user-message {
+            background: var(--primary-red);
+            color: white;
+            align-self: flex-end;
+            border-bottom-right-radius: 4px;
+        }
+        
+        .chat-bot-input {
+            display: flex;
+            padding: 1rem;
+            gap: 0.5rem;
+            border-top: 1px solid var(--border-color);
+        }
+        
+        .chat-input {
+            flex: 1;
+            padding: 0.7rem 1rem;
+            border: 1px solid var(--border-color);
+            border-radius: 20px;
+            outline: none;
+            font-size: 0.9rem;
+            transition: var(--transition);
+        }
+        
+        .chat-input:focus {
+            border-color: var(--primary-red);
+            box-shadow: 0 0 0 2px rgba(178, 34, 34, 0.1);
+        }
+        
+        .chat-send-btn {
+            background: var(--primary-red);
+            color: white;
+            border: none;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: var(--transition);
+        }
+        
+        .chat-send-btn:hover {
+            background: var(--secondary-red);
+            transform: scale(1.1);
+        }
+        
+        .chat-options {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+            padding: 0 1rem 1rem;
+        }
+        
+        .chat-option-btn {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border-color);
+            padding: 0.7rem 1rem;
+            border-radius: 8px;
+            cursor: pointer;
+            text-align: left;
+            transition: var(--transition);
+            font-size: 0.9rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
+        .chat-option-btn:hover {
+            background: var(--primary-red);
+            color: white;
+            border-color: var(--primary-red);
+            transform: translateX(5px);
+        }
+        
+        .chat-option-btn i {
+            font-size: 0.8rem;
+            opacity: 0.7;
+        }
+        
+        /* Mobile Responsive */
+        @media (max-width: 768px) {
+            .hamburger {
+                display: flex;
+            }
+            
+            .nav-links {
+                display: none;
+            }
+            
+            .hero {
+                height: 40vh;
+                min-height: 250px;
+            }
+            
+            .hero-title {
+                font-size: 1.8rem;
+            }
+            
+            .hero-subtitle {
+                font-size: 0.9rem;
+            }
+            
+            .products-grid {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 1rem;
+            }
+            
+            .product-image {
+                height: 180px;
+            }
+            
+            .product-info {
+                padding: 1rem;
+            }
+            
+            .product-title {
+                font-size: 0.95rem;
+            }
+            
+            .product-price {
+                font-size: 1.1rem;
+            }
+            
+            .modal-body {
+                grid-template-columns: 1fr;
+                gap: 1.5rem;
+                padding: 1.5rem;
+            }
+            
+            .modal-image-container {
+                height: 300px;
+            }
+            
+            .modal-title {
+                font-size: 1.4rem;
+            }
+            
+            .gallery-thumbnail {
+                width: 50px;
+                height: 50px;
+            }
+            
+            .collections-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .collection-card {
+                height: 250px;
+            }
+            
+            .whatsapp-chat-bot {
+                bottom: 80px;
+                right: 15px;
+            }
+            
+            .chat-bot-container {
+                width: 280px;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .hero {
+                height: 35vh;
+                min-height: 200px;
+            }
+            
+            .section-title h2 {
+                font-size: 1.5rem;
+            }
+            
+            .products-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .modal-body {
+                padding: 1rem;
+            }
+            
+            .modal-image-container {
+                height: 250px;
+            }
+            
+            .zoom-hint {
+                display: none;
+            }
+            
+            .bottom-nav-container {
+                padding: 0 0.3rem;
+            }
+            
+            .nav-item {
+                padding: 0.4rem 0.5rem;
+                max-width: 65px;
+            }
+            
+            .nav-icon {
+                width: 32px;
+                height: 32px;
+                font-size: 1rem;
+            }
+            
+            .nav-label {
+                font-size: 0.6rem;
+            }
+        }
+        
+        @media (max-width: 360px) {
+            .hero {
+                height: 30vh;
+            }
+            
+            .product-image {
+                height: 150px;
+            }
+            
+            .chat-bot-container {
+                width: 260px;
+            }
+        }
+    </style>
     
-    <!-- Font Awesome -->
+    <!-- Font Awesome for icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 <body>
+    <!-- Enhanced Header with DSOG Theme -->
     <header>
         <div class="header-content">
             <img src="https://i.postimg.cc/kMZ1jTww/Untitled-design-4-removebg-preview.png" alt="DSOG STORES" class="logo">
             
+            <!-- Desktop Navigation -->
             <nav class="nav-links">
-                <a href="index.html">Home</a>
-                <a href="mens.html" class="active">Men's</a>
+                <a href="franchise.html" class="active">Home</a>
+                <a href="mens.html">Men's</a>
                 <a href="womens.html">Women's</a>
                 <a href="kids.html">Kids</a>
                 <a href="accessories.html">Accessories</a>
                 <a href="gifts.html">Gifts</a>
             </nav>
             
+            <!-- Hamburger Menu Button -->
             <button class="hamburger" id="hamburgerBtn">
                 <span></span>
                 <span></span>
@@ -39,83 +1360,136 @@
             <i class="fas fa-times"></i>
         </button>
         <nav class="mobile-nav-links">
-            <a href="index.html">Home</a>
-            <a href="mens.html">Men's</a>
-            <a href="womens.html">Women's</a>
-            <a href="kids.html">Kids</a>
-            <a href="accessories.html">Accessories</a>
-            <a href="gifts.html">Gifts</a>
-            <a href="mailto:care.dsogstores@gmail.com">Email Us</a>
-            <a href="https://wa.me/254733737983">WhatsApp</a>
+            <a href="index.html" onclick="closeMobileMenu()">Home</a>
+            <a href="mens.html" onclick="closeMobileMenu()">Men's</a>
+            <a href="womens.html" onclick="closeMobileMenu()">Women's</a>
+            <a href="kids.html" onclick="closeMobileMenu()">Kids</a>
+            <a href="accessories.html" onclick="closeMobileMenu()">Accessories</a>
+            <a href="gifts.html" onclick="closeMobileMenu()">Gifts</a>
+            <a href="mailto:care.dsogstores@gmail.com" onclick="closeMobileMenu()">Email Us</a>
+            <a href="https://wa.me/254733737983" onclick="closeMobileMenu()">WhatsApp</a>
         </nav>
     </div>
     
+    <!-- Menu Backdrop -->
     <div class="menu-backdrop" id="menuBackdrop"></div>
 
-    <!-- Collection Hero -->
-    <section class="collection-hero">
-        <h1>Men's Collection</h1>
-        <p>Premium menswear for every occasion - From casual wear to formal attire</p>
+    <!-- DSOG Hero Slideshow -->
+    <section class="hero" id="home">
+        <div class="hero-slides" id="heroSlides">
+            <!-- Slides will be populated by JavaScript -->
+        </div>
+        <div class="hero-dots" id="heroDots">
+            <!-- Dots will be populated by JavaScript -->
+        </div>
     </section>
 
-    <!-- Filters -->
-    <section class="collection-filters">
-        <div class="filters-container" id="filtersContainer"></div>
-    </section>
-
-    <!-- Products -->
-    <section class="products-section">
+    <!-- Collections Section -->
+    <section class="collections" id="collections">
         <div class="section-title">
-            <h2>Men's Products</h2>
+            <h2>Our Collections</h2>
+            <p>Curated fashion collections for every style</p>
+        </div>
+        
+        <div class="collections-grid" id="collectionsContainer">
+            <!-- Collections will be populated by JavaScript -->
+        </div>
+    </section>
+
+    <!-- Products Section -->
+    <section class="products" id="products">
+        <div class="section-title">
+            <h2>Featured Products</h2>
             <p>Premium fashion items with direct WhatsApp ordering</p>
         </div>
-        <div class="products-grid" id="productsContainer"></div>
+        
+        <div class="products-grid" id="productsContainer">
+            <div class="loading">
+                <div class="loading-spinner"></div>
+                <p>Loading premium products...</p>
+            </div>
+        </div>
     </section>
 
-    <!-- Modal -->
+    <!-- Gifts Section -->
+    <section class="gifts" id="gifts">
+        <div class="section-title">
+            <h2>Gifts & Specials</h2>
+            <p>Perfect presents for every occasion</p>
+        </div>
+        
+        <div class="gifts-grid" id="giftsContainer">
+            <!-- Gifts will be populated by JavaScript -->
+        </div>
+    </section>
+
+    <!-- Product Modal -->
     <div class="product-modal" id="productModal">
         <div class="modal-content">
             <button class="modal-close" id="modalClose">
                 <i class="fas fa-times"></i>
             </button>
-            <div class="modal-body" id="modalBody"></div>
+            <div class="modal-body" id="modalBody">
+                <!-- Modal content will be populated by JavaScript -->
+            </div>
         </div>
     </div>
 
-    <!-- Bottom Navigation -->
+    <!-- Enhanced Bottom Navigation -->
     <nav class="bottom-nav">
         <div class="bottom-nav-container">
-            <a href="index.html" class="nav-item">
-                <div class="nav-icon"><i class="fas fa-home"></i></div>
+            <!-- Home Button -->
+            <a href="franchise.html" class="nav-item active" onclick="setActiveNav(this)">
+                <div class="nav-icon">
+                    <i class="fas fa-home"></i>
+                </div>
                 <span class="nav-label">Home</span>
             </a>
-            <a href="mens.html" class="nav-item active">
-                <div class="nav-icon"><i class="fas fa-male"></i></div>
-                <span class="nav-label">Men's</span>
+            
+            <!-- Collections Button -->
+            <a href="#collections" class="nav-item" onclick="setActiveNav(this)">
+                <div class="nav-icon">
+                    <i class="fas fa-layer-group"></i>
+                </div>
+                <span class="nav-label">Collections</span>
             </a>
-            <a href="womens.html" class="nav-item">
-                <div class="nav-icon"><i class="fas fa-female"></i></div>
-                <span class="nav-label">Women's</span>
+            
+            <!-- Products Button -->
+            <a href="#products" class="nav-item" onclick="setActiveNav(this)">
+                <div class="nav-icon">
+                    <i class="fas fa-shopping-bag"></i>
+                </div>
+                <span class="nav-label">Products</span>
             </a>
-            <a href="kids.html" class="nav-item">
-                <div class="nav-icon"><i class="fas fa-child"></i></div>
-                <span class="nav-label">Kids</span>
+            
+            <!-- Gifts Button -->
+            <a href="#gifts" class="nav-item" onclick="setActiveNav(this)">
+                <div class="nav-icon">
+                    <i class="fas fa-gift"></i>
+                </div>
+                <span class="nav-label">Gifts</span>
             </a>
-            <a href="https://wa.me/254733737983" class="nav-item" target="_blank">
-                <div class="nav-icon"><i class="fab fa-whatsapp"></i></div>
+            
+            <!-- Contact Button -->
+            <a href="https://wa.me/254733737983" class="nav-item" onclick="setActiveNav(this)" target="_blank">
+                <div class="nav-icon">
+                    <i class="fab fa-whatsapp"></i>
+                </div>
                 <span class="nav-label">Contact</span>
             </a>
         </div>
     </nav>
 
-    <!-- Chat Bot -->
+    <!-- WhatsApp Chat Bot with Franchisee Name -->
     <div class="whatsapp-chat-bot" id="whatsappChatBot">
         <button class="chat-bot-toggle" id="chatBotToggle">
             <i class="fab fa-whatsapp"></i>
         </button>
         <div class="chat-bot-container" id="chatBotContainer">
             <div class="chat-bot-header">
-                <div class="chat-bot-avatar"><i class="fab fa-whatsapp"></i></div>
+                <div class="chat-bot-avatar">
+                    <i class="fab fa-whatsapp"></i>
+                </div>
                 <div>
                     <h4 id="franchiseeChatName">DSOG Assistant</h4>
                     <div class="franchisee-name" id="franchiseeNameDisplay">Your Fashion Expert</div>
@@ -124,24 +1498,890 @@
             </div>
             <div class="chat-bot-messages" id="chatMessages">
                 <div class="chat-message bot-message">
-                    Hi! I'm your DSOG fashion assistant. Looking for men's fashion? How can I help you today?
+                    Hi! I'm your DSOG fashion assistant. How can I help you today?
                 </div>
             </div>
             <div class="chat-options" id="chatOptions">
-                <button class="chat-option-btn" onclick="DSOG.chatBot.addMessage('Show me hoodies', 'user')">
-                    <i class="fas fa-hoodie"></i> Hoodies
+                <button class="chat-option-btn" onclick="handleChatOption('products')">
+                    <i class="fas fa-shopping-bag"></i> View Products
                 </button>
-                <button class="chat-option-btn" onclick="DSOG.chatBot.addMessage('Show me t-shirts', 'user')">
-                    <i class="fas fa-tshirt"></i> T-Shirts
+                <button class="chat-option-btn" onclick="handleChatOption('order')">
+                    <i class="fas fa-shopping-cart"></i> Place Order
                 </button>
-                <button class="chat-option-btn" onclick="DSOG.chatBot.addMessage('Contact franchisee', 'user')">
-                    <i class="fas fa-phone"></i> Contact
+                <button class="chat-option-btn" onclick="handleChatOption('tracking')">
+                    <i class="fas fa-truck"></i> Order Tracking
+                </button>
+                <button class="chat-option-btn" onclick="handleChatOption('contact')">
+                    <i class="fas fa-phone"></i> Contact Franchisee
+                </button>
+            </div>
+            <div class="chat-bot-input">
+                <input type="text" class="chat-input" id="chatInput" placeholder="Type your message..." onkeypress="handleChatKeypress(event)">
+                <button class="chat-send-btn" onclick="sendChatMessage()">
+                    <i class="fas fa-paper-plane"></i>
                 </button>
             </div>
         </div>
     </div>
 
-    <!-- Unified JavaScript -->
-    <script src="dsog-app.js"></script>
+    <!-- Enhanced JavaScript with DSOG Theme and WhatsApp Bot -->
+    <script>
+        // Google Apps Script URL - UPDATE THIS
+        const scriptUrl = 'https://script.google.com/macros/s/AKfycby-iIbv89AN4tXwB1bxdw3GC4CPHDSFkkwrS9apdMH0ZLYBaY4aKYESnAZGUqGNmEmorA/exec';
+        
+        // WhatsApp number
+        const mainWhatsAppNumber = '254733737983';
+        
+        // Franchisee database with their WhatsApp numbers
+        const franchisees = {
+            'john': {
+                name: 'John Mwangi',
+                phone: '254722111111',
+                location: 'Nairobi CBD'
+            },
+            'sarah': {
+                name: 'Sarah Atieno',
+                phone: '254722222222',
+                location: 'Westlands'
+            }, 
+            'david': {
+                name: 'David Omondi',
+                phone: '254722333333',
+                location: 'Mombasa'
+            },
+            'grace': {
+                name: 'Grace Wambui',
+                phone: '254722444444',
+                location: 'Kisumu'
+            },
+            'mike': {
+                name: 'Mike Kamau',
+                phone: '254722555555',
+                location: 'Nakuru'
+            },
+            'linda': {
+                name: 'Linda Chebet',
+                phone: '254722666666',
+                location: 'Thika'
+            }
+        };
+
+        // Track current franchisee
+        let currentFranchisee = null;
+        
+        // Hero slides data
+        const heroSlides = [
+            {
+                image: 'https://i.postimg.cc/P5g46hcZ/Black-White-Minimal-Simple-Modern-Creative-Studio-Ego-Logo-3.webp',
+                title: 'DSOG Collections',
+                subtitle: 'Premium fashion for everyone'
+            },
+            {
+                image: 'https://i.postimg.cc/SN01T6MK/Black-White-Minimal-Simple-Modern-Creative-Studio-Ego-Logo-4.webp',
+                title: 'New Arrivals',
+                subtitle: 'Fresh styles every season'
+            },
+            {
+                image: 'https://i.postimg.cc/44wbtpQ1/Black-White-Minimal-Simple-Modern-Creative-Studio-Ego-Logo-5.webp',
+                title: 'Direct WhatsApp Ordering',
+                subtitle: 'Shop instantly via WhatsApp'
+            }
+        ];
+        
+        // Collections data for home page
+        const collectionsData = [
+            {
+                image: 'https://images.unsplash.com/photo-1520975916090-3105956dac38?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80',
+                title: 'Men\'s Collection',
+                description: 'Premium menswear for every occasion',
+                link: 'mens.html'
+            },
+            {
+                image: 'https://images.unsplash.com/photo-1490481651871-ab68de25d43d?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80',
+                title: 'Women\'s Collection',
+                description: 'Elegant womenswear for all styles',
+                link: 'womens.html'
+            },
+            {
+                image: 'https://images.unsplash.com/photo-1581655353564-df123a1eb820?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80',
+                title: 'Kids Collection',
+                description: 'Comfortable kids wear',
+                link: 'kids.html'
+            },
+            {
+                image: 'https://images.unsplash.com/photo-1559056199-641a0ac8b55e?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80',
+                title: 'Accessories',
+                description: 'Complete your fashion look',
+                link: 'accessories.html'
+            },
+            {
+                image: 'https://images.unsplash.com/photo-1513475382585-d06e58bcb0e0?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80',
+                title: 'Gifts',
+                description: 'Perfect presents for special occasions',
+                link: 'gifts.html'
+            }
+        ];
+        
+        // Gifts data
+        const giftsData = [
+            {
+                icon: 'fas fa-gift',
+                title: 'Gift Box Sets',
+                description: 'Curated fashion gift packages for special occasions'
+            },
+            {
+                icon: 'fas fa-tshirt',
+                title: 'Custom Bundles',
+                description: 'Create your own gift bundle with multiple items'
+            },
+            {
+                icon: 'fas fa-shipping-fast',
+                title: 'Express Delivery',
+                description: 'Special gift wrapping and fast delivery options'
+            },
+            {
+                icon: 'fas fa-star',
+                title: 'Premium Packaging',
+                description: 'Luxury packaging for the perfect presentation'
+            }
+        ];
+        
+        // Current product for modal
+        let currentProduct = null;
+        let currentImageIndex = 0;
+        
+        // Mobile menu state
+        let isMobileMenuOpen = false;
+        
+        // WhatsApp chat state
+        let isChatOpen = false;
+
+        // Initialize the page
+        document.addEventListener('DOMContentLoaded', function() {
+            console.log('🚀 DSOG Franchise App - Home Page');
+            detectFranchiseeFromURL();
+            initMobileMenu();
+            initHeroSlideshow();
+            loadCollections();
+            loadGifts();
+            loadFeaturedProducts();
+            initModal();
+            initBottomNav();
+            initWhatsAppChat();
+            
+            // Set franchisee name in chat
+            updateFranchiseeChatName();
+        });
+
+        // Detect franchisee from URL
+        function detectFranchiseeFromURL() {
+            const urlParams = new URLSearchParams(window.location.search);
+            const franchiseeCode = urlParams.get('franchisee') || urlParams.get('ref');
+            
+            if (franchiseeCode && franchisees[franchiseeCode]) {
+                currentFranchisee = franchisees[franchiseeCode];
+                console.log(`🎯 Franchisee: ${currentFranchisee.name}`);
+                
+                // Save to localStorage for future visits
+                localStorage.setItem('dsog_franchisee', JSON.stringify({
+                    code: franchiseeCode,
+                    name: currentFranchisee.name,
+                    phone: currentFranchisee.phone,
+                    location: currentFranchisee.location,
+                    timestamp: new Date().toISOString()
+                }));
+            } else {
+                // Check if franchisee was previously set
+                const savedFranchisee = localStorage.getItem('dsog_franchisee');
+                if (savedFranchisee) {
+                    const franchiseeData = JSON.parse(savedFranchisee);
+                    currentFranchisee = franchisees[franchiseeData.code];
+                }
+            }
+        }
+
+        // Update franchisee name in chat
+        function updateFranchiseeChatName() {
+            const chatNameElement = document.getElementById('franchiseeChatName');
+            const nameDisplayElement = document.getElementById('franchiseeNameDisplay');
+            
+            if (currentFranchisee) {
+                chatNameElement.textContent = currentFranchisee.name;
+                nameDisplayElement.textContent = `DSOG ${currentFranchisee.location}`;
+            }
+        }
+
+        // Improved Mobile Menu Functionality
+        function initMobileMenu() {
+            const hamburgerBtn = document.getElementById('hamburgerBtn');
+            const mobileMenu = document.getElementById('mobileMenu');
+            const menuBackdrop = document.getElementById('menuBackdrop');
+            const closeMenu = document.getElementById('closeMenu');
+            
+            function toggleMobileMenu() {
+                isMobileMenuOpen = !isMobileMenuOpen;
+                
+                if (isMobileMenuOpen) {
+                    // Open menu
+                    mobileMenu.classList.add('active');
+                    menuBackdrop.classList.add('active');
+                    hamburgerBtn.classList.add('active');
+                    document.body.style.overflow = 'hidden';
+                } else {
+                    // Close menu
+                    mobileMenu.classList.remove('active');
+                    menuBackdrop.classList.remove('active');
+                    hamburgerBtn.classList.remove('active');
+                    document.body.style.overflow = 'auto';
+                }
+            }
+            
+            // Hamburger button click
+            hamburgerBtn.addEventListener('click', toggleMobileMenu);
+            
+            // Close button click
+            closeMenu.addEventListener('click', toggleMobileMenu);
+            
+            // Backdrop click
+            menuBackdrop.addEventListener('click', toggleMobileMenu);
+            
+            // Close menu when clicking on links
+            const mobileLinks = document.querySelectorAll('.mobile-nav-links a');
+            mobileLinks.forEach(link => {
+                link.addEventListener('click', toggleMobileMenu);
+            });
+            
+            // Close menu with Escape key
+            document.addEventListener('keydown', function(e) {
+                if (e.key === 'Escape' && isMobileMenuOpen) {
+                    toggleMobileMenu();
+                }
+            });
+        }
+        
+        // Make closeMobileMenu available globally
+        window.closeMobileMenu = function() {
+            const mobileMenu = document.getElementById('mobileMenu');
+            const menuBackdrop = document.getElementById('menuBackdrop');
+            const hamburgerBtn = document.getElementById('hamburgerBtn');
+            
+            mobileMenu.classList.remove('active');
+            menuBackdrop.classList.remove('active');
+            hamburgerBtn.classList.remove('active');
+            document.body.style.overflow = 'auto';
+            isMobileMenuOpen = false;
+        };
+
+        // DSOG Hero Slideshow
+        function initHeroSlideshow() {
+            const slidesContainer = document.getElementById('heroSlides');
+            const dotsContainer = document.getElementById('heroDots');
+            
+            // Create slides and dots
+            heroSlides.forEach((slide, index) => {
+                // Create slide
+                const slideElement = document.createElement('div');
+                slideElement.className = `hero-slide ${index === 0 ? 'active' : ''}`;
+                slideElement.innerHTML = `
+                    <img src="${slide.image}" alt="${slide.title}" loading="lazy">
+                    <div class="hero-overlay">
+                        <h1 class="hero-title">${slide.title}</h1>
+                        <p class="hero-subtitle">${slide.subtitle}</p>
+                    </div>
+                `;
+                slidesContainer.appendChild(slideElement);
+                
+                // Create dot
+                const dot = document.createElement('div');
+                dot.className = `dot ${index === 0 ? 'active' : ''}`;
+                dot.addEventListener('click', () => showSlide(index));
+                dotsContainer.appendChild(dot);
+            });
+            
+            // Auto-advance slides
+            let currentSlide = 0;
+            setInterval(() => {
+                currentSlide = (currentSlide + 1) % heroSlides.length;
+                showSlide(currentSlide);
+            }, 5000);
+        }
+        
+        function showSlide(index) {
+            // Update slides
+            const slides = document.querySelectorAll('.hero-slide');
+            slides.forEach((slide, i) => {
+                slide.classList.toggle('active', i === index);
+            });
+            
+            // Update dots
+            const dots = document.querySelectorAll('.dot');
+            dots.forEach((dot, i) => {
+                dot.classList.toggle('active', i === index);
+            });
+        }
+        
+        // Load collections
+        function loadCollections() {
+            const container = document.getElementById('collectionsContainer');
+            
+            collectionsData.forEach(collection => {
+                const card = document.createElement('a');
+                card.className = 'collection-card';
+                card.href = collection.link;
+                card.innerHTML = `
+                    <img src="${collection.image}" alt="${collection.title}" class="collection-image" loading="lazy">
+                    <div class="collection-overlay">
+                        <h3 class="collection-title">${collection.title}</h3>
+                        <p class="collection-description">${collection.description}</p>
+                    </div>
+                `;
+                
+                container.appendChild(card);
+            });
+        }
+        
+        // Load gifts
+        function loadGifts() {
+            const container = document.getElementById('giftsContainer');
+            
+            giftsData.forEach(gift => {
+                const card = document.createElement('div');
+                card.className = 'gift-card';
+                card.innerHTML = `
+                    <div class="gift-icon">
+                        <i class="${gift.icon}"></i>
+                    </div>
+                    <h3 class="gift-title">${gift.title}</h3>
+                    <p class="gift-description">${gift.description}</p>
+                `;
+                
+                card.addEventListener('click', function() {
+                    window.location.href = 'gifts.html';
+                });
+                
+                container.appendChild(card);
+            });
+        }
+        
+        // Product Modal Functionality with Image Zoom
+        function initModal() {
+            const modal = document.getElementById('productModal');
+            const modalClose = document.getElementById('modalClose');
+            
+            modalClose.addEventListener('click', closeModal);
+            
+            modal.addEventListener('click', function(e) {
+                if (e.target === modal) {
+                    closeModal();
+                }
+            });
+            
+            // Close modal with Escape key
+            document.addEventListener('keydown', function(e) {
+                if (e.key === 'Escape' && modal.classList.contains('active')) {
+                    closeModal();
+                }
+            });
+        }
+        
+        function openModal(product) {
+            currentProduct = product;
+            currentImageIndex = 0;
+            const modal = document.getElementById('productModal');
+            const modalBody = document.getElementById('modalBody');
+            
+            // Get product images (use array if available, otherwise single image)
+            const productImages = product.images || [product.image];
+            
+            modalBody.innerHTML = `
+                <div class="modal-image-section">
+                    <div class="modal-image-container" id="modalImageContainer">
+                        <img src="${productImages[0]}" alt="${product.name}" class="modal-image" id="modalMainImage">
+                        <div class="zoom-hint">
+                            <i class="fas fa-search-plus"></i>
+                            Click to zoom
+                        </div>
+                    </div>
+                    ${productImages.length > 1 ? `
+                        <div class="image-gallery" id="imageGallery">
+                            ${productImages.map((img, index) => `
+                                <div class="gallery-thumbnail ${index === 0 ? 'active' : ''}" data-index="${index}">
+                                    <img src="${img}" alt="${product.name} - View ${index + 1}">
+                                </div>
+                            `).join('')}
+                        </div>
+                    ` : ''}
+                </div>
+                <div class="modal-details">
+                    <h2 class="modal-title">${product.name}</h2>
+                    <div class="modal-price">KSh ${product.basePrice}</div>
+                    <div class="modal-category">${product.category}</div>
+                    <p class="modal-description">${product.description || 'Premium quality product from DSOG STORES. Crafted with attention to detail and using the finest materials.'}</p>
+                    <button class="modal-whatsapp-btn" onclick="orderViaWhatsApp('${product.name}', ${product.basePrice})">
+                        <i class="fab fa-whatsapp"></i> Order via WhatsApp
+                    </button>
+                </div>
+            `;
+            
+            // Initialize image zoom and gallery
+            initImageZoom();
+            if (productImages.length > 1) {
+                initImageGallery(productImages);
+            }
+            
+            modal.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+        
+        function initImageZoom() {
+            const imageContainer = document.getElementById('modalImageContainer');
+            const mainImage = document.getElementById('modalMainImage');
+            
+            if (imageContainer && mainImage) {
+                imageContainer.addEventListener('click', function() {
+                    mainImage.classList.toggle('zoomed');
+                    
+                    // Update cursor and hint text
+                    if (mainImage.classList.contains('zoomed')) {
+                        this.style.cursor = 'zoom-out';
+                        const hint = this.querySelector('.zoom-hint');
+                        if (hint) {
+                            hint.innerHTML = '<i class="fas fa-search-minus"></i> Click to zoom out';
+                        }
+                    } else {
+                        this.style.cursor = 'zoom-in';
+                        const hint = this.querySelector('.zoom-hint');
+                        if (hint) {
+                            hint.innerHTML = '<i class="fas fa-search-plus"></i> Click to zoom';
+                        }
+                    }
+                });
+                
+                // Reset zoom when clicking outside the image
+                document.addEventListener('click', function(e) {
+                    if (!imageContainer.contains(e.target) && mainImage.classList.contains('zoomed')) {
+                        mainImage.classList.remove('zoomed');
+                        imageContainer.style.cursor = 'zoom-in';
+                        const hint = imageContainer.querySelector('.zoom-hint');
+                        if (hint) {
+                            hint.innerHTML = '<i class="fas fa-search-plus"></i> Click to zoom';
+                        }
+                    }
+                });
+            }
+        }
+        
+        function initImageGallery(images) {
+            const thumbnails = document.querySelectorAll('.gallery-thumbnail');
+            const mainImage = document.getElementById('modalMainImage');
+            
+            thumbnails.forEach(thumb => {
+                thumb.addEventListener('click', function() {
+                    const index = parseInt(this.getAttribute('data-index'));
+                    currentImageIndex = index;
+                    
+                    // Update main image
+                    mainImage.src = images[index];
+                    mainImage.classList.remove('zoomed');
+                    
+                    // Update active thumbnail
+                    thumbnails.forEach(t => t.classList.remove('active'));
+                    this.classList.add('active');
+                    
+                    // Reset zoom container cursor
+                    const imageContainer = document.getElementById('modalImageContainer');
+                    if (imageContainer) {
+                        imageContainer.style.cursor = 'zoom-in';
+                        const hint = imageContainer.querySelector('.zoom-hint');
+                        if (hint) {
+                            hint.innerHTML = '<i class="fas fa-search-plus"></i> Click to zoom';
+                        }
+                    }
+                });
+            });
+            
+            // Add keyboard navigation for gallery
+            document.addEventListener('keydown', function(e) {
+                if (e.key === 'ArrowLeft' && currentImageIndex > 0) {
+                    // Previous image
+                    const prevThumb = document.querySelector(`.gallery-thumbnail[data-index="${currentImageIndex - 1}"]`);
+                    if (prevThumb) prevThumb.click();
+                } else if (e.key === 'ArrowRight' && currentImageIndex < images.length - 1) {
+                    // Next image
+                    const nextThumb = document.querySelector(`.gallery-thumbnail[data-index="${currentImageIndex + 1}"]`);
+                    if (nextThumb) nextThumb.click();
+                }
+            });
+        }
+        
+        function closeModal() {
+            const modal = document.getElementById('productModal');
+            modal.classList.remove('active');
+            document.body.style.overflow = 'auto';
+            currentProduct = null;
+            currentImageIndex = 0;
+        }
+        
+        // Load featured products from all collections
+        async function loadFeaturedProducts() {
+            const container = document.getElementById('productsContainer');
+            
+            try {
+                console.log('📦 Loading featured products...');
+                
+                // Try to load from backend
+                const collections = ['mens', 'womens', 'kids', 'accessories', 'gifts'];
+                const allProducts = [];
+                
+                // Load 2 products from each collection
+                for (const collection of collections) {
+                    try {
+                        const response = await fetch(`${scriptUrl}?action=getProducts&collection=${collection}`);
+                        const result = await response.json();
+                        if (result.success && result.data) {
+                            // Add collection info to each product
+                            const productsWithCollection = result.data.slice(0, 2).map(product => ({
+                                ...product,
+                                collectionName: collection
+                            }));
+                            allProducts.push(...productsWithCollection);
+                        }
+                    } catch (error) {
+                        console.error(`Error loading ${collection}:`, error);
+                    }
+                }
+                
+                if (allProducts.length > 0) {
+                    console.log(`✅ Loaded ${allProducts.length} featured products`);
+                    displayFeaturedProducts(allProducts.slice(0, 8)); // Show 8 featured products
+                } else {
+                    throw new Error('No products found');
+                }
+                
+            } catch (error) {
+                console.error('❌ Error loading featured products:', error);
+                // Fallback to sample products
+                loadSampleProducts();
+            }
+        }
+        
+        // Display featured products
+        function displayFeaturedProducts(products) {
+            const container = document.getElementById('productsContainer');
+            container.innerHTML = '';
+            
+            products.forEach(product => {
+                const productCard = createProductCard(product);
+                container.appendChild(productCard);
+            });
+        }
+        
+        // Create product card
+        function createProductCard(product) {
+            const card = document.createElement('div');
+            card.className = 'product-card';
+            
+            card.innerHTML = `
+                <img src="${product.image}" alt="${product.name}" class="product-image" loading="lazy">
+                <div class="product-info">
+                    <div class="product-badge">${product.collectionName || product.category}</div>
+                    <h3 class="product-title">${product.name}</h3>
+                    <div class="product-price">KSh ${product.basePrice}</div>
+                    <p class="product-description">${product.description || 'Premium quality product from DSOG STORES. Crafted with attention to detail.'}</p>
+                    <button class="whatsapp-btn" onclick="orderViaWhatsApp('${product.name}', ${product.basePrice})">
+                        <i class="fab fa-whatsapp"></i> Order via WhatsApp
+                    </button>
+                </div>
+            `;
+            
+            // Add click event to open modal
+            card.addEventListener('click', function(e) {
+                if (!e.target.classList.contains('whatsapp-btn')) {
+                    openModal(product);
+                }
+            });
+            
+            return card;
+        }
+        
+        // Fallback sample products
+        function loadSampleProducts() {
+            const sampleProducts = [
+                {
+                    id: '1',
+                    name: 'Premium Hoodie',
+                    category: 'clothing',
+                    basePrice: 8999,
+                    image: 'https://images.unsplash.com/photo-1556821840-3a63f95609a7?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80',
+                    description: 'Premium quality hoodie with comfortable fabric and modern design.',
+                    collectionName: 'mens'
+                },
+                {
+                    id: '2',
+                    name: 'Designer T-Shirt',
+                    category: 'clothing',
+                    basePrice: 4550,
+                    image: 'https://images.unsplash.com/photo-1576566588028-4147f3842f27?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80',
+                    description: 'Elegant designer t-shirt perfect for casual wear.',
+                    collectionName: 'womens'
+                },
+                {
+                    id: '3',
+                    name: 'Sports Jersey',
+                    category: 'sportswear',
+                    basePrice: 6550,
+                    image: 'https://images.unsplash.com/photo-1600185365483-26d7a4cc7519?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80',
+                    description: 'High-performance sports jersey for athletic activities.',
+                    collectionName: 'kids'
+                },
+                {
+                    id: '4',
+                    name: 'Fashion Cap',
+                    category: 'accessories',
+                    basePrice: 2999,
+                    image: 'https://images.unsplash.com/photo-1588850561407-ed78c282e89b?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80',
+                    description: 'Stylish cap to complete your fashion look.',
+                    collectionName: 'accessories'
+                },
+                {
+                    id: '5',
+                    name: 'Gift Box Set',
+                    category: 'gifts',
+                    basePrice: 14999,
+                    image: 'https://images.unsplash.com/photo-1513475382585-d06e58bcb0e0?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80',
+                    description: 'Premium gift box set with multiple fashion items.',
+                    collectionName: 'gifts'
+                }
+            ];
+            
+            displayFeaturedProducts(sampleProducts);
+        }
+        
+        // WhatsApp ordering function with franchisee tracking
+        function orderViaWhatsApp(productName, price) {
+            // Determine which WhatsApp number to use
+            const whatsappNumber = currentFranchisee ? currentFranchisee.phone : mainWhatsAppNumber;
+            const contactName = currentFranchisee ? currentFranchisee.name : 'DSOG STORES';
+            
+            let message = `Hello ${contactName}! I would like to order:\n\n` +
+                         `Product: ${productName}\n` +
+                         `Price: KSh ${price}\n\n` +
+                         `Please guide me through the ordering process.`;
+            
+            // Add franchisee info
+            if (currentFranchisee) {
+                message += `\n\n---\nOrder placed through ${currentFranchisee.name} (${currentFranchisee.location})`;
+            }
+            
+            const encodedMessage = encodeURIComponent(message);
+            const whatsappUrl = `https://wa.me/${whatsappNumber}?text=${encodedMessage}`;
+            
+            window.open(whatsappUrl, '_blank');
+            showNotification(`Opening WhatsApp to order ${productName}`);
+        }
+        
+        // Bottom Navigation
+        function initBottomNav() {
+            const navItems = document.querySelectorAll('.nav-item');
+            
+            navItems.forEach(item => {
+                item.addEventListener('click', function(e) {
+                    if (this.getAttribute('href').startsWith('#')) {
+                        e.preventDefault();
+                        const targetId = this.getAttribute('href');
+                        const targetElement = document.querySelector(targetId);
+                        
+                        if (targetElement) {
+                            targetElement.scrollIntoView({
+                                behavior: 'smooth',
+                                block: 'start'
+                            });
+                            
+                            // Update active state after scroll
+                            setTimeout(() => {
+                                setActiveNav(this);
+                            }, 500);
+                        }
+                    } else {
+                        // For external links, just update active state
+                        setActiveNav(this);
+                    }
+                });
+            });
+        }
+        
+        function setActiveNav(clickedItem) {
+            const navItems = document.querySelectorAll('.nav-item');
+            navItems.forEach(item => {
+                item.classList.remove('active');
+            });
+            clickedItem.classList.add('active');
+        }
+        
+        // WhatsApp Chat Functionality
+        function initWhatsAppChat() {
+            const chatToggle = document.getElementById('chatBotToggle');
+            const chatContainer = document.getElementById('chatBotContainer');
+            
+            chatToggle.addEventListener('click', function() {
+                isChatOpen = !isChatOpen;
+                chatContainer.classList.toggle('active');
+                
+                if (isChatOpen) {
+                    this.style.transform = 'rotate(360deg)';
+                    setTimeout(() => {
+                        this.style.transform = '';
+                    }, 300);
+                }
+            });
+            
+            // Close chat when clicking outside
+            document.addEventListener('click', function(e) {
+                if (!chatContainer.contains(e.target) && !chatToggle.contains(e.target) && isChatOpen) {
+                    chatContainer.classList.remove('active');
+                    isChatOpen = false;
+                }
+            });
+        }
+        
+        function handleChatOption(option) {
+            const chatMessages = document.getElementById('chatMessages');
+            
+            switch(option) {
+                case 'products':
+                    addChatMessage('I\'d like to see products', 'user');
+                    setTimeout(() => {
+                        addChatMessage('You can browse all our collections from the menu. We have Men\'s, Women\'s, Kids, Accessories, and Gifts collections!', 'bot');
+                    }, 500);
+                    break;
+                    
+                case 'order':
+                    addChatMessage('I want to place an order', 'user');
+                    setTimeout(() => {
+                        addChatMessage('Great! Browse our products and click the "Order via WhatsApp" button on any item. You\'ll be connected directly to ' + (currentFranchisee ? currentFranchisee.name : 'our team') + ' for ordering.', 'bot');
+                    }, 500);
+                    break;
+                    
+                case 'tracking':
+                    addChatMessage('I need order tracking', 'user');
+                    setTimeout(() => {
+                        addChatMessage('Please contact ' + (currentFranchisee ? currentFranchisee.name : 'our team') + ' directly via WhatsApp for order tracking updates.', 'bot');
+                    }, 500);
+                    break;
+                    
+                case 'contact':
+                    addChatMessage('I want to contact the franchisee', 'user');
+                    setTimeout(() => {
+                        if (currentFranchisee) {
+                            addChatMessage(`Our franchisee ${currentFranchisee.name} in ${currentFranchisee.location} is available via WhatsApp. Click the chat icon to message them directly!`, 'bot');
+                        } else {
+                            addChatMessage('You can contact our main team via WhatsApp for any inquiries. Just click the WhatsApp button on any product!', 'bot');
+                        }
+                    }, 500);
+                    break;
+            }
+        }
+        
+        function handleChatKeypress(e) {
+            if (e.key === 'Enter') {
+                sendChatMessage();
+            }
+        }
+        
+        function sendChatMessage() {
+            const chatInput = document.getElementById('chatInput');
+            const message = chatInput.value.trim();
+            
+            if (!message) return;
+            
+            addChatMessage(message, 'user');
+            chatInput.value = '';
+            
+            // Simulate bot response
+            setTimeout(() => {
+                handleBotResponse(message.toLowerCase());
+            }, 1000);
+        }
+        
+        function handleBotResponse(message) {
+            let response = '';
+            
+            if (message.includes('product') || message.includes('item') || message.includes('buy')) {
+                response = 'You can browse all our collections from the menu. We have Men\'s, Women\'s, Kids, Accessories, and Gifts collections!';
+            } else if (message.includes('price') || message.includes('cost') || message.includes('how much')) {
+                response = 'All prices are listed with each product. You can see them in the Products section.';
+            } else if (message.includes('delivery') || message.includes('shipping')) {
+                response = 'We offer delivery services. Delivery details will be discussed when you place your order via WhatsApp.';
+            } else if (message.includes('size') || message.includes('fit')) {
+                response = 'Size information is available for each product. Please check the product details or ask when ordering.';
+            } else if (message.includes('hello') || message.includes('hi') || message.includes('hey')) {
+                response = 'Hello! I\'m your DSOG assistant. How can I help you today?';
+            } else if (message.includes('collection') || message.includes('category')) {
+                response = 'We have 5 main collections: Men\'s, Women\'s, Kids, Accessories, and Gifts. Use the menu to explore each one!';
+            } else {
+                response = 'I\'m here to help! You can browse our collections, place orders via WhatsApp, or ask about specific items.';
+            }
+            
+            addChatMessage(response, 'bot');
+        }
+        
+        function addChatMessage(text, sender) {
+            const chatMessages = document.getElementById('chatMessages');
+            const messageDiv = document.createElement('div');
+            messageDiv.className = `chat-message ${sender}-message`;
+            messageDiv.textContent = text;
+            chatMessages.appendChild(messageDiv);
+            chatMessages.scrollTop = chatMessages.scrollHeight;
+        }
+        
+        // Simple notification
+        function showNotification(message) {
+            // Remove existing notification
+            const existingNotification = document.querySelector('.notification');
+            if (existingNotification) {
+                existingNotification.remove();
+            }
+            
+            // Create new notification
+            const notification = document.createElement('div');
+            notification.className = 'notification';
+            notification.textContent = message;
+            notification.style.cssText = `
+                position: fixed;
+                top: 100px;
+                right: 20px;
+                background: var(--primary-red);
+                color: white;
+                padding: 1rem 1.5rem;
+                border-radius: 30px;
+                box-shadow: var(--shadow-lg);
+                z-index: 1000;
+                animation: slideIn 0.3s ease;
+                max-width: 300px;
+                font-weight: 600;
+                border: 2px solid var(--primary-gold);
+                backdrop-filter: blur(10px);
+            `;
+            
+            document.body.appendChild(notification);
+            
+            // Remove after 3 seconds
+            setTimeout(() => {
+                if (notification.parentNode) {
+                    notification.remove();
+                }
+            }, 3000);
+        }
+        
+        // Add CSS for notification animation
+        const style = document.createElement('style');
+        style.textContent = `
+            @keyframes slideIn {
+                from { transform: translateX(100%); opacity: 0; }
+                to { transform: translateX(0); opacity: 1; }
+            }
+        `;
+        document.head.appendChild(style);
+    </script>
 </body>
 </html>
