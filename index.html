@@ -332,7 +332,7 @@
             border-color: var(--primary-gold);
         }
         
-        /* DSOG Products Section */
+        /* DSOG Products Section - OPTIMIZED */
         .products {
             max-width: 1400px;
             margin: 3rem auto;
@@ -375,10 +375,57 @@
             line-height: 1.6;
         }
         
+        /* Product Filter Bar */
+        .product-filters {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            margin-bottom: 2rem;
+            flex-wrap: wrap;
+            padding: 1rem;
+            background: var(--card-bg);
+            border-radius: 10px;
+            box-shadow: var(--shadow-sm);
+            border: 1px solid var(--border-color);
+        }
+        
+        .filter-btn {
+            padding: 0.6rem 1.5rem;
+            border: 2px solid var(--border-color);
+            background: var(--white);
+            color: var(--text-primary);
+            border-radius: 30px;
+            cursor: pointer;
+            transition: var(--transition);
+            font-weight: 500;
+            font-size: 0.9rem;
+            white-space: nowrap;
+        }
+        
+        .filter-btn:hover {
+            border-color: var(--primary-red);
+            color: var(--primary-red);
+            transform: translateY(-2px);
+        }
+        
+        .filter-btn.active {
+            background: var(--primary-red);
+            color: var(--white);
+            border-color: var(--primary-red);
+        }
+        
         .products-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
             gap: 1.5rem;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.5s ease, transform 0.5s ease;
+        }
+        
+        .products-grid.loaded {
+            opacity: 1;
+            transform: translateY(0);
         }
         
         .product-card {
@@ -392,6 +439,16 @@
             display: flex;
             flex-direction: column;
             height: 100%;
+            opacity: 0;
+            transform: translateY(10px);
+            animation: fadeInUp 0.5s ease forwards;
+        }
+        
+        @keyframes fadeInUp {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
         }
         
         .product-card:hover {
@@ -400,15 +457,52 @@
             border-color: var(--primary-red);
         }
         
+        .product-image-wrapper {
+            position: relative;
+            width: 100%;
+            height: 280px;
+            overflow: hidden;
+            background: var(--bg-secondary);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
         .product-image {
             width: 100%;
-            height: 250px;
-            object-fit: cover;
+            height: 100%;
+            object-fit: contain;
             transition: transform 0.5s ease;
+            padding: 1rem;
         }
         
         .product-card:hover .product-image {
             transform: scale(1.05);
+        }
+        
+        .view-image-btn {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: rgba(0,0,0,0.7);
+            color: white;
+            border: none;
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            transform: translateY(-10px);
+            transition: var(--transition);
+            z-index: 2;
+        }
+        
+        .product-image-wrapper:hover .view-image-btn {
+            opacity: 1;
+            transform: translateY(0);
         }
         
         .product-info {
@@ -599,14 +693,14 @@
             line-height: 1.5;
         }
         
-        /* Product Modal */
+        /* Enhanced Product Modal */
         .product-modal {
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            background: rgba(0,0,0,0.95);
+            background: rgba(0,0,0,0.98);
             display: flex;
             justify-content: center;
             align-items: center;
@@ -625,7 +719,7 @@
         .modal-content {
             background: var(--white);
             border-radius: 0;
-            max-width: 1000px;
+            max-width: 1200px;
             width: 100%;
             max-height: 90vh;
             overflow-y: auto;
@@ -671,81 +765,108 @@
         .modal-body {
             display: grid;
             grid-template-columns: 1fr 1fr;
-            gap: 2rem;
-            padding: 2rem;
+            gap: 3rem;
+            padding: 3rem;
         }
         
-        /* Enhanced Image Section with Zoom */
+        /* Enhanced Image Section with Full View Modal */
         .modal-image-section {
             position: relative;
         }
         
         .modal-image-container {
             width: 100%;
-            height: 400px;
+            height: 500px;
             border-radius: 8px;
             overflow: hidden;
             position: relative;
-            cursor: zoom-in;
+            cursor: pointer;
             background: var(--bg-secondary);
             border: 1px solid var(--border-color);
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
         
-        .modal-image {
-            width: 100%;
-            height: 100%;
+        .modal-main-image {
+            max-width: 100%;
+            max-height: 100%;
             object-fit: contain;
             transition: transform 0.3s ease;
         }
         
-        .modal-image.zoomed {
-            cursor: zoom-out;
-            transform: scale(1.5);
+        .modal-image-container:hover .modal-main-image {
+            transform: scale(1.02);
         }
         
-        .zoom-hint {
+        .image-zoom-btn {
             position: absolute;
-            bottom: 10px;
-            right: 10px;
-            background: rgba(0,0,0,0.7);
+            bottom: 20px;
+            right: 20px;
+            background: rgba(0,0,0,0.8);
             color: white;
-            padding: 0.5rem 1rem;
-            border-radius: 20px;
-            font-size: 0.8rem;
+            border: none;
+            padding: 0.8rem 1.5rem;
+            border-radius: 30px;
+            cursor: pointer;
             display: flex;
             align-items: center;
             gap: 0.5rem;
-            opacity: 0;
-            transition: opacity 0.3s ease;
+            transition: var(--transition);
+            font-weight: 500;
             backdrop-filter: blur(5px);
+            border: 1px solid rgba(255,255,255,0.1);
         }
         
-        .modal-image-container:hover .zoom-hint {
-            opacity: 1;
+        .image-zoom-btn:hover {
+            background: rgba(178, 34, 34, 0.9);
+            transform: translateY(-2px);
         }
         
         .image-gallery {
             display: flex;
-            gap: 0.5rem;
-            margin-top: 1rem;
+            gap: 0.8rem;
+            margin-top: 1.5rem;
             overflow-x: auto;
-            padding: 0.5rem 0;
+            padding: 0.5rem;
+            scrollbar-width: thin;
+            scrollbar-color: var(--primary-red) var(--bg-secondary);
+        }
+        
+        .image-gallery::-webkit-scrollbar {
+            height: 6px;
+        }
+        
+        .image-gallery::-webkit-scrollbar-track {
+            background: var(--bg-secondary);
+            border-radius: 3px;
+        }
+        
+        .image-gallery::-webkit-scrollbar-thumb {
+            background: var(--primary-red);
+            border-radius: 3px;
         }
         
         .gallery-thumbnail {
-            width: 60px;
-            height: 60px;
+            width: 80px;
+            height: 80px;
             border-radius: 8px;
             overflow: hidden;
             cursor: pointer;
-            border: 2px solid transparent;
+            border: 3px solid transparent;
             transition: var(--transition);
             flex-shrink: 0;
             background: var(--bg-secondary);
         }
         
+        .gallery-thumbnail:hover {
+            border-color: var(--primary-red);
+            transform: scale(1.05);
+        }
+        
         .gallery-thumbnail.active {
             border-color: var(--primary-red);
+            box-shadow: 0 0 0 3px rgba(178, 34, 34, 0.2);
         }
         
         .gallery-thumbnail img {
@@ -757,18 +878,18 @@
         .modal-details {
             display: flex;
             flex-direction: column;
-            gap: 1rem;
+            gap: 1.2rem;
         }
         
         .modal-title {
-            font-size: 1.8rem;
-            font-weight: 600;
+            font-size: 2rem;
+            font-weight: 700;
             color: var(--text-primary);
             line-height: 1.3;
         }
         
         .modal-price {
-            font-size: 1.5rem;
+            font-size: 1.8rem;
             font-weight: bold;
             color: var(--primary-red);
         }
@@ -776,25 +897,67 @@
         .modal-category {
             background: var(--primary-red);
             color: var(--white);
-            padding: 0.5rem 1rem;
-            border-radius: 20px;
+            padding: 0.6rem 1.2rem;
+            border-radius: 30px;
             font-size: 0.9rem;
             align-self: flex-start;
             font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
         }
         
         .modal-description {
             color: var(--text-secondary);
-            line-height: 1.6;
+            line-height: 1.7;
             font-size: 1rem;
             margin: 1rem 0;
+            flex-grow: 1;
+        }
+        
+        .product-specs {
+            background: var(--bg-secondary);
+            padding: 1.5rem;
+            border-radius: 10px;
+            margin: 1rem 0;
+        }
+        
+        .specs-title {
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            color: var(--text-primary);
+        }
+        
+        .specs-list {
+            list-style: none;
+        }
+        
+        .specs-list li {
+            padding: 0.5rem 0;
+            border-bottom: 1px solid var(--border-color);
+            display: flex;
+            justify-content: space-between;
+        }
+        
+        .specs-list li:last-child {
+            border-bottom: none;
+        }
+        
+        .spec-label {
+            color: var(--gray);
+            font-weight: 500;
+        }
+        
+        .spec-value {
+            color: var(--text-primary);
+            font-weight: 600;
         }
         
         .modal-whatsapp-btn {
             background: var(--whatsapp-green);
             color: var(--white);
             border: none;
-            padding: 1rem 2rem;
+            padding: 1.2rem 2rem;
             border-radius: 0;
             font-weight: 600;
             cursor: pointer;
@@ -802,16 +965,179 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            gap: 0.5rem;
-            font-size: 1rem;
+            gap: 0.8rem;
+            font-size: 1.1rem;
             margin-top: 1rem;
             text-transform: uppercase;
             letter-spacing: 0.5px;
+            box-shadow: 0 4px 15px rgba(37, 211, 102, 0.3);
         }
         
         .modal-whatsapp-btn:hover {
             background: var(--whatsapp-dark);
-            transform: translateY(-2px);
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(37, 211, 102, 0.4);
+        }
+        
+        /* Full Image View Modal */
+        .full-image-modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.95);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 3000;
+            opacity: 0;
+            visibility: hidden;
+            transition: var(--transition);
+        }
+        
+        .full-image-modal.active {
+            opacity: 1;
+            visibility: visible;
+        }
+        
+        .full-image-content {
+            position: relative;
+            width: 90%;
+            height: 90%;
+            display: flex;
+            flex-direction: column;
+            background: transparent;
+        }
+        
+        .full-image-nav {
+            position: absolute;
+            top: 50%;
+            left: 0;
+            right: 0;
+            transform: translateY(-50%);
+            display: flex;
+            justify-content: space-between;
+            padding: 0 2rem;
+            z-index: 10;
+        }
+        
+        .image-nav-btn {
+            background: rgba(0,0,0,0.7);
+            color: white;
+            border: none;
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            transition: var(--transition);
+            backdrop-filter: blur(10px);
+            border: 2px solid rgba(255,255,255,0.1);
+        }
+        
+        .image-nav-btn:hover {
+            background: var(--primary-red);
+            transform: scale(1.1);
+        }
+        
+        .full-image-container {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+        }
+        
+        .full-image {
+            max-width: 100%;
+            max-height: 100%;
+            object-fit: contain;
+            cursor: move;
+            transition: transform 0.3s ease;
+            user-select: none;
+        }
+        
+        .full-image-controls {
+            position: absolute;
+            bottom: 2rem;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 1rem;
+            background: rgba(0,0,0,0.7);
+            padding: 1rem 2rem;
+            border-radius: 50px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+        
+        .image-control-btn {
+            background: transparent;
+            color: white;
+            border: none;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+            transition: var(--transition);
+        }
+        
+        .image-control-btn:hover {
+            background: var(--primary-red);
+            transform: scale(1.1);
+        }
+        
+        .image-control-btn.active {
+            background: var(--primary-red);
+        }
+        
+        .full-image-close {
+            position: absolute;
+            top: 2rem;
+            right: 2rem;
+            background: rgba(0,0,0,0.7);
+            color: white;
+            border: none;
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            transition: var(--transition);
+            z-index: 10;
+            backdrop-filter: blur(10px);
+            border: 2px solid rgba(255,255,255,0.1);
+        }
+        
+        .full-image-close:hover {
+            background: var(--primary-red);
+            transform: rotate(90deg);
+        }
+        
+        .image-counter {
+            position: absolute;
+            bottom: 2rem;
+            right: 2rem;
+            background: rgba(0,0,0,0.7);
+            color: white;
+            padding: 0.8rem 1.5rem;
+            border-radius: 30px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255,255,255,0.1);
         }
         
         /* Loading State */
@@ -1184,7 +1510,79 @@
             opacity: 0.7;
         }
         
+        /* Product Skeleton Loading */
+        .skeleton-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 1.5rem;
+        }
+        
+        .skeleton-card {
+            background: var(--card-bg);
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: var(--shadow-sm);
+            border: 1px solid var(--border-color);
+            animation: skeleton-loading 1.5s infinite ease-in-out;
+        }
+        
+        .skeleton-image {
+            width: 100%;
+            height: 280px;
+            background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+            background-size: 200% 100%;
+        }
+        
+        .skeleton-info {
+            padding: 1.5rem;
+        }
+        
+        .skeleton-text {
+            height: 20px;
+            background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+            background-size: 200% 100%;
+            margin-bottom: 1rem;
+            border-radius: 4px;
+        }
+        
+        .skeleton-text.short {
+            width: 60%;
+        }
+        
+        .skeleton-text.medium {
+            width: 80%;
+        }
+        
+        .skeleton-btn {
+            height: 40px;
+            background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+            background-size: 200% 100%;
+            border-radius: 0;
+            margin-top: 1rem;
+        }
+        
+        @keyframes skeleton-loading {
+            0% {
+                background-position: -200% 0;
+            }
+            100% {
+                background-position: 200% 0;
+            }
+        }
+        
         /* Mobile Responsive */
+        @media (max-width: 992px) {
+            .modal-body {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+                padding: 2rem;
+            }
+            
+            .modal-image-container {
+                height: 400px;
+            }
+        }
+        
         @media (max-width: 768px) {
             .hamburger {
                 display: flex;
@@ -1212,8 +1610,8 @@
                 gap: 1rem;
             }
             
-            .product-image {
-                height: 180px;
+            .product-image-wrapper {
+                height: 200px;
             }
             
             .product-info {
@@ -1229,8 +1627,6 @@
             }
             
             .modal-body {
-                grid-template-columns: 1fr;
-                gap: 1.5rem;
                 padding: 1.5rem;
             }
             
@@ -1243,8 +1639,8 @@
             }
             
             .gallery-thumbnail {
-                width: 50px;
-                height: 50px;
+                width: 60px;
+                height: 60px;
             }
             
             .collections-grid {
@@ -1253,6 +1649,27 @@
             
             .collection-card {
                 height: 250px;
+            }
+            
+            .full-image-nav {
+                padding: 0 1rem;
+            }
+            
+            .image-nav-btn {
+                width: 50px;
+                height: 50px;
+                font-size: 1.2rem;
+            }
+            
+            .full-image-controls {
+                padding: 0.8rem 1.5rem;
+                bottom: 1rem;
+            }
+            
+            .image-control-btn {
+                width: 40px;
+                height: 40px;
+                font-size: 1rem;
             }
             
             .whatsapp-chat-bot {
@@ -1279,16 +1696,68 @@
                 grid-template-columns: 1fr;
             }
             
+            .product-filters {
+                gap: 0.5rem;
+                padding: 0.8rem;
+            }
+            
+            .filter-btn {
+                padding: 0.5rem 1rem;
+                font-size: 0.8rem;
+            }
+            
             .modal-body {
                 padding: 1rem;
+                gap: 1.5rem;
             }
             
             .modal-image-container {
                 height: 250px;
             }
             
-            .zoom-hint {
+            .modal-title {
+                font-size: 1.3rem;
+            }
+            
+            .modal-price {
+                font-size: 1.4rem;
+            }
+            
+            .modal-description {
+                font-size: 0.9rem;
+            }
+            
+            .image-zoom-btn {
+                padding: 0.6rem 1rem;
+                font-size: 0.9rem;
+            }
+            
+            .full-image-nav {
                 display: none;
+            }
+            
+            .full-image-controls {
+                bottom: 0.5rem;
+                padding: 0.6rem 1rem;
+            }
+            
+            .image-control-btn {
+                width: 35px;
+                height: 35px;
+                font-size: 0.9rem;
+            }
+            
+            .full-image-close {
+                top: 1rem;
+                right: 1rem;
+                width: 50px;
+                height: 50px;
+            }
+            
+            .image-counter {
+                bottom: 1rem;
+                right: 1rem;
+                padding: 0.6rem 1rem;
             }
             
             .bottom-nav-container {
@@ -1316,12 +1785,16 @@
                 height: 30vh;
             }
             
-            .product-image {
-                height: 150px;
+            .product-image-wrapper {
+                height: 180px;
             }
             
             .chat-bot-container {
                 width: 260px;
+            }
+            
+            .modal-image-container {
+                height: 200px;
             }
         }
     </style>
@@ -1403,11 +1876,65 @@
             <p>Premium fashion items with direct WhatsApp ordering</p>
         </div>
         
+        <!-- Product Filters -->
+        <div class="product-filters" id="productFilters">
+            <button class="filter-btn active" data-filter="all">All Products</button>
+            <button class="filter-btn" data-filter="mens">Men's</button>
+            <button class="filter-btn" data-filter="womens">Women's</button>
+            <button class="filter-btn" data-filter="kids">Kids</button>
+            <button class="filter-btn" data-filter="accessories">Accessories</button>
+            <button class="filter-btn" data-filter="gifts">Gifts</button>
+        </div>
+        
+        <!-- Products Grid -->
         <div class="products-grid" id="productsContainer">
-            <div class="loading">
-                <div class="loading-spinner"></div>
-                <p>Loading premium products...</p>
+            <!-- Products will be populated by JavaScript -->
+            <div class="skeleton-grid" id="skeletonLoader">
+                <div class="skeleton-card">
+                    <div class="skeleton-image"></div>
+                    <div class="skeleton-info">
+                        <div class="skeleton-text short"></div>
+                        <div class="skeleton-text medium"></div>
+                        <div class="skeleton-text" style="width: 40%;"></div>
+                        <div class="skeleton-btn"></div>
+                    </div>
+                </div>
+                <div class="skeleton-card">
+                    <div class="skeleton-image"></div>
+                    <div class="skeleton-info">
+                        <div class="skeleton-text short"></div>
+                        <div class="skeleton-text medium"></div>
+                        <div class="skeleton-text" style="width: 40%;"></div>
+                        <div class="skeleton-btn"></div>
+                    </div>
+                </div>
+                <div class="skeleton-card">
+                    <div class="skeleton-image"></div>
+                    <div class="skeleton-info">
+                        <div class="skeleton-text short"></div>
+                        <div class="skeleton-text medium"></div>
+                        <div class="skeleton-text" style="width: 40%;"></div>
+                        <div class="skeleton-btn"></div>
+                    </div>
+                </div>
+                <div class="skeleton-card">
+                    <div class="skeleton-image"></div>
+                    <div class="skeleton-info">
+                        <div class="skeleton-text short"></div>
+                        <div class="skeleton-text medium"></div>
+                        <div class="skeleton-text" style="width: 40%;"></div>
+                        <div class="skeleton-btn"></div>
+                    </div>
+                </div>
             </div>
+        </div>
+        
+        <!-- Load More Button -->
+        <div id="loadMoreContainer" style="text-align: center; margin-top: 3rem; display: none;">
+            <button id="loadMoreBtn" style="padding: 1rem 2.5rem; background: var(--primary-red); color: white; border: none; border-radius: 30px; font-weight: 600; cursor: pointer; transition: var(--transition); font-size: 1rem;">
+                <i class="fas fa-spinner fa-spin" style="margin-right: 0.5rem; display: none;"></i>
+                Load More Products
+            </button>
         </div>
     </section>
 
@@ -1432,6 +1959,48 @@
             <div class="modal-body" id="modalBody">
                 <!-- Modal content will be populated by JavaScript -->
             </div>
+        </div>
+    </div>
+
+    <!-- Full Image View Modal -->
+    <div class="full-image-modal" id="fullImageModal">
+        <button class="full-image-close" id="fullImageClose">
+            <i class="fas fa-times"></i>
+        </button>
+        
+        <div class="full-image-nav">
+            <button class="image-nav-btn" id="prevImageBtn">
+                <i class="fas fa-chevron-left"></i>
+            </button>
+            <button class="image-nav-btn" id="nextImageBtn">
+                <i class="fas fa-chevron-right"></i>
+            </button>
+        </div>
+        
+        <div class="full-image-content">
+            <div class="full-image-container" id="fullImageContainer">
+                <img src="" alt="" class="full-image" id="fullImage">
+            </div>
+            
+            <div class="full-image-controls">
+                <button class="image-control-btn" id="zoomInBtn">
+                    <i class="fas fa-search-plus"></i>
+                </button>
+                <button class="image-control-btn" id="zoomOutBtn">
+                    <i class="fas fa-search-minus"></i>
+                </button>
+                <button class="image-control-btn" id="resetZoomBtn">
+                    <i class="fas fa-expand"></i>
+                </button>
+                <button class="image-control-btn" id="rotateBtn">
+                    <i class="fas fa-redo"></i>
+                </button>
+                <button class="image-control-btn" id="downloadBtn">
+                    <i class="fas fa-download"></i>
+                </button>
+            </div>
+            
+            <div class="image-counter" id="imageCounter">1 / 1</div>
         </div>
     </div>
 
@@ -1524,7 +2093,7 @@
         </div>
     </div>
 
-    <!-- Enhanced JavaScript with DSOG Theme and WhatsApp Bot -->
+    <!-- Enhanced JavaScript with Optimized Product Loading and Image Modal -->
     <script>
         // Google Apps Script URL - UPDATE THIS
         const scriptUrl = 'https://script.google.com/macros/s/AKfycby-iIbv89AN4tXwB1bxdw3GC4CPHDSFkkwrS9apdMH0ZLYBaY4aKYESnAZGUqGNmEmorA/exec';
@@ -1646,9 +2215,25 @@
             }
         ];
         
-        // Current product for modal
+        // Product management variables
         let currentProduct = null;
+        let allProducts = [];
+        let filteredProducts = [];
+        let currentFilter = 'all';
+        let isLoadingProducts = false;
+        let currentPage = 1;
+        const productsPerPage = 12;
+        
+        // Image modal variables
         let currentImageIndex = 0;
+        let currentImages = [];
+        let currentZoom = 1;
+        let currentRotation = 0;
+        let isDragging = false;
+        let dragStartX = 0;
+        let dragStartY = 0;
+        let translateX = 0;
+        let translateY = 0;
         
         // Mobile menu state
         let isMobileMenuOpen = false;
@@ -1664,13 +2249,19 @@
             initHeroSlideshow();
             loadCollections();
             loadGifts();
-            loadFeaturedProducts();
+            initProductFilters();
             initModal();
             initBottomNav();
             initWhatsAppChat();
+            initFullImageModal();
             
             // Set franchisee name in chat
             updateFranchiseeChatName();
+            
+            // Load products with optimized loading
+            setTimeout(() => {
+                loadFeaturedProducts();
+            }, 500);
         });
 
         // Detect franchisee from URL
@@ -1863,7 +2454,324 @@
             });
         }
         
-        // Product Modal Functionality with Image Zoom
+        // Initialize product filters
+        function initProductFilters() {
+            const filterButtons = document.querySelectorAll('.filter-btn');
+            
+            filterButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    // Remove active class from all buttons
+                    filterButtons.forEach(btn => btn.classList.remove('active'));
+                    
+                    // Add active class to clicked button
+                    this.classList.add('active');
+                    
+                    // Update current filter
+                    currentFilter = this.dataset.filter;
+                    currentPage = 1;
+                    
+                    // Filter products
+                    filterProducts();
+                });
+            });
+        }
+        
+        // Filter products based on current filter
+        function filterProducts() {
+            if (currentFilter === 'all') {
+                filteredProducts = [...allProducts];
+            } else {
+                filteredProducts = allProducts.filter(product => 
+                    product.category === currentFilter || product.collectionName === currentFilter
+                );
+            }
+            
+            // Display filtered products
+            displayProducts(filteredProducts.slice(0, productsPerPage));
+            
+            // Show/hide load more button
+            const loadMoreContainer = document.getElementById('loadMoreContainer');
+            if (filteredProducts.length > productsPerPage) {
+                loadMoreContainer.style.display = 'block';
+            } else {
+                loadMoreContainer.style.display = 'none';
+            }
+        }
+        
+        // OPTIMIZED: Load featured products
+        async function loadFeaturedProducts() {
+            if (isLoadingProducts) return;
+            
+            isLoadingProducts = true;
+            const container = document.getElementById('productsContainer');
+            const loadMoreBtn = document.getElementById('loadMoreBtn');
+            const loadMoreIcon = loadMoreBtn.querySelector('.fa-spinner');
+            
+            try {
+                console.log('📦 Loading featured products...');
+                
+                // Show loading state
+                loadMoreIcon.style.display = 'inline-block';
+                loadMoreBtn.disabled = true;
+                
+                // Load all products at once for better performance
+                const products = await fetchAllProducts();
+                
+                if (products.length > 0) {
+                    console.log(`✅ Loaded ${products.length} products`);
+                    allProducts = products;
+                    filterProducts();
+                    
+                    // Add event listener for load more button
+                    loadMoreBtn.addEventListener('click', loadMoreProducts);
+                } else {
+                    throw new Error('No products found');
+                }
+                
+            } catch (error) {
+                console.error('❌ Error loading products:', error);
+                // Fallback to sample products
+                loadSampleProducts();
+            } finally {
+                isLoadingProducts = false;
+                loadMoreIcon.style.display = 'none';
+                loadMoreBtn.disabled = false;
+                
+                // Hide skeleton loader
+                const skeletonLoader = document.getElementById('skeletonLoader');
+                if (skeletonLoader) {
+                    skeletonLoader.style.display = 'none';
+                }
+                
+                // Show products grid
+                container.classList.add('loaded');
+            }
+        }
+        
+        // Fetch all products from all collections
+        async function fetchAllProducts() {
+            const collections = ['mens', 'womens', 'kids', 'accessories', 'gifts'];
+            const allProducts = [];
+            
+            // Use Promise.all to fetch all collections in parallel
+            const promises = collections.map(async (collection) => {
+                try {
+                    const response = await fetch(`${scriptUrl}?action=getProducts&collection=${collection}`);
+                    const result = await response.json();
+                    
+                    if (result.success && result.data) {
+                        // Add collection info to each product
+                        const productsWithCollection = result.data.map(product => ({
+                            ...product,
+                            collectionName: collection,
+                            category: product.category || collection
+                        }));
+                        return productsWithCollection;
+                    }
+                } catch (error) {
+                    console.error(`Error loading ${collection}:`, error);
+                }
+                return [];
+            });
+            
+            // Wait for all promises to resolve
+            const results = await Promise.all(promises);
+            
+            // Flatten the results array
+            results.forEach(products => {
+                allProducts.push(...products);
+            });
+            
+            return allProducts;
+        }
+        
+        // Load more products (pagination)
+        function loadMoreProducts() {
+            const startIndex = currentPage * productsPerPage;
+            const endIndex = startIndex + productsPerPage;
+            const moreProducts = filteredProducts.slice(startIndex, endIndex);
+            
+            if (moreProducts.length > 0) {
+                displayMoreProducts(moreProducts);
+                currentPage++;
+                
+                // Hide load more button if no more products
+                if (endIndex >= filteredProducts.length) {
+                    document.getElementById('loadMoreContainer').style.display = 'none';
+                }
+            }
+        }
+        
+        // Display initial products
+        function displayProducts(products) {
+            const container = document.getElementById('productsContainer');
+            const skeletonLoader = document.getElementById('skeletonLoader');
+            
+            // Clear existing content except skeleton
+            Array.from(container.children).forEach(child => {
+                if (child.id !== 'skeletonLoader') {
+                    container.removeChild(child);
+                }
+            });
+            
+            // Hide skeleton loader
+            if (skeletonLoader) {
+                skeletonLoader.style.display = 'none';
+            }
+            
+            // Display products with staggered animation
+            products.forEach((product, index) => {
+                setTimeout(() => {
+                    const productCard = createProductCard(product);
+                    container.appendChild(productCard);
+                }, index * 50); // Stagger animation
+            });
+        }
+        
+        // Display more products for pagination
+        function displayMoreProducts(products) {
+            const container = document.getElementById('productsContainer');
+            
+            products.forEach((product, index) => {
+                setTimeout(() => {
+                    const productCard = createProductCard(product);
+                    container.appendChild(productCard);
+                }, index * 50);
+            });
+        }
+        
+        // Create product card with optimized image loading
+        function createProductCard(product) {
+            const card = document.createElement('div');
+            card.className = 'product-card';
+            card.style.animationDelay = `${Math.random() * 0.3}s`;
+            
+            // Get product images
+            const productImages = product.images || [product.image];
+            const mainImage = productImages[0];
+            
+            card.innerHTML = `
+                <div class="product-image-wrapper">
+                    <img src="${mainImage}" alt="${product.name}" class="product-image" loading="lazy">
+                    <button class="view-image-btn" onclick="openFullImageView('${productImages.join(',')}', '${product.name}')">
+                        <i class="fas fa-expand"></i>
+                    </button>
+                </div>
+                <div class="product-info">
+                    <div class="product-badge">${product.collectionName || product.category}</div>
+                    <h3 class="product-title">${product.name}</h3>
+                    <div class="product-price">KSh ${product.basePrice}</div>
+                    <p class="product-description">${product.description || 'Premium quality product from DSOG STORES. Crafted with attention to detail.'}</p>
+                    <button class="whatsapp-btn" onclick="orderViaWhatsApp('${product.name}', ${product.basePrice}, event)">
+                        <i class="fab fa-whatsapp"></i> Order via WhatsApp
+                    </button>
+                </div>
+            `;
+            
+            // Add click event to open modal
+            card.addEventListener('click', function(e) {
+                if (!e.target.closest('.whatsapp-btn') && !e.target.closest('.view-image-btn')) {
+                    openModal(product);
+                }
+            });
+            
+            // Lazy load other images
+            if (productImages.length > 1) {
+                productImages.slice(1).forEach(img => {
+                    const imgElement = new Image();
+                    imgElement.src = img;
+                });
+            }
+            
+            return card;
+        }
+        
+        // Fallback sample products
+        function loadSampleProducts() {
+            const sampleProducts = [
+                {
+                    id: '1',
+                    name: 'Premium Hoodie',
+                    category: 'mens',
+                    basePrice: 8999,
+                    image: 'https://images.unsplash.com/photo-1556821840-3a63f95609a7?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80',
+                    description: 'Premium quality hoodie with comfortable fabric and modern design.',
+                    collectionName: 'mens',
+                    images: [
+                        'https://images.unsplash.com/photo-1556821840-3a63f95609a7?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80',
+                        'https://images.unsplash.com/photo-1591047139829-d91aecb6caea?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80'
+                    ]
+                },
+                {
+                    id: '2',
+                    name: 'Designer T-Shirt',
+                    category: 'womens',
+                    basePrice: 4550,
+                    image: 'https://images.unsplash.com/photo-1576566588028-4147f3842f27?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80',
+                    description: 'Elegant designer t-shirt perfect for casual wear.',
+                    collectionName: 'womens',
+                    images: [
+                        'https://images.unsplash.com/photo-1576566588028-4147f3842f27?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80',
+                        'https://images.unsplash.com/photo-1586790170083-2f9ceadc732d?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80'
+                    ]
+                },
+                {
+                    id: '3',
+                    name: 'Sports Jersey',
+                    category: 'kids',
+                    basePrice: 6550,
+                    image: 'https://images.unsplash.com/photo-1600185365483-26d7a4cc7519?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80',
+                    description: 'High-performance sports jersey for athletic activities.',
+                    collectionName: 'kids',
+                    images: [
+                        'https://images.unsplash.com/photo-1600185365483-26d7a4cc7519?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80',
+                        'https://images.unsplash.com/photo-1591369822093-7557b0321198?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80'
+                    ]
+                },
+                {
+                    id: '4',
+                    name: 'Fashion Cap',
+                    category: 'accessories',
+                    basePrice: 2999,
+                    image: 'https://images.unsplash.com/photo-1588850561407-ed78c282e89b?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80',
+                    description: 'Stylish cap to complete your fashion look.',
+                    collectionName: 'accessories',
+                    images: [
+                        'https://images.unsplash.com/photo-1588850561407-ed78c282e89b?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80',
+                        'https://images.unsplash.com/photo-1590650046871-92c887180603?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80'
+                    ]
+                },
+                {
+                    id: '5',
+                    name: 'Gift Box Set',
+                    category: 'gifts',
+                    basePrice: 14999,
+                    image: 'https://images.unsplash.com/photo-1513475382585-d06e58bcb0e0?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80',
+                    description: 'Premium gift box set with multiple fashion items.',
+                    collectionName: 'gifts',
+                    images: [
+                        'https://images.unsplash.com/photo-1513475382585-d06e58bcb0e0?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80',
+                        'https://images.unsplash.com/photo-1530103862676-de8c9debad1d?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80'
+                    ]
+                }
+            ];
+            
+            allProducts = sampleProducts;
+            filteredProducts = [...sampleProducts];
+            displayProducts(filteredProducts.slice(0, productsPerPage));
+            
+            // Hide skeleton loader
+            const skeletonLoader = document.getElementById('skeletonLoader');
+            if (skeletonLoader) {
+                skeletonLoader.style.display = 'none';
+            }
+            
+            // Show products grid
+            const container = document.getElementById('productsContainer');
+            container.classList.add('loaded');
+        }
+        
+        // Product Modal Functionality
         function initModal() {
             const modal = document.getElementById('productModal');
             const modalClose = document.getElementById('modalClose');
@@ -1886,27 +2794,26 @@
         
         function openModal(product) {
             currentProduct = product;
-            currentImageIndex = 0;
             const modal = document.getElementById('productModal');
             const modalBody = document.getElementById('modalBody');
             
-            // Get product images (use array if available, otherwise single image)
+            // Get product images
             const productImages = product.images || [product.image];
             
             modalBody.innerHTML = `
                 <div class="modal-image-section">
-                    <div class="modal-image-container" id="modalImageContainer">
-                        <img src="${productImages[0]}" alt="${product.name}" class="modal-image" id="modalMainImage">
-                        <div class="zoom-hint">
-                            <i class="fas fa-search-plus"></i>
-                            Click to zoom
-                        </div>
+                    <div class="modal-image-container" onclick="openFullImageView('${productImages.join(',')}', '${product.name}')">
+                        <img src="${productImages[0]}" alt="${product.name}" class="modal-main-image" loading="lazy">
+                        <button class="image-zoom-btn">
+                            <i class="fas fa-expand"></i>
+                            Click to view full image
+                        </button>
                     </div>
                     ${productImages.length > 1 ? `
                         <div class="image-gallery" id="imageGallery">
                             ${productImages.map((img, index) => `
-                                <div class="gallery-thumbnail ${index === 0 ? 'active' : ''}" data-index="${index}">
-                                    <img src="${img}" alt="${product.name} - View ${index + 1}">
+                                <div class="gallery-thumbnail ${index === 0 ? 'active' : ''}" data-index="${index}" onclick="switchModalImage('${img}', ${index})">
+                                    <img src="${img}" alt="${product.name} - View ${index + 1}" loading="lazy">
                                 </div>
                             `).join('')}
                         </div>
@@ -1915,101 +2822,54 @@
                 <div class="modal-details">
                     <h2 class="modal-title">${product.name}</h2>
                     <div class="modal-price">KSh ${product.basePrice}</div>
-                    <div class="modal-category">${product.category}</div>
+                    <div class="modal-category">${product.collectionName || product.category}</div>
                     <p class="modal-description">${product.description || 'Premium quality product from DSOG STORES. Crafted with attention to detail and using the finest materials.'}</p>
+                    
+                    <div class="product-specs">
+                        <h3 class="specs-title">Product Details</h3>
+                        <ul class="specs-list">
+                            <li>
+                                <span class="spec-label">Category:</span>
+                                <span class="spec-value">${product.category || product.collectionName}</span>
+                            </li>
+                            <li>
+                                <span class="spec-label">Collection:</span>
+                                <span class="spec-value">${product.collectionName || 'Featured'}</span>
+                            </li>
+                            <li>
+                                <span class="spec-label">Material:</span>
+                                <span class="spec-value">Premium Quality</span>
+                            </li>
+                            <li>
+                                <span class="spec-label">Availability:</span>
+                                <span class="spec-value">In Stock</span>
+                            </li>
+                        </ul>
+                    </div>
+                    
                     <button class="modal-whatsapp-btn" onclick="orderViaWhatsApp('${product.name}', ${product.basePrice})">
                         <i class="fab fa-whatsapp"></i> Order via WhatsApp
                     </button>
                 </div>
             `;
             
-            // Initialize image zoom and gallery
-            initImageZoom();
-            if (productImages.length > 1) {
-                initImageGallery(productImages);
-            }
-            
             modal.classList.add('active');
             document.body.style.overflow = 'hidden';
         }
         
-        function initImageZoom() {
-            const imageContainer = document.getElementById('modalImageContainer');
-            const mainImage = document.getElementById('modalMainImage');
-            
-            if (imageContainer && mainImage) {
-                imageContainer.addEventListener('click', function() {
-                    mainImage.classList.toggle('zoomed');
-                    
-                    // Update cursor and hint text
-                    if (mainImage.classList.contains('zoomed')) {
-                        this.style.cursor = 'zoom-out';
-                        const hint = this.querySelector('.zoom-hint');
-                        if (hint) {
-                            hint.innerHTML = '<i class="fas fa-search-minus"></i> Click to zoom out';
-                        }
-                    } else {
-                        this.style.cursor = 'zoom-in';
-                        const hint = this.querySelector('.zoom-hint');
-                        if (hint) {
-                            hint.innerHTML = '<i class="fas fa-search-plus"></i> Click to zoom';
-                        }
-                    }
-                });
-                
-                // Reset zoom when clicking outside the image
-                document.addEventListener('click', function(e) {
-                    if (!imageContainer.contains(e.target) && mainImage.classList.contains('zoomed')) {
-                        mainImage.classList.remove('zoomed');
-                        imageContainer.style.cursor = 'zoom-in';
-                        const hint = imageContainer.querySelector('.zoom-hint');
-                        if (hint) {
-                            hint.innerHTML = '<i class="fas fa-search-plus"></i> Click to zoom';
-                        }
-                    }
-                });
-            }
-        }
-        
-        function initImageGallery(images) {
+        function switchModalImage(imageSrc, index) {
+            const mainImage = document.querySelector('.modal-main-image');
             const thumbnails = document.querySelectorAll('.gallery-thumbnail');
-            const mainImage = document.getElementById('modalMainImage');
             
+            if (mainImage) {
+                mainImage.src = imageSrc;
+            }
+            
+            // Update active thumbnail
             thumbnails.forEach(thumb => {
-                thumb.addEventListener('click', function() {
-                    const index = parseInt(this.getAttribute('data-index'));
-                    currentImageIndex = index;
-                    
-                    // Update main image
-                    mainImage.src = images[index];
-                    mainImage.classList.remove('zoomed');
-                    
-                    // Update active thumbnail
-                    thumbnails.forEach(t => t.classList.remove('active'));
-                    this.classList.add('active');
-                    
-                    // Reset zoom container cursor
-                    const imageContainer = document.getElementById('modalImageContainer');
-                    if (imageContainer) {
-                        imageContainer.style.cursor = 'zoom-in';
-                        const hint = imageContainer.querySelector('.zoom-hint');
-                        if (hint) {
-                            hint.innerHTML = '<i class="fas fa-search-plus"></i> Click to zoom';
-                        }
-                    }
-                });
-            });
-            
-            // Add keyboard navigation for gallery
-            document.addEventListener('keydown', function(e) {
-                if (e.key === 'ArrowLeft' && currentImageIndex > 0) {
-                    // Previous image
-                    const prevThumb = document.querySelector(`.gallery-thumbnail[data-index="${currentImageIndex - 1}"]`);
-                    if (prevThumb) prevThumb.click();
-                } else if (e.key === 'ArrowRight' && currentImageIndex < images.length - 1) {
-                    // Next image
-                    const nextThumb = document.querySelector(`.gallery-thumbnail[data-index="${currentImageIndex + 1}"]`);
-                    if (nextThumb) nextThumb.click();
+                thumb.classList.remove('active');
+                if (parseInt(thumb.dataset.index) === index) {
+                    thumb.classList.add('active');
                 }
             });
         }
@@ -2019,146 +2879,266 @@
             modal.classList.remove('active');
             document.body.style.overflow = 'auto';
             currentProduct = null;
-            currentImageIndex = 0;
         }
         
-        // Load featured products from all collections
-        async function loadFeaturedProducts() {
-            const container = document.getElementById('productsContainer');
+        // Initialize full image modal
+        function initFullImageModal() {
+            const fullImageModal = document.getElementById('fullImageModal');
+            const fullImageClose = document.getElementById('fullImageClose');
+            const prevImageBtn = document.getElementById('prevImageBtn');
+            const nextImageBtn = document.getElementById('nextImageBtn');
+            const zoomInBtn = document.getElementById('zoomInBtn');
+            const zoomOutBtn = document.getElementById('zoomOutBtn');
+            const resetZoomBtn = document.getElementById('resetZoomBtn');
+            const rotateBtn = document.getElementById('rotateBtn');
+            const downloadBtn = document.getElementById('downloadBtn');
+            const fullImage = document.getElementById('fullImage');
+            const fullImageContainer = document.getElementById('fullImageContainer');
             
-            try {
-                console.log('📦 Loading featured products...');
+            // Close modal
+            fullImageClose.addEventListener('click', closeFullImageModal);
+            
+            fullImageModal.addEventListener('click', function(e) {
+                if (e.target === fullImageModal) {
+                    closeFullImageModal();
+                }
+            });
+            
+            // Navigation
+            prevImageBtn.addEventListener('click', showPrevImage);
+            nextImageBtn.addEventListener('click', showNextImage);
+            
+            // Zoom controls
+            zoomInBtn.addEventListener('click', () => zoomImage(1.2));
+            zoomOutBtn.addEventListener('click', () => zoomImage(0.8));
+            resetZoomBtn.addEventListener('click', resetImage);
+            rotateBtn.addEventListener('click', rotateImage);
+            downloadBtn.addEventListener('click', downloadImage);
+            
+            // Keyboard navigation
+            document.addEventListener('keydown', function(e) {
+                if (!fullImageModal.classList.contains('active')) return;
                 
-                // Try to load from backend
-                const collections = ['mens', 'womens', 'kids', 'accessories', 'gifts'];
-                const allProducts = [];
-                
-                // Load 2 products from each collection
-                for (const collection of collections) {
-                    try {
-                        const response = await fetch(`${scriptUrl}?action=getProducts&collection=${collection}`);
-                        const result = await response.json();
-                        if (result.success && result.data) {
-                            // Add collection info to each product
-                            const productsWithCollection = result.data.slice(0, 2).map(product => ({
-                                ...product,
-                                collectionName: collection
-                            }));
-                            allProducts.push(...productsWithCollection);
-                        }
-                    } catch (error) {
-                        console.error(`Error loading ${collection}:`, error);
+                switch(e.key) {
+                    case 'Escape':
+                        closeFullImageModal();
+                        break;
+                    case 'ArrowLeft':
+                        showPrevImage();
+                        break;
+                    case 'ArrowRight':
+                        showNextImage();
+                        break;
+                    case '+':
+                    case '=':
+                        zoomImage(1.2);
+                        break;
+                    case '-':
+                        zoomImage(0.8);
+                        break;
+                    case 'r':
+                    case 'R':
+                        rotateImage();
+                        break;
+                    case '0':
+                        resetImage();
+                        break;
+                }
+            });
+            
+            // Mouse wheel zoom
+            fullImageContainer.addEventListener('wheel', function(e) {
+                if (e.ctrlKey || e.metaKey) {
+                    e.preventDefault();
+                    if (e.deltaY < 0) {
+                        zoomImage(1.1);
+                    } else {
+                        zoomImage(0.9);
                     }
                 }
-                
-                if (allProducts.length > 0) {
-                    console.log(`✅ Loaded ${allProducts.length} featured products`);
-                    displayFeaturedProducts(allProducts.slice(0, 8)); // Show 8 featured products
-                } else {
-                    throw new Error('No products found');
+            });
+            
+            // Touch events for mobile
+            let touchStartDistance = 0;
+            
+            fullImageContainer.addEventListener('touchstart', function(e) {
+                if (e.touches.length === 2) {
+                    touchStartDistance = getTouchDistance(e);
                 }
-                
-            } catch (error) {
-                console.error('❌ Error loading featured products:', error);
-                // Fallback to sample products
-                loadSampleProducts();
+            });
+            
+            fullImageContainer.addEventListener('touchmove', function(e) {
+                if (e.touches.length === 2) {
+                    e.preventDefault();
+                    const touchDistance = getTouchDistance(e);
+                    const scale = touchDistance / touchStartDistance;
+                    
+                    if (scale > 1.1) {
+                        zoomImage(1.1);
+                        touchStartDistance = touchDistance;
+                    } else if (scale < 0.9) {
+                        zoomImage(0.9);
+                        touchStartDistance = touchDistance;
+                    }
+                }
+            });
+            
+            // Drag functionality
+            fullImage.addEventListener('mousedown', startDrag);
+            fullImage.addEventListener('touchstart', startDrag);
+            
+            document.addEventListener('mousemove', doDrag);
+            document.addEventListener('touchmove', doDrag);
+            
+            document.addEventListener('mouseup', stopDrag);
+            document.addEventListener('touchend', stopDrag);
+        }
+        
+        function getTouchDistance(e) {
+            const dx = e.touches[0].clientX - e.touches[1].clientX;
+            const dy = e.touches[0].clientY - e.touches[1].clientY;
+            return Math.sqrt(dx * dx + dy * dy);
+        }
+        
+        function startDrag(e) {
+            isDragging = true;
+            if (e.type === 'mousedown') {
+                dragStartX = e.clientX - translateX;
+                dragStartY = e.clientY - translateY;
+            } else if (e.type === 'touchstart') {
+                dragStartX = e.touches[0].clientX - translateX;
+                dragStartY = e.touches[0].clientY - translateY;
             }
         }
         
-        // Display featured products
-        function displayFeaturedProducts(products) {
-            const container = document.getElementById('productsContainer');
-            container.innerHTML = '';
+        function doDrag(e) {
+            if (!isDragging) return;
             
-            products.forEach(product => {
-                const productCard = createProductCard(product);
-                container.appendChild(productCard);
-            });
+            e.preventDefault();
+            let clientX, clientY;
+            
+            if (e.type === 'mousemove') {
+                clientX = e.clientX;
+                clientY = e.clientY;
+            } else if (e.type === 'touchmove') {
+                clientX = e.touches[0].clientX;
+                clientY = e.touches[0].clientY;
+            }
+            
+            translateX = clientX - dragStartX;
+            translateY = clientY - dragStartY;
+            
+            updateImageTransform();
         }
         
-        // Create product card
-        function createProductCard(product) {
-            const card = document.createElement('div');
-            card.className = 'product-card';
-            
-            card.innerHTML = `
-                <img src="${product.image}" alt="${product.name}" class="product-image" loading="lazy">
-                <div class="product-info">
-                    <div class="product-badge">${product.collectionName || product.category}</div>
-                    <h3 class="product-title">${product.name}</h3>
-                    <div class="product-price">KSh ${product.basePrice}</div>
-                    <p class="product-description">${product.description || 'Premium quality product from DSOG STORES. Crafted with attention to detail.'}</p>
-                    <button class="whatsapp-btn" onclick="orderViaWhatsApp('${product.name}', ${product.basePrice})">
-                        <i class="fab fa-whatsapp"></i> Order via WhatsApp
-                    </button>
-                </div>
-            `;
-            
-            // Add click event to open modal
-            card.addEventListener('click', function(e) {
-                if (!e.target.classList.contains('whatsapp-btn')) {
-                    openModal(product);
-                }
-            });
-            
-            return card;
+        function stopDrag() {
+            isDragging = false;
         }
         
-        // Fallback sample products
-        function loadSampleProducts() {
-            const sampleProducts = [
-                {
-                    id: '1',
-                    name: 'Premium Hoodie',
-                    category: 'clothing',
-                    basePrice: 8999,
-                    image: 'https://images.unsplash.com/photo-1556821840-3a63f95609a7?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80',
-                    description: 'Premium quality hoodie with comfortable fabric and modern design.',
-                    collectionName: 'mens'
-                },
-                {
-                    id: '2',
-                    name: 'Designer T-Shirt',
-                    category: 'clothing',
-                    basePrice: 4550,
-                    image: 'https://images.unsplash.com/photo-1576566588028-4147f3842f27?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80',
-                    description: 'Elegant designer t-shirt perfect for casual wear.',
-                    collectionName: 'womens'
-                },
-                {
-                    id: '3',
-                    name: 'Sports Jersey',
-                    category: 'sportswear',
-                    basePrice: 6550,
-                    image: 'https://images.unsplash.com/photo-1600185365483-26d7a4cc7519?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80',
-                    description: 'High-performance sports jersey for athletic activities.',
-                    collectionName: 'kids'
-                },
-                {
-                    id: '4',
-                    name: 'Fashion Cap',
-                    category: 'accessories',
-                    basePrice: 2999,
-                    image: 'https://images.unsplash.com/photo-1588850561407-ed78c282e89b?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80',
-                    description: 'Stylish cap to complete your fashion look.',
-                    collectionName: 'accessories'
-                },
-                {
-                    id: '5',
-                    name: 'Gift Box Set',
-                    category: 'gifts',
-                    basePrice: 14999,
-                    image: 'https://images.unsplash.com/photo-1513475382585-d06e58bcb0e0?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80',
-                    description: 'Premium gift box set with multiple fashion items.',
-                    collectionName: 'gifts'
-                }
-            ];
-            
-            displayFeaturedProducts(sampleProducts);
+        function updateImageTransform() {
+            const fullImage = document.getElementById('fullImage');
+            fullImage.style.transform = `translate(${translateX}px, ${translateY}px) scale(${currentZoom}) rotate(${currentRotation}deg)`;
         }
         
-        // WhatsApp ordering function with franchisee tracking
-        function orderViaWhatsApp(productName, price) {
+        // Open full image view
+        window.openFullImageView = function(imageUrls, productName) {
+            currentImages = imageUrls.split(',');
+            currentImageIndex = 0;
+            currentZoom = 1;
+            currentRotation = 0;
+            translateX = 0;
+            translateY = 0;
+            
+            const fullImageModal = document.getElementById('fullImageModal');
+            const fullImage = document.getElementById('fullImage');
+            const imageCounter = document.getElementById('imageCounter');
+            
+            // Load first image
+            fullImage.src = currentImages[0];
+            fullImage.alt = productName;
+            imageCounter.textContent = `1 / ${currentImages.length}`;
+            
+            // Reset transform
+            fullImage.style.transform = `translate(0, 0) scale(1) rotate(0deg)`;
+            
+            // Show modal
+            fullImageModal.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        };
+        
+        function showPrevImage() {
+            if (currentImages.length <= 1) return;
+            
+            currentImageIndex = (currentImageIndex - 1 + currentImages.length) % currentImages.length;
+            updateFullImage();
+        }
+        
+        function showNextImage() {
+            if (currentImages.length <= 1) return;
+            
+            currentImageIndex = (currentImageIndex + 1) % currentImages.length;
+            updateFullImage();
+        }
+        
+        function updateFullImage() {
+            const fullImage = document.getElementById('fullImage');
+            const imageCounter = document.getElementById('imageCounter');
+            
+            // Reset zoom and position for new image
+            currentZoom = 1;
+            currentRotation = 0;
+            translateX = 0;
+            translateY = 0;
+            
+            // Update image
+            fullImage.src = currentImages[currentImageIndex];
+            fullImage.style.transform = `translate(0, 0) scale(1) rotate(0deg)`;
+            imageCounter.textContent = `${currentImageIndex + 1} / ${currentImages.length}`;
+        }
+        
+        function zoomImage(factor) {
+            currentZoom *= factor;
+            currentZoom = Math.max(0.1, Math.min(currentZoom, 10));
+            updateImageTransform();
+        }
+        
+        function rotateImage() {
+            currentRotation += 90;
+            if (currentRotation >= 360) {
+                currentRotation = 0;
+            }
+            updateImageTransform();
+        }
+        
+        function resetImage() {
+            currentZoom = 1;
+            currentRotation = 0;
+            translateX = 0;
+            translateY = 0;
+            updateImageTransform();
+        }
+        
+        function downloadImage() {
+            const fullImage = document.getElementById('fullImage');
+            const link = document.createElement('a');
+            link.href = fullImage.src;
+            link.download = `dsog-product-${currentImageIndex + 1}.jpg`;
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+        }
+        
+        function closeFullImageModal() {
+            const fullImageModal = document.getElementById('fullImageModal');
+            fullImageModal.classList.remove('active');
+            document.body.style.overflow = 'auto';
+            currentImages = [];
+        }
+        
+        // WhatsApp ordering function
+        function orderViaWhatsApp(productName, price, event = null) {
+            if (event) event.stopPropagation();
+            
             // Determine which WhatsApp number to use
             const whatsappNumber = currentFranchisee ? currentFranchisee.phone : mainWhatsAppNumber;
             const contactName = currentFranchisee ? currentFranchisee.name : 'DSOG STORES';
