@@ -322,7 +322,7 @@
             color: var(--primary-black);
         }
         
-        /* Collection Filters */
+        /* UPDATED: Collection Filters - Matches Home Page Style */
         .collection-filters {
             max-width: 1400px;
             margin: 3rem auto 2rem;
@@ -334,29 +334,37 @@
             justify-content: center;
             gap: 1rem;
             flex-wrap: wrap;
+            padding: 1rem;
+            background: var(--card-bg);
+            border-radius: 10px;
+            box-shadow: var(--shadow-sm);
+            border: 1px solid var(--border-color);
         }
         
+        /* UPDATED: Filter buttons to match home page style */
         .filter-btn {
+            padding: 0.6rem 1.5rem;
+            border: 2px solid var(--border-color);
             background: var(--white);
-            border: 1px solid var(--border-color);
-            padding: 0.8rem 2rem;
+            color: var(--text-primary);
             border-radius: 30px;
             cursor: pointer;
             transition: var(--transition);
-            font-weight: 600;
+            font-weight: 500;
             font-size: 0.9rem;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-            color: var(--text-primary);
-            box-shadow: var(--shadow-sm);
+            white-space: nowrap;
         }
         
-        .filter-btn.active, .filter-btn:hover {
+        .filter-btn:hover {
+            border-color: var(--primary-red);
+            color: var(--primary-red);
+            transform: translateY(-2px);
+        }
+        
+        .filter-btn.active {
             background: var(--primary-red);
             color: var(--white);
             border-color: var(--primary-red);
-            transform: translateY(-3px);
-            box-shadow: var(--shadow-md);
         }
         
         /* DSOG Products Section - OPTIMIZED */
@@ -562,6 +570,17 @@
         .whatsapp-btn:hover {
             background: var(--whatsapp-dark);
             transform: translateY(-2px);
+        }
+        
+        /* FIX: Ensure proper click handling */
+        .whatsapp-btn *,
+        .view-image-btn *,
+        .image-zoom-btn *,
+        .modal-whatsapp-btn *,
+        .chat-option-btn *,
+        .filter-btn *,
+        .hero-btn * {
+            pointer-events: none;
         }
         
         /* Loading State */
@@ -1617,6 +1636,7 @@
             
             .filters-container {
                 gap: 0.5rem;
+                padding: 0.8rem;
             }
             
             .filter-btn {
@@ -1782,7 +1802,7 @@
         </div>
     </section>
 
-    <!-- Collection Filters -->
+    <!-- UPDATED: Collection Filters - Now matches home page style -->
     <section class="collection-filters">
         <div class="filters-container" id="filtersContainer">
             <!-- Filters will be populated by JavaScript -->
@@ -1991,9 +2011,9 @@
         </div>
     </div>
 
-    <!-- Enhanced JavaScript for Men's Collection Page -->
+    <!-- Enhanced JavaScript for Men's Collection Page with Fixes -->
     <script>
-        // Google Apps Script URL - UPDATE THIS
+        // Google Apps Script URL
         const scriptUrl = 'https://script.google.com/macros/s/AKfycby-iIbv89AN4tXwB1bxdw3GC4CPHDSFkkwrS9apdMH0ZLYBaY4aKYESnAZGUqGNmEmorA/exec';
         
         // WhatsApp number
@@ -2192,7 +2212,7 @@
             }
         }
 
-        // Load category filters
+        // Load category filters - UPDATED to match home page style
         function loadFilters() {
             const filters = [
                 { id: 'all', name: 'All Products' },
@@ -2213,7 +2233,9 @@
                 button.textContent = filter.name;
                 button.setAttribute('data-filter', filter.id);
                 
-                button.addEventListener('click', function() {
+                button.addEventListener('click', function(e) {
+                    e.stopPropagation();
+                    
                     // Update active button
                     document.querySelectorAll('.filter-btn').forEach(btn => {
                         btn.classList.remove('active');
@@ -2345,8 +2367,12 @@
             // Display products with staggered animation
             products.forEach((product, index) => {
                 setTimeout(() => {
-                    const productCard = createProductCard(product);
-                    container.appendChild(productCard);
+                    try {
+                        const productCard = createProductCard(product);
+                        container.appendChild(productCard);
+                    } catch (error) {
+                        console.error('Error displaying product:', error, product);
+                    }
                 }, index * 50); // Stagger animation
             });
         }
@@ -2357,56 +2383,91 @@
             
             products.forEach((product, index) => {
                 setTimeout(() => {
-                    const productCard = createProductCard(product);
-                    container.appendChild(productCard);
+                    try {
+                        const productCard = createProductCard(product);
+                        container.appendChild(productCard);
+                    } catch (error) {
+                        console.error('Error displaying product:', error, product);
+                    }
                 }, index * 50);
             });
         }
         
-        // Create product card with optimized image loading
+        // Create product card with optimized image loading - FIXED VERSION
         function createProductCard(product) {
-            const card = document.createElement('div');
-            card.className = 'product-card';
-            card.style.animationDelay = `${Math.random() * 0.3}s`;
-            
-            // Get product images
-            const productImages = product.images || [product.image];
-            const mainImage = productImages[0];
-            
-            card.innerHTML = `
-                <div class="product-image-wrapper">
-                    <img src="${mainImage}" alt="${product.name}" class="product-image" loading="lazy">
-                    <button class="view-image-btn" onclick="openFullImageView('${productImages.join(',')}', '${product.name}', event)">
-                        <i class="fas fa-expand"></i>
-                    </button>
-                </div>
-                <div class="product-info">
-                    <div class="product-badge">${product.category || 'Men'}</div>
-                    <h3 class="product-title">${product.name}</h3>
-                    <div class="product-price">KSh ${product.basePrice}</div>
-                    <p class="product-description">${product.description || 'Premium quality product from DSOG Men\'s Collection. Crafted with attention to detail.'}</p>
-                    <button class="whatsapp-btn" onclick="orderViaWhatsApp('${product.name}', ${product.basePrice}, event)">
-                        <i class="fab fa-whatsapp"></i> Order via WhatsApp
-                    </button>
-                </div>
-            `;
-            
-            // Add click event to open modal
-            card.addEventListener('click', function(e) {
-                if (!e.target.closest('.whatsapp-btn') && !e.target.closest('.view-image-btn')) {
-                    openModal(product);
-                }
-            });
-            
-            // Lazy load other images
-            if (productImages.length > 1) {
-                productImages.slice(1).forEach(img => {
-                    const imgElement = new Image();
-                    imgElement.src = img;
+            try {
+                const card = document.createElement('div');
+                card.className = 'product-card';
+                card.style.animationDelay = `${Math.random() * 0.3}s`;
+                
+                // Get product images
+                const productImages = product.images || [product.image];
+                const mainImage = productImages[0];
+                
+                // Properly escape quotes and special characters
+                const escapedProductName = product.name.replace(/'/g, "\\'").replace(/"/g, '\\"');
+                const imageUrlsString = productImages.join(',').replace(/'/g, "\\'");
+                
+                card.innerHTML = `
+                    <div class="product-image-wrapper">
+                        <img src="${mainImage}" alt="${product.name}" class="product-image" loading="lazy">
+                        <button class="view-image-btn" onclick="event.stopPropagation(); openFullImageView('${imageUrlsString}', '${escapedProductName}')">
+                            <i class="fas fa-expand"></i>
+                        </button>
+                    </div>
+                    <div class="product-info">
+                        <div class="product-badge">${product.category || 'Men'}</div>
+                        <h3 class="product-title">${product.name}</h3>
+                        <div class="product-price">KSh ${product.basePrice}</div>
+                        <p class="product-description">${product.description || 'Premium quality product from DSOG Men\'s Collection. Crafted with attention to detail.'}</p>
+                        <button class="whatsapp-btn" onclick="event.stopPropagation(); orderViaWhatsApp('${escapedProductName}', ${product.basePrice}, event)">
+                            <i class="fab fa-whatsapp"></i> Order via WhatsApp
+                        </button>
+                    </div>
+                `;
+                
+                // Add click event to open modal - FIXED with better event handling
+                card.addEventListener('click', function(e) {
+                    // Only open modal if click is not on whatsapp button, view button, or their children
+                    if (!e.target.closest('.whatsapp-btn') && 
+                        !e.target.closest('.view-image-btn') &&
+                        !e.target.matches('.whatsapp-btn') &&
+                        !e.target.matches('.view-image-btn') &&
+                        !e.target.closest('.fa-whatsapp') &&
+                        !e.target.closest('.fa-expand')) {
+                        openModal(product);
+                    }
                 });
+                
+                // Lazy load other images
+                if (productImages.length > 1) {
+                    productImages.slice(1).forEach(img => {
+                        const imgElement = new Image();
+                        imgElement.src = img;
+                    });
+                }
+                
+                return card;
+            } catch (error) {
+                console.error('Error creating product card:', error, product);
+                // Return a simple card as fallback
+                const fallbackCard = document.createElement('div');
+                fallbackCard.className = 'product-card';
+                fallbackCard.innerHTML = `
+                    <div class="product-image-wrapper">
+                        <img src="${product.image || 'https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80'}" alt="${product.name}" class="product-image" loading="lazy">
+                    </div>
+                    <div class="product-info">
+                        <div class="product-badge">${product.category || 'Men'}</div>
+                        <h3 class="product-title">${product.name}</h3>
+                        <div class="product-price">KSh ${product.basePrice}</div>
+                        <button class="whatsapp-btn" onclick="event.stopPropagation(); orderViaWhatsApp('${product.name}', ${product.basePrice}, event)">
+                            <i class="fab fa-whatsapp"></i> Order via WhatsApp
+                        </button>
+                    </div>
+                `;
+                return fallbackCard;
             }
-            
-            return card;
         }
         
         // Fallback sample products for men's collection
@@ -2529,68 +2590,74 @@
         }
         
         function openModal(product) {
-            currentProduct = product;
-            const modal = document.getElementById('productModal');
-            const modalBody = document.getElementById('modalBody');
-            
-            // Get product images
-            const productImages = product.images || [product.image];
-            
-            modalBody.innerHTML = `
-                <div class="modal-image-section">
-                    <div class="modal-image-container" onclick="openFullImageView('${productImages.join(',')}', '${product.name}')">
-                        <img src="${productImages[0]}" alt="${product.name}" class="modal-main-image" loading="lazy">
-                        <button class="image-zoom-btn">
-                            <i class="fas fa-expand"></i>
-                            Click to view full image
+            try {
+                currentProduct = product;
+                const modal = document.getElementById('productModal');
+                const modalBody = document.getElementById('modalBody');
+                
+                // Get product images
+                const productImages = product.images || [product.image];
+                const escapedProductName = product.name.replace(/'/g, "\\'").replace(/"/g, '\\"');
+                const imageUrlsString = productImages.join(',').replace(/'/g, "\\'");
+                
+                modalBody.innerHTML = `
+                    <div class="modal-image-section">
+                        <div class="modal-image-container" onclick="openFullImageView('${imageUrlsString}', '${escapedProductName}')">
+                            <img src="${productImages[0]}" alt="${product.name}" class="modal-main-image" loading="lazy">
+                            <button class="image-zoom-btn" onclick="event.stopPropagation(); openFullImageView('${imageUrlsString}', '${escapedProductName}')">
+                                <i class="fas fa-expand"></i>
+                                Click to view full image
+                            </button>
+                        </div>
+                        ${productImages.length > 1 ? `
+                            <div class="image-gallery" id="imageGallery">
+                                ${productImages.map((img, index) => `
+                                    <div class="gallery-thumbnail ${index === 0 ? 'active' : ''}" data-index="${index}" onclick="event.stopPropagation(); switchModalImage('${img.replace(/'/g, "\\'")}', ${index})">
+                                        <img src="${img}" alt="${product.name} - View ${index + 1}" loading="lazy">
+                                    </div>
+                                `).join('')}
+                            </div>
+                        ` : ''}
+                    </div>
+                    <div class="modal-details">
+                        <h2 class="modal-title">${product.name}</h2>
+                        <div class="modal-price">KSh ${product.basePrice}</div>
+                        <div class="modal-category">${product.category || 'Men'}</div>
+                        <p class="modal-description">${product.description || 'Premium quality product from DSOG Men\'s Collection. Crafted with attention to detail and using the finest materials.'}</p>
+                        
+                        <div class="product-specs">
+                            <h3 class="specs-title">Product Details</h3>
+                            <ul class="specs-list">
+                                <li>
+                                    <span class="spec-label">Category:</span>
+                                    <span class="spec-value">${product.category || 'Men'}</span>
+                                </li>
+                                <li>
+                                    <span class="spec-label">Material:</span>
+                                    <span class="spec-value">Premium Quality</span>
+                                </li>
+                                <li>
+                                    <span class="spec-label">Available Colors:</span>
+                                    <span class="spec-value">${product.availableColors || 'Black, Navy, Charcoal, White'}</span>
+                                </li>
+                                <li>
+                                    <span class="spec-label">Available Sizes:</span>
+                                    <span class="spec-value">${product.availableSizes || 'S, M, L, XL, XXL'}</span>
+                                </li>
+                            </ul>
+                        </div>
+                        
+                        <button class="modal-whatsapp-btn" onclick="orderViaWhatsApp('${escapedProductName}', ${product.basePrice})">
+                            <i class="fab fa-whatsapp"></i> Order via WhatsApp
                         </button>
                     </div>
-                    ${productImages.length > 1 ? `
-                        <div class="image-gallery" id="imageGallery">
-                            ${productImages.map((img, index) => `
-                                <div class="gallery-thumbnail ${index === 0 ? 'active' : ''}" data-index="${index}" onclick="switchModalImage('${img}', ${index})">
-                                    <img src="${img}" alt="${product.name} - View ${index + 1}" loading="lazy">
-                                </div>
-                            `).join('')}
-                        </div>
-                    ` : ''}
-                </div>
-                <div class="modal-details">
-                    <h2 class="modal-title">${product.name}</h2>
-                    <div class="modal-price">KSh ${product.basePrice}</div>
-                    <div class="modal-category">${product.category || 'Men'}</div>
-                    <p class="modal-description">${product.description || 'Premium quality product from DSOG Men\'s Collection. Crafted with attention to detail and using the finest materials.'}</p>
-                    
-                    <div class="product-specs">
-                        <h3 class="specs-title">Product Details</h3>
-                        <ul class="specs-list">
-                            <li>
-                                <span class="spec-label">Category:</span>
-                                <span class="spec-value">${product.category || 'Men'}</span>
-                            </li>
-                            <li>
-                                <span class="spec-label">Material:</span>
-                                <span class="spec-value">Premium Quality</span>
-                            </li>
-                            <li>
-                                <span class="spec-label">Available Colors:</span>
-                                <span class="spec-value">${product.availableColors || 'Black, Navy, Charcoal, White'}</span>
-                            </li>
-                            <li>
-                                <span class="spec-label">Available Sizes:</span>
-                                <span class="spec-value">${product.availableSizes || 'S, M, L, XL, XXL'}</span>
-                            </li>
-                        </ul>
-                    </div>
-                    
-                    <button class="modal-whatsapp-btn" onclick="orderViaWhatsApp('${product.name}', ${product.basePrice})">
-                        <i class="fab fa-whatsapp"></i> Order via WhatsApp
-                    </button>
-                </div>
-            `;
-            
-            modal.classList.add('active');
-            document.body.style.overflow = 'hidden';
+                `;
+                
+                modal.classList.add('active');
+                document.body.style.overflow = 'hidden';
+            } catch (error) {
+                console.error('Error opening modal:', error, product);
+            }
         }
         
         function switchModalImage(imageSrc, index) {
@@ -2776,32 +2843,46 @@
             fullImage.style.transform = `translate(${translateX}px, ${translateY}px) scale(${currentZoom}) rotate(${currentRotation}deg)`;
         }
         
-        // Open full image view
-        window.openFullImageView = function(imageUrls, productName, event = null) {
-            if (event) event.stopPropagation();
-            
-            currentImages = imageUrls.split(',');
-            currentImageIndex = 0;
-            currentZoom = 1;
-            currentRotation = 0;
-            translateX = 0;
-            translateY = 0;
-            
-            const fullImageModal = document.getElementById('fullImageModal');
-            const fullImage = document.getElementById('fullImage');
-            const imageCounter = document.getElementById('imageCounter');
-            
-            // Load first image
-            fullImage.src = currentImages[0];
-            fullImage.alt = productName;
-            imageCounter.textContent = `1 / ${currentImages.length}`;
-            
-            // Reset transform
-            fullImage.style.transform = `translate(0, 0) scale(1) rotate(0deg)`;
-            
-            // Show modal
-            fullImageModal.classList.add('active');
-            document.body.style.overflow = 'hidden';
+        // Open full image view - FIXED VERSION
+        window.openFullImageView = function(imageUrls, productName) {
+            try {
+                // Ensure imageUrls is properly formatted
+                const images = imageUrls.split(',').map(url => url.trim());
+                
+                currentImages = images;
+                currentImageIndex = 0;
+                currentZoom = 1;
+                currentRotation = 0;
+                translateX = 0;
+                translateY = 0;
+                
+                const fullImageModal = document.getElementById('fullImageModal');
+                const fullImage = document.getElementById('fullImage');
+                const imageCounter = document.getElementById('imageCounter');
+                
+                // Load first image
+                if (currentImages[0]) {
+                    fullImage.src = currentImages[0];
+                    fullImage.alt = productName;
+                    imageCounter.textContent = `1 / ${currentImages.length}`;
+                    
+                    // Reset transform
+                    fullImage.style.transform = `translate(0, 0) scale(1) rotate(0deg)`;
+                    fullImage.style.transition = 'transform 0.3s ease';
+                    
+                    // Show modal
+                    fullImageModal.classList.add('active');
+                    document.body.style.overflow = 'hidden';
+                    
+                    console.log('✅ Opened full image view with', currentImages.length, 'images');
+                } else {
+                    console.error('❌ No images found for full view');
+                    showNotification('Could not load images');
+                }
+            } catch (error) {
+                console.error('Error opening full image view:', error);
+                showNotification('Error opening image viewer');
+            }
         };
         
         function showPrevImage() {
@@ -2829,9 +2910,11 @@
             translateY = 0;
             
             // Update image
-            fullImage.src = currentImages[currentImageIndex];
-            fullImage.style.transform = `translate(0, 0) scale(1) rotate(0deg)`;
-            imageCounter.textContent = `${currentImageIndex + 1} / ${currentImages.length}`;
+            if (currentImages[currentImageIndex]) {
+                fullImage.src = currentImages[currentImageIndex];
+                fullImage.style.transform = `translate(0, 0) scale(1) rotate(0deg)`;
+                imageCounter.textContent = `${currentImageIndex + 1} / ${currentImages.length}`;
+            }
         }
         
         function zoomImage(factor) {
@@ -2873,29 +2956,34 @@
             currentImages = [];
         }
         
-        // WhatsApp ordering function
+        // WhatsApp ordering function - FIXED VERSION
         function orderViaWhatsApp(productName, price, event = null) {
             if (event) event.stopPropagation();
             
-            // Determine which WhatsApp number to use
-            const whatsappNumber = currentFranchisee ? currentFranchisee.phone : mainWhatsAppNumber;
-            const contactName = currentFranchisee ? currentFranchisee.name : 'DSOG STORES';
-            
-            let message = `Hello ${contactName}! I would like to order from Men's Collection:\n\n` +
-                         `Product: ${productName}\n` +
-                         `Price: KSh ${price}\n\n` +
-                         `Please guide me through the ordering process.`;
-            
-            // Add franchisee info
-            if (currentFranchisee) {
-                message += `\n\n---\nOrder placed through ${currentFranchisee.name} (${currentFranchisee.location})`;
+            try {
+                // Determine which WhatsApp number to use
+                const whatsappNumber = currentFranchisee ? currentFranchisee.phone : mainWhatsAppNumber;
+                const contactName = currentFranchisee ? currentFranchisee.name : 'DSOG STORES';
+                
+                let message = `Hello ${contactName}! I would like to order from Men's Collection:\n\n` +
+                             `Product: ${productName}\n` +
+                             `Price: KSh ${price}\n\n` +
+                             `Please guide me through the ordering process.`;
+                
+                // Add franchisee info
+                if (currentFranchisee) {
+                    message += `\n\n---\nOrder placed through ${currentFranchisee.name} (${currentFranchisee.location})`;
+                }
+                
+                const encodedMessage = encodeURIComponent(message);
+                const whatsappUrl = `https://wa.me/${whatsappNumber}?text=${encodedMessage}`;
+                
+                window.open(whatsappUrl, '_blank');
+                showNotification(`Opening WhatsApp to order ${productName}`);
+            } catch (error) {
+                console.error('Error in WhatsApp ordering:', error);
+                showNotification('Error opening WhatsApp');
             }
-            
-            const encodedMessage = encodeURIComponent(message);
-            const whatsappUrl = `https://wa.me/${whatsappNumber}?text=${encodedMessage}`;
-            
-            window.open(whatsappUrl, '_blank');
-            showNotification(`Opening WhatsApp to order ${productName}`);
         }
         
         // Bottom Navigation
@@ -2926,7 +3014,8 @@
             const chatToggle = document.getElementById('chatBotToggle');
             const chatContainer = document.getElementById('chatBotContainer');
             
-            chatToggle.addEventListener('click', function() {
+            chatToggle.addEventListener('click', function(e) {
+                e.stopPropagation();
                 isChatOpen = !isChatOpen;
                 chatContainer.classList.toggle('active');
                 
@@ -3084,15 +3173,86 @@
             }, 3000);
         }
         
-        // Add CSS for notification animation
+        // Add CSS for notification animation and fixes
         const style = document.createElement('style');
         style.textContent = `
             @keyframes slideIn {
                 from { transform: translateX(100%); opacity: 0; }
                 to { transform: translateX(0); opacity: 1; }
             }
+            
+            .notification {
+                position: fixed;
+                top: 100px;
+                right: 20px;
+                background: var(--primary-red);
+                color: white;
+                padding: 1rem 1.5rem;
+                border-radius: 30px;
+                box-shadow: var(--shadow-lg);
+                z-index: 1000;
+                animation: slideIn 0.3s ease;
+                max-width: 300px;
+                font-weight: 600;
+                border: 2px solid var(--primary-gold);
+                backdrop-filter: blur(10px);
+            }
+            
+            /* FIX: Ensure buttons are clickable on mobile */
+            @media (max-width: 768px) {
+                .whatsapp-btn,
+                .view-image-btn,
+                .modal-whatsapp-btn,
+                .image-control-btn,
+                .image-nav-btn,
+                .filter-btn,
+                .hero-btn,
+                .load-more-btn,
+                .chat-option-btn {
+                    min-height: 44px;
+                    min-width: 44px;
+                }
+                
+                .chat-option-btn {
+                    min-height: 44px;
+                }
+            }
+            
+            /* FIX: Prevent double triggering */
+            .product-card * {
+                user-select: none;
+            }
+            
+            /* FIX: Ensure proper cursor for all interactive elements */
+            .whatsapp-btn,
+            .view-image-btn,
+            .image-zoom-btn,
+            .modal-whatsapp-btn,
+            .chat-option-btn,
+            .filter-btn,
+            .hero-btn,
+            .load-more-btn,
+            .modal-close,
+            .full-image-close,
+            .image-nav-btn,
+            .image-control-btn,
+            .chat-send-btn,
+            .chat-bot-toggle,
+            .hamburger,
+            .close-menu {
+                cursor: pointer !important;
+            }
         `;
         document.head.appendChild(style);
+        
+        // Add error boundary for global errors
+        window.addEventListener('error', function(e) {
+            console.error('Global error:', e.error);
+        });
+        
+        window.addEventListener('unhandledrejection', function(e) {
+            console.error('Unhandled promise rejection:', e.reason);
+        });
     </script>
 </body>
 </html>
