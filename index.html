@@ -3,7 +3,38 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=0.8, maximum-scale=1.0, user-scalable=no">
+    
+    <!-- PWA Meta Tags -->
+    <meta name="theme-color" content="#B22222">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="DSOG Fashion">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="application-name" content="DSOG Fashion">
+    <meta name="msapplication-TileColor" content="#B22222">
+    <meta name="msapplication-starturl" content="/">
+    
     <title>DSOG Franchise | Luxury Fashion Store</title>
+    
+    <!-- PWA Manifest -->
+    <link rel="manifest" href="manifest.json" crossorigin="use-credentials">
+    
+    <!-- Apple Touch Icons -->
+    <link rel="apple-touch-icon" sizes="180x180" href="https://i.postimg.cc/kMZ1jTww/Untitled-design-4-removebg-preview.png">
+    <link rel="apple-touch-icon" sizes="152x152" href="https://i.postimg.cc/kMZ1jTww/Untitled-design-4-removebg-preview.png">
+    <link rel="apple-touch-icon" sizes="144x144" href="https://i.postimg.cc/kMZ1jTww/Untitled-design-4-removebg-preview.png">
+    <link rel="apple-touch-icon" sizes="120x120" href="https://i.postimg.cc/kMZ1jTww/Untitled-design-4-removebg-preview.png">
+    <link rel="apple-touch-icon" sizes="114x114" href="https://i.postimg.cc/kMZ1jTww/Untitled-design-4-removebg-preview.png">
+    <link rel="apple-touch-icon" sizes="76x76" href="https://i.postimg.cc/kMZ1jTww/Untitled-design-4-removebg-preview.png">
+    <link rel="apple-touch-icon" sizes="72x72" href="https://i.postimg.cc/kMZ1jTww/Untitled-design-4-removebg-preview.png">
+    <link rel="apple-touch-icon" sizes="60x60" href="https://i.postimg.cc/kMZ1jTww/Untitled-design-4-removebg-preview.png">
+    <link rel="apple-touch-icon" sizes="57x57" href="https://i.postimg.cc/kMZ1jTww/Untitled-design-4-removebg-preview.png">
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" sizes="192x192" href="https://i.postimg.cc/kMZ1jTww/Untitled-design-4-removebg-preview.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="https://i.postimg.cc/kMZ1jTww/Untitled-design-4-removebg-preview.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="https://i.postimg.cc/kMZ1jTww/Untitled-design-4-removebg-preview.png">
+    <link rel="shortcut icon" href="https://i.postimg.cc/kMZ1jTww/Untitled-design-4-removebg-preview.png">
     
     <!-- Main DSOG Theme Colors -->
     <style>
@@ -47,6 +78,148 @@
             color: var(--text-primary);
             line-height: 1.6;
             overflow-x: hidden;
+        }
+        
+        /* PWA Install Prompt */
+        .pwa-install-prompt {
+            position: fixed;
+            bottom: 100px;
+            left: 20px;
+            right: 20px;
+            background: var(--primary-black);
+            color: var(--white);
+            padding: 1.2rem;
+            border-radius: 15px;
+            box-shadow: var(--shadow-lg);
+            z-index: 2000;
+            display: none;
+            flex-direction: column;
+            gap: 1rem;
+            border: 2px solid var(--primary-red);
+            animation: slideUp 0.3s ease;
+            max-width: 400px;
+            margin: 0 auto;
+        }
+        
+        @keyframes slideUp {
+            from {
+                transform: translateY(100px);
+                opacity: 0;
+            }
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+        
+        .pwa-install-header {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+        
+        .pwa-install-icon {
+            width: 50px;
+            height: 50px;
+            border-radius: 10px;
+            background: var(--primary-red);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            border: 2px solid var(--primary-gold);
+        }
+        
+        .pwa-install-title {
+            font-weight: 600;
+            font-size: 1.1rem;
+            color: var(--white);
+        }
+        
+        .pwa-install-subtitle {
+            font-size: 0.9rem;
+            opacity: 0.8;
+            margin-top: 0.2rem;
+        }
+        
+        .pwa-install-buttons {
+            display: flex;
+            gap: 0.8rem;
+            justify-content: flex-end;
+        }
+        
+        .pwa-install-btn {
+            padding: 0.7rem 1.5rem;
+            border: none;
+            border-radius: 25px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+            font-size: 0.9rem;
+        }
+        
+        .pwa-install-primary {
+            background: var(--primary-red);
+            color: var(--white);
+        }
+        
+        .pwa-install-primary:hover {
+            background: var(--secondary-red);
+            transform: translateY(-2px);
+        }
+        
+        .pwa-install-secondary {
+            background: transparent;
+            color: var(--white);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+        }
+        
+        .pwa-install-secondary:hover {
+            background: rgba(255, 255, 255, 0.1);
+        }
+        
+        .pwa-install-close {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: none;
+            border: none;
+            color: var(--white);
+            opacity: 0.7;
+            cursor: pointer;
+            width: 30px;
+            height: 30px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            transition: var(--transition);
+        }
+        
+        .pwa-install-close:hover {
+            background: var(--primary-red);
+            opacity: 1;
+        }
+        
+        .install-app-btn {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: var(--primary-red);
+            color: var(--white);
+            border: none;
+            padding: 0.8rem 1.5rem;
+            border-radius: 30px;
+            cursor: pointer;
+            transition: var(--transition);
+            font-weight: 600;
+            margin-left: auto;
+            text-decoration: none;
+        }
+        
+        .install-app-btn:hover {
+            background: var(--secondary-red);
+            transform: translateY(-2px);
         }
         
         /* Enhanced Header with DSOG Theme */
@@ -1630,6 +1803,12 @@
                 height: 55px;
                 bottom: 10px;
             }
+            
+            .pwa-install-prompt {
+                bottom: 80px;
+                left: 10px;
+                right: 10px;
+            }
         }
         
         /* Mobile Responsive */
@@ -1885,6 +2064,10 @@
                 <a href="kids.html">Kids</a>
                 <a href="accessories.html">Accessories</a>
                 <a href="gifts.html">Gifts</a>
+                <a href="#" class="install-app-btn" id="installAppBtn">
+                    <i class="fas fa-download"></i>
+                    <span>Install App</span>
+                </a>
             </nav>
             
             <!-- Hamburger Menu Button -->
@@ -1895,6 +2078,30 @@
             </button>
         </div>
     </header>
+
+    <!-- PWA Install Prompt -->
+    <div class="pwa-install-prompt" id="pwaInstallPrompt">
+        <button class="pwa-install-close" id="pwaInstallClose">
+            <i class="fas fa-times"></i>
+        </button>
+        <div class="pwa-install-header">
+            <div class="pwa-install-icon">
+                <i class="fas fa-shopping-bag"></i>
+            </div>
+            <div>
+                <div class="pwa-install-title">Install DSOG Fashion App</div>
+                <div class="pwa-install-subtitle">Get the best shopping experience on your device</div>
+            </div>
+        </div>
+        <div class="pwa-install-buttons">
+            <button class="pwa-install-btn pwa-install-secondary" id="pwaInstallLater">
+                Maybe Later
+            </button>
+            <button class="pwa-install-btn pwa-install-primary" id="pwaInstallNow">
+                Install Now
+            </button>
+        </div>
+    </div>
 
     <!-- Mobile Menu -->
     <div class="mobile-menu" id="mobileMenu">
@@ -1910,6 +2117,9 @@
             <a href="gifts.html" onclick="closeMobileMenu()">Gifts</a>
             <a href="mailto:care.dsogstores@gmail.com" onclick="closeMobileMenu()">Email Us</a>
             <a href="https://wa.me/254733737983" onclick="closeMobileMenu()">WhatsApp</a>
+            <a href="#" onclick="showInstallPrompt(); closeMobileMenu();" style="color: var(--primary-gold);">
+                <i class="fas fa-download"></i> Install App
+            </a>
         </nav>
     </div>
     
@@ -2155,7 +2365,7 @@
         </div>
     </div>
 
-    <!-- Enhanced JavaScript with Optimized Product Loading and Image Modal -->
+    <!-- Enhanced JavaScript with Optimized Product Loading, Image Modal, and PWA -->
     <script>
         // Google Apps Script URL - UPDATE THIS
         const scriptUrl = 'https://script.google.com/macros/s/AKfycby-iIbv89AN4tXwB1bxdw3GC4CPHDSFkkwrS9apdMH0ZLYBaY4aKYESnAZGUqGNmEmorA/exec';
@@ -2253,7 +2463,10 @@
             }
         ];
         
-        // Gifts data (removed as it's now on gifts.html)
+        // PWA variables
+        let deferredPrompt = null;
+        let isAppInstalled = false;
+        let isInstallPromptShown = false;
         
         // Product management variables
         let currentProduct = null;
@@ -2303,6 +2516,7 @@
             initWhatsAppChat();
             initFullImageModal();
             initScrollBehavior();
+            initPWA();
             
             // Set franchisee name in chat
             updateFranchiseeChatName();
@@ -2313,6 +2527,201 @@
             }, 500);
         });
 
+        // PWA Installation
+        function initPWA() {
+            // Check if app is already installed
+            if (window.matchMedia('(display-mode: standalone)').matches || 
+                window.navigator.standalone === true) {
+                isAppInstalled = true;
+                console.log('📱 App is installed as PWA');
+                hideInstallButton();
+            }
+            
+            // Listen for beforeinstallprompt event
+            window.addEventListener('beforeinstallprompt', (e) => {
+                e.preventDefault();
+                deferredPrompt = e;
+                console.log('📱 PWA installation available');
+                
+                // Show install button after a delay
+                setTimeout(() => {
+                    if (!isAppInstalled && !isInstallPromptShown) {
+                        showInstallButton();
+                    }
+                }, 3000);
+            });
+            
+            // Listen for app installed event
+            window.addEventListener('appinstalled', () => {
+                isAppInstalled = true;
+                deferredPrompt = null;
+                console.log('✅ PWA installed successfully');
+                hideInstallPrompt();
+                hideInstallButton();
+                showNotification('App installed successfully!');
+            });
+            
+            // Initialize install buttons
+            initInstallButtons();
+            
+            // Generate manifest dynamically
+            generateManifest();
+        }
+        
+        function generateManifest() {
+            const manifest = {
+                "name": "DSOG Fashion Store",
+                "short_name": "DSOG Fashion",
+                "description": "Premium fashion store with direct WhatsApp ordering",
+                "theme_color": "#B22222",
+                "background_color": "#000000",
+                "display": "standalone",
+                "orientation": "portrait",
+                "scope": "/",
+                "start_url": "/",
+                "icons": [
+                    {
+                        "src": "https://i.postimg.cc/kMZ1jTww/Untitled-design-4-removebg-preview.png",
+                        "sizes": "192x192",
+                        "type": "image/png",
+                        "purpose": "any maskable"
+                    },
+                    {
+                        "src": "https://i.postimg.cc/kMZ1jTww/Untitled-design-4-removebg-preview.png",
+                        "sizes": "512x512",
+                        "type": "image/png",
+                        "purpose": "any maskable"
+                    }
+                ],
+                "screenshots": [
+                    {
+                        "src": "https://i.postimg.cc/bYnQMMyy/Black_Red_Minimalist_Black_Friday_Sale_Instagram_Post.webp",
+                        "sizes": "1280x720",
+                        "type": "image/webp",
+                        "form_factor": "wide"
+                    }
+                ],
+                "categories": ["shopping", "fashion", "ecommerce"],
+                "shortcuts": [
+                    {
+                        "name": "Browse Products",
+                        "short_name": "Products",
+                        "description": "View all fashion products",
+                        "url": "/#products",
+                        "icons": [{ "src": "https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/svgs/solid/bag-shopping.svg", "sizes": "192x192" }]
+                    },
+                    {
+                        "name": "Order via WhatsApp",
+                        "short_name": "WhatsApp",
+                        "description": "Contact franchisee on WhatsApp",
+                        "url": "https://wa.me/254733737983",
+                        "icons": [{ "src": "https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/svgs/brands/whatsapp.svg", "sizes": "192x192" }]
+                    }
+                ]
+            };
+            
+            // Create manifest link if not exists
+            let manifestLink = document.querySelector('link[rel="manifest"]');
+            if (!manifestLink) {
+                manifestLink = document.createElement('link');
+                manifestLink.rel = 'manifest';
+                document.head.appendChild(manifestLink);
+            }
+            
+            // Create blob URL for manifest
+            const blob = new Blob([JSON.stringify(manifest)], { type: 'application/json' });
+            const url = URL.createObjectURL(blob);
+            manifestLink.href = url;
+        }
+        
+        function initInstallButtons() {
+            const installBtn = document.getElementById('installAppBtn');
+            const installNowBtn = document.getElementById('pwaInstallNow');
+            const installLaterBtn = document.getElementById('pwaInstallLater');
+            const installCloseBtn = document.getElementById('pwaInstallClose');
+            
+            if (installBtn) {
+                installBtn.addEventListener('click', showInstallPrompt);
+            }
+            
+            if (installNowBtn) {
+                installNowBtn.addEventListener('click', installPWA);
+            }
+            
+            if (installLaterBtn) {
+                installLaterBtn.addEventListener('click', hideInstallPrompt);
+            }
+            
+            if (installCloseBtn) {
+                installCloseBtn.addEventListener('click', hideInstallPrompt);
+            }
+        }
+        
+        function showInstallButton() {
+            const installBtn = document.getElementById('installAppBtn');
+            if (installBtn) {
+                installBtn.style.display = 'flex';
+            }
+        }
+        
+        function hideInstallButton() {
+            const installBtn = document.getElementById('installAppBtn');
+            if (installBtn) {
+                installBtn.style.display = 'none';
+            }
+        }
+        
+        function showInstallPrompt() {
+            if (isAppInstalled) {
+                showNotification('App is already installed!');
+                return;
+            }
+            
+            if (!deferredPrompt) {
+                showNotification('App installation not available on this device');
+                return;
+            }
+            
+            const installPrompt = document.getElementById('pwaInstallPrompt');
+            if (installPrompt) {
+                installPrompt.style.display = 'flex';
+                isInstallPromptShown = true;
+            }
+        }
+        
+        function hideInstallPrompt() {
+            const installPrompt = document.getElementById('pwaInstallPrompt');
+            if (installPrompt) {
+                installPrompt.style.display = 'none';
+            }
+        }
+        
+        async function installPWA() {
+            if (!deferredPrompt) {
+                showNotification('Installation not available');
+                return;
+            }
+            
+            try {
+                deferredPrompt.prompt();
+                const { outcome } = await deferredPrompt.userChoice;
+                
+                if (outcome === 'accepted') {
+                    console.log('✅ User accepted PWA installation');
+                    isAppInstalled = true;
+                    hideInstallPrompt();
+                    hideInstallButton();
+                } else {
+                    console.log('❌ User dismissed PWA installation');
+                }
+                
+                deferredPrompt = null;
+            } catch (error) {
+                console.error('Error installing PWA:', error);
+                showNotification('Error installing app. Please try again.');
+            }
+        }
+        
         // Detect franchisee from URL
         function detectFranchiseeFromURL() {
             const urlParams = new URLSearchParams(window.location.search);
@@ -3614,6 +4023,25 @@
             .product-card * {
                 user-select: none;
             }
+            
+            /* Standalone app styles */
+            @media all and (display-mode: standalone) {
+                header {
+                    padding-top: env(safe-area-inset-top);
+                }
+                
+                .bottom-nav {
+                    bottom: calc(20px + env(safe-area-inset-bottom));
+                }
+                
+                .nav-toggle-btn {
+                    bottom: calc(20px + env(safe-area-inset-bottom));
+                }
+                
+                .whatsapp-chat-bot {
+                    bottom: calc(90px + env(safe-area-inset-bottom));
+                }
+            }
         `;
         document.head.appendChild(style);
         
@@ -3625,6 +4053,17 @@
         window.addEventListener('unhandledrejection', function(e) {
             console.error('Unhandled promise rejection:', e.reason);
         });
+        
+        // Service Worker Registration for PWA
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('/service-worker.js').then(registration => {
+                    console.log('✅ Service Worker registered:', registration.scope);
+                }).catch(error => {
+                    console.log('❌ Service Worker registration failed:', error);
+                });
+            });
+        }
     </script>
 </body>
 </html>
