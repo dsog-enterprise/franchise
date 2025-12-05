@@ -641,58 +641,6 @@
             font-size: 0.85rem;
         }
         
-        /* Gifts Section */
-        .gifts {
-            max-width: 1400px;
-            margin: 4rem auto;
-            padding: 0 1.5rem;
-        }
-        
-        .gifts-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 1.5rem;
-            margin-top: 2rem;
-        }
-        
-        .gift-card {
-            background: var(--card-bg);
-            border-radius: 10px;
-            overflow: hidden;
-            box-shadow: var(--shadow-sm);
-            transition: var(--transition);
-            cursor: pointer;
-            border: 1px solid var(--border-color);
-            text-align: center;
-            padding: 2rem;
-        }
-        
-        .gift-card:hover {
-            transform: translateY(-5px);
-            box-shadow: var(--shadow-md);
-            border-color: var(--primary-gold);
-        }
-        
-        .gift-icon {
-            font-size: 2.5rem;
-            color: var(--primary-gold);
-            margin-bottom: 1rem;
-        }
-        
-        .gift-title {
-            font-size: 1.2rem;
-            font-weight: 600;
-            margin-bottom: 0.5rem;
-            color: var(--text-primary);
-        }
-        
-        .gift-description {
-            color: var(--gray);
-            font-size: 0.9rem;
-            margin-bottom: 1.5rem;
-            line-height: 1.5;
-        }
-        
         /* Enhanced Product Modal */
         .product-modal {
             position: fixed;
@@ -1962,6 +1910,7 @@
             </button>
         </div>
     </section>
+
     <!-- Product Modal -->
     <div class="product-modal" id="productModal">
         <div class="modal-content">
@@ -2016,7 +1965,7 @@
         </div>
     </div>
 
-        <!-- Enhanced Bottom Navigation -->
+    <!-- Enhanced Bottom Navigation -->
     <nav class="bottom-nav">
         <div class="bottom-nav-container">
             <!-- Home Button -->
@@ -2203,29 +2152,7 @@
             }
         ];
         
-        // Gifts data
-        const giftsData = [
-            {
-                icon: 'fas fa-gift',
-                title: 'Gift Box Sets',
-                description: 'Curated fashion gift packages for special occasions'
-            },
-            {
-                icon: 'fas fa-tshirt',
-                title: 'Custom Bundles',
-                description: 'Create your own gift bundle with multiple items'
-            },
-            {
-                icon: 'fas fa-shipping-fast',
-                title: 'Express Delivery',
-                description: 'Special gift wrapping and fast delivery options'
-            },
-            {
-                icon: 'fas fa-star',
-                title: 'Premium Packaging',
-                description: 'Luxury packaging for the perfect presentation'
-            }
-        ];
+        // Gifts data (removed as it's now on gifts.html)
         
         // Product management variables
         let currentProduct = null;
@@ -2260,7 +2187,6 @@
             initMobileMenu();
             initHeroSlideshow();
             loadCollections();
-            loadGifts();
             initProductFilters();
             initModal();
             initBottomNav();
@@ -2438,29 +2364,6 @@
                         <p class="collection-description">${collection.description}</p>
                     </div>
                 `;
-                
-                container.appendChild(card);
-            });
-        }
-        
-        // Load gifts
-        function loadGifts() {
-            const container = document.getElementById('giftsContainer');
-            
-            giftsData.forEach(gift => {
-                const card = document.createElement('div');
-                card.className = 'gift-card';
-                card.innerHTML = `
-                    <div class="gift-icon">
-                        <i class="${gift.icon}"></i>
-                    </div>
-                    <h3 class="gift-title">${gift.title}</h3>
-                    <p class="gift-description">${gift.description}</p>
-                `;
-                
-                card.addEventListener('click', function() {
-                    window.location.href = 'gifts.html';
-                });
                 
                 container.appendChild(card);
             });
@@ -3241,16 +3144,19 @@
         }
         
         // Bottom Navigation
-                // Bottom Navigation - UPDATED
         function initBottomNav() {
             const navItems = document.querySelectorAll('.nav-item');
             
             navItems.forEach(item => {
                 item.addEventListener('click', function(e) {
-                    if (this.getAttribute('href') === '#collections' || 
-                        this.getAttribute('href') === '#products' || 
-                        this.getAttribute('href') === '#gifts') {
-                        
+                    // For gifts.html link, allow normal navigation
+                    if (this.getAttribute('href') === 'gifts.html') {
+                        setActiveNav(this);
+                        // Navigation will happen normally via the link
+                        return;
+                    }
+                    
+                    if (this.getAttribute('href').startsWith('#')) {
                         e.preventDefault();
                         const targetId = this.getAttribute('href');
                         const targetElement = document.querySelector(targetId);
@@ -3266,9 +3172,6 @@
                                 setActiveNav(this);
                             }, 500);
                         }
-                    } else if (this.getAttribute('href') === 'gifts.html') {
-                        // For gifts.html, just update active state and let the link work normally
-                        setActiveNav(this);
                     } else {
                         // For external links, just update active state
                         setActiveNav(this);
@@ -3386,6 +3289,8 @@
                 response = 'Hello! I\'m your DSOG assistant. How can I help you today?';
             } else if (message.includes('collection') || message.includes('category')) {
                 response = 'We have 5 main collections: Men\'s, Women\'s, Kids, Accessories, and Gifts. Use the menu to explore each one!';
+            } else if (message.includes('gift') || message.includes('present')) {
+                response = 'Check out our Gifts collection for special gift ideas. Click the Gifts button in the bottom navigation!';
             } else {
                 response = 'I\'m here to help! You can browse our collections, place orders via WhatsApp, or ask about specific items.';
             }
