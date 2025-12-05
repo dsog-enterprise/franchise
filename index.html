@@ -2029,7 +2029,7 @@
         </div>
     </div>
 
-    <!-- Enhanced Bottom Navigation -->
+        <!-- Enhanced Bottom Navigation -->
     <nav class="bottom-nav">
         <div class="bottom-nav-container">
             <!-- Home Button -->
@@ -2057,7 +2057,7 @@
             </a>
             
             <!-- Gifts Button -->
-            <a href="#gifts" class="nav-item" onclick="setActiveNav(this)">
+            <a href="gifts.html" class="nav-item" onclick="setActiveNav(this)">
                 <div class="nav-icon">
                     <i class="fas fa-gift"></i>
                 </div>
@@ -3254,12 +3254,16 @@
         }
         
         // Bottom Navigation
+                // Bottom Navigation - UPDATED
         function initBottomNav() {
             const navItems = document.querySelectorAll('.nav-item');
             
             navItems.forEach(item => {
                 item.addEventListener('click', function(e) {
-                    if (this.getAttribute('href').startsWith('#')) {
+                    if (this.getAttribute('href') === '#collections' || 
+                        this.getAttribute('href') === '#products' || 
+                        this.getAttribute('href') === '#gifts') {
+                        
                         e.preventDefault();
                         const targetId = this.getAttribute('href');
                         const targetElement = document.querySelector(targetId);
@@ -3275,6 +3279,9 @@
                                 setActiveNav(this);
                             }, 500);
                         }
+                    } else if (this.getAttribute('href') === 'gifts.html') {
+                        // For gifts.html, just update active state and let the link work normally
+                        setActiveNav(this);
                     } else {
                         // For external links, just update active state
                         setActiveNav(this);
