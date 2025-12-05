@@ -237,13 +237,13 @@
             transform: rotate(90deg);
         }
         
-        /* DSOG Hero Slideshow */
+        /* DSOG Hero Slideshow - LIGHT VERSION */
         .hero {
-            height: 50vh;
-            min-height: 300px;
+            height: 60vh;
+            min-height: 400px;
             position: relative;
             overflow: hidden;
-            background: linear-gradient(135deg, #0c0c0c 0%, #1a1a1a 100%);
+            background: var(--bg-secondary);
         }
         
         .hero-slides {
@@ -260,6 +260,7 @@
             height: 100%;
             opacity: 0;
             transition: opacity 1s ease;
+            background: var(--white);
         }
         
         .hero-slide.active {
@@ -269,40 +270,14 @@
         .hero-slide img {
             width: 100%;
             height: 100%;
-            object-fit: cover;
-        }
-        
-        .hero-overlay {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(to bottom, rgba(0,0,0,0.3), rgba(0,0,0,0.7));
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            text-align: center;
-            color: var(--white);
+            object-fit: contain;
             padding: 2rem;
+            background: var(--white);
         }
         
-        .hero-title {
-            font-size: clamp(2rem, 4vw, 3rem);
-            font-weight: 900;
-            margin-bottom: 1rem;
-            text-transform: uppercase;
-            letter-spacing: 2px;
-            color: var(--primary-gold);
-            text-shadow: 0 2px 10px rgba(0,0,0,0.5);
-        }
-        
-        .hero-subtitle {
-            font-size: clamp(1rem, 2vw, 1.2rem);
-            max-width: 600px;
-            opacity: 0.9;
-            line-height: 1.5;
+        /* Remove the overlay completely */
+        .hero-overlay {
+            display: none;
         }
         
         .hero-dots {
@@ -319,7 +294,7 @@
             width: 12px;
             height: 12px;
             border-radius: 50%;
-            background: rgba(255,255,255,0.5);
+            background: rgba(0, 0, 0, 0.3);
             cursor: pointer;
             transition: var(--transition);
             border: 2px solid transparent;
@@ -329,6 +304,25 @@
             background: var(--primary-red);
             transform: scale(1.2);
             border-color: var(--primary-gold);
+        }
+        
+        /* Mobile adjustments */
+        @media (max-width: 768px) {
+            .hero {
+                height: 50vh;
+                min-height: 300px;
+            }
+            
+            .hero-slide img {
+                padding: 1rem;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .hero {
+                height: 40vh;
+                min-height: 250px;
+            }
         }
         
         /* DSOG Products Section - OPTIMIZED */
@@ -2200,22 +2194,22 @@
         // Track current franchisee
         let currentFranchisee = null;
         
-        // Hero slides data
+        // Hero slides data - Updated with clearer images
         const heroSlides = [
             {
                 image: 'https://i.postimg.cc/bYnQMMyy/Black_Red_Minimalist_Black_Friday_Sale_Instagram_Post.webp',
-                title: 'DSOG Collections',
-                subtitle: 'Premium fashion for everyone'
+                title: '', // Empty titles
+                subtitle: '' // Empty subtitles
             },
             {
                 image: 'https://i.postimg.cc/nhpfy6qX/Red_and_White_Modern_Sport_Shoes_Fashion_Instagram_Post.webp',
-                title: 'New Arrivals',
-                subtitle: 'Fresh styles every season'
+                title: '',
+                subtitle: ''
             },
             {
                 image: 'https://i.postimg.cc/L5JdvWSy/20251125_1050_Christmas_Gift_Set_Design_remix_01kawzr8jpft18qb14dsbt6g25.png',
-                title: 'Direct WhatsApp Ordering',
-                subtitle: 'Shop instantly via WhatsApp'
+                title: '',
+                subtitle: ''
             }
         ];
         
@@ -2414,6 +2408,7 @@
         };
 
         // DSOG Hero Slideshow
+        // DSOG Hero Slideshow - Updated without overlay
         function initHeroSlideshow() {
             const slidesContainer = document.getElementById('heroSlides');
             const dotsContainer = document.getElementById('heroDots');
@@ -2424,11 +2419,7 @@
                 const slideElement = document.createElement('div');
                 slideElement.className = `hero-slide ${index === 0 ? 'active' : ''}`;
                 slideElement.innerHTML = `
-                    <img src="${slide.image}" alt="${slide.title}" loading="lazy">
-                    <div class="hero-overlay">
-                        <h1 class="hero-title">${slide.title}</h1>
-                        <p class="hero-subtitle">${slide.subtitle}</p>
-                    </div>
+                    <img src="${slide.image}" alt="DSOG Fashion" loading="lazy">
                 `;
                 slidesContainer.appendChild(slideElement);
                 
@@ -2445,7 +2436,7 @@
                 currentSlide = (currentSlide + 1) % heroSlides.length;
                 showSlide(currentSlide);
             }, 5000);
-        }
+}
         
         function showSlide(index) {
             // Update slides
