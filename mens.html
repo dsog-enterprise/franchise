@@ -1053,7 +1053,7 @@
             border: 1px solid rgba(255,255,255,0.1);
         }
         
-        /* Enhanced Floating Bottom Navigation - Matching Home Page */
+        /* UPDATED: Enhanced Floating Bottom Navigation - Matching Home Page */
         .bottom-nav {
             position: fixed;
             bottom: 20px;
@@ -1210,7 +1210,7 @@
             white-space: nowrap;
         }
         
-        /* Show/Hide Toggle Button */
+        /* Show/Hide Toggle Button - NEW: Added from homepage */
         .nav-toggle-btn {
             position: fixed;
             bottom: 20px;
@@ -1250,64 +1250,6 @@
         
         .nav-toggle-btn.active i {
             transform: rotate(180deg);
-        }
-        
-        /* Adjust body padding */
-        body {
-            padding-bottom: 20px; /* Reduced padding since nav is floating */
-        }
-        
-        /* Mobile adjustments */
-        @media (max-width: 768px) {
-            .bottom-nav {
-                bottom: 10px;
-                padding: 0.4rem;
-                max-width: calc(100vw - 20px);
-            }
-            
-            .nav-item {
-                padding: 0.5rem 0.6rem;
-                min-width: 55px;
-                max-width: 65px;
-            }
-            
-            .nav-icon {
-                width: 32px;
-                height: 32px;
-                font-size: 1rem;
-            }
-            
-            .nav-label {
-                font-size: 0.6rem;
-            }
-            
-            .nav-toggle-btn {
-                width: 55px;
-                height: 55px;
-                bottom: 10px;
-            }
-        }
-        
-        @media (max-width: 480px) {
-            .bottom-nav-container {
-                gap: 0.2rem;
-            }
-            
-            .nav-item {
-                padding: 0.4rem 0.5rem;
-                min-width: 50px;
-                max-width: 60px;
-            }
-            
-            .nav-icon {
-                width: 28px;
-                height: 28px;
-                font-size: 0.9rem;
-            }
-            
-            .nav-label {
-                font-size: 0.55rem;
-            }
         }
         
         /* WhatsApp Chat Bot with Franchisee Name */
@@ -1730,6 +1672,35 @@
             .chat-bot-container {
                 width: 280px;
             }
+            
+            /* Mobile adjustments for bottom nav */
+            .bottom-nav {
+                bottom: 10px;
+                padding: 0.4rem;
+                max-width: calc(100vw - 20px);
+            }
+            
+            .nav-item {
+                padding: 0.5rem 0.6rem;
+                min-width: 55px;
+                max-width: 65px;
+            }
+            
+            .nav-icon {
+                width: 32px;
+                height: 32px;
+                font-size: 1rem;
+            }
+            
+            .nav-label {
+                font-size: 0.6rem;
+            }
+            
+            .nav-toggle-btn {
+                width: 55px;
+                height: 55px;
+                bottom: 10px;
+            }
         }
         
         @media (max-width: 480px) {
@@ -1819,22 +1790,23 @@
             }
             
             .bottom-nav-container {
-                padding: 0 0.3rem;
+                gap: 0.2rem;
             }
             
             .nav-item {
                 padding: 0.4rem 0.5rem;
-                max-width: 65px;
+                min-width: 50px;
+                max-width: 60px;
             }
             
             .nav-icon {
-                width: 32px;
-                height: 32px;
-                font-size: 1rem;
+                width: 28px;
+                height: 28px;
+                font-size: 0.9rem;
             }
             
             .nav-label {
-                font-size: 0.6rem;
+                font-size: 0.55rem;
             }
         }
         
@@ -1854,6 +1826,12 @@
             
             .modal-image-container {
                 height: 200px;
+            }
+            
+            .nav-item {
+                min-width: 45px;
+                max-width: 55px;
+                padding: 0.3rem 0.4rem;
             }
         }
     </style>
@@ -2042,8 +2020,8 @@
         </div>
     </div>
 
-    <!-- Enhanced Bottom Navigation -->
-    <nav class="bottom-nav">
+    <!-- UPDATED: Enhanced Bottom Navigation - Matching Home Page -->
+    <div class="bottom-nav" id="bottomNav">
         <div class="bottom-nav-container">
             <!-- Home Button -->
             <a href="index.html" class="nav-item" onclick="setActiveNav(this)">
@@ -2085,7 +2063,12 @@
                 <span class="nav-label">Contact</span>
             </a>
         </div>
-    </nav>
+    </div>
+
+    <!-- UPDATED: Nav Toggle Button - Matching Home Page -->
+    <button class="nav-toggle-btn" id="navToggleBtn">
+        <i class="fas fa-chevron-up"></i>
+    </button>
 
     <!-- WhatsApp Chat Bot with Franchisee Name -->
     <div class="whatsapp-chat-bot" id="whatsappChatBot">
@@ -2131,7 +2114,7 @@
         </div>
     </div>
 
-    <!-- Enhanced JavaScript for Men's Collection Page with Fixes -->
+    <!-- Enhanced JavaScript for Men's Collection Page with Updated Bottom Nav -->
     <script>
         // Google Apps Script URL
         const scriptUrl = 'https://script.google.com/macros/s/AKfycby-iIbv89AN4tXwB1bxdw3GC4CPHDSFkkwrS9apdMH0ZLYBaY4aKYESnAZGUqGNmEmorA/exec';
@@ -3495,7 +3478,8 @@
             .chat-send-btn,
             .chat-bot-toggle,
             .hamburger,
-            .close-menu {
+            .close-menu,
+            .nav-toggle-btn {
                 cursor: pointer !important;
             }
         `;
