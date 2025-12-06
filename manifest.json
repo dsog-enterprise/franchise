@@ -1,6 +1,6 @@
 {
   "name": "DSOG STORES",
-  "short_name": "DSOG",
+  "short_name": "DSOG STORES",
   "description": "Premium fashion store with direct WhatsApp ordering",
   "theme_color": "#B22222",
   "background_color": "#000000",
@@ -10,13 +10,13 @@
   "start_url": "/",
   "icons": [
     {
-      "src": "https://i.postimg.cc/Y0Sm3Dcf/Untitled-design(8).png",
+      "src": "https://i.postimg.cc/HLQZDnr0/Untitled-design(9).png",
       "sizes": "192x192",
       "type": "image/webp",
       "purpose": "any maskable"
     },
     {
-      "src": "https://i.postimg.cc/Y0Sm3Dcf/Untitled-design(8).png",
+      "src": "https://i.postimg.cc/HLQZDnr0/Untitled-design(9).png",
       "sizes": "512x512",
       "type": "image/webp",
       "purpose": "any maskable"
