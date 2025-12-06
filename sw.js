@@ -1,26 +1,28 @@
-// Service Worker for DSOG STORES - Auto Update Version
+// Service Worker for DSOG STORES - Simplified Version
 const APP_VERSION = '2.0.0';
 const CACHE_NAME = `dsog-stores-${APP_VERSION}`;
 
-// Install - Force update when version changes
+// Resources to cache
+const urlsToCache = [
+  '/',
+  '/index.html',
+  '/manifest.json',
+  'https://i.postimg.cc/CxNLzQgt/Untitled-design-3.webp',
+  'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css'
+];
+
+// Install - Cache resources
 self.addEventListener('install', event => {
   console.log(`Service Worker v${APP_VERSION}: Installing...`);
   
-  self.skipWaiting(); // Activate immediately
+  // Activate immediately
+  self.skipWaiting();
   
   event.waitUntil(
     caches.open(CACHE_NAME)
       .then(cache => {
-        // Cache the manifest FIRST
-        return fetch('/manifest.json')
-          .then(response => {
-            cache.put('/manifest.json', response);
-            return cache.addAll([
-              '/',
-              '/index.html',
-              // Add other critical files here
-            ]);
-          });
+        console.log('Service Worker: Caching app resources');
+        return cache.addAll(urlsToCache);
       })
       .then(() => {
         console.log(`Service Worker v${APP_VERSION}: Installed successfully`);
@@ -28,94 +30,57 @@ self.addEventListener('install', event => {
   );
 });
 
-// Activate - Clean old caches and update clients
+// Activate - Clean old caches
 self.addEventListener('activate', event => {
   console.log(`Service Worker v${APP_VERSION}: Activating...`);
   
   event.waitUntil(
-    Promise.all([
-      // Clean up old caches
-      caches.keys().then(cacheNames => {
-        return Promise.all(
-          cacheNames.map(cacheName => {
-            if (cacheName !== CACHE_NAME) {
-              console.log(`Deleting old cache: ${cacheName}`);
-              return caches.delete(cacheName);
-            }
-          })
-        );
-      }),
-      
-      // Check if app needs update notification
-      fetch('/manifest.json')
-        .then(response => response.json())
-        .then(manifest => {
-          // Store current version
-          localStorage.setItem('dsog_app_version', manifest.version || APP_VERSION);
-          
-          // Notify all clients about update
-          self.clients.matchAll().then(clients => {
-            clients.forEach(client => {
-              client.postMessage({
-                type: 'APP_UPDATE_AVAILABLE',
-                version: manifest.version || APP_VERSION,
-                oldVersion: localStorage.getItem('dsog_previous_version') || '1.0.0'
-              });
-            });
-          });
-          
-          // Store previous version for comparison
-          localStorage.setItem('dsog_previous_version', manifest.version || APP_VERSION);
+    // Clean up old caches
+    caches.keys().then(cacheNames => {
+      return Promise.all(
+        cacheNames.map(cacheName => {
+          if (cacheName !== CACHE_NAME) {
+            console.log(`Deleting old cache: ${cacheName}`);
+            return caches.delete(cacheName);
+          }
         })
-    ]).then(() => {
+      );
+    }).then(() => {
       console.log(`Service Worker v${APP_VERSION}: Activated`);
       return self.clients.claim();
     })
   );
 });
 
-// Fetch with version checking
+// Fetch - Serve from cache, fallback to network
 self.addEventListener('fetch', event => {
-  // Don't cache API requests
-  if (event.request.url.includes('script.google.com')) {
-    event.respondWith(fetch(event.request));
+  // Skip non-GET requests
+  if (event.request.method !== 'GET') {
     return;
   }
   
-  // For manifest, always fetch fresh
-  if (event.request.url.includes('manifest.json')) {
+  // Handle API requests - network first
+  if (event.request.url.includes('script.google.com')) {
     event.respondWith(
       fetch(event.request)
-        .then(response => {
-          const responseClone = response.clone();
-          
-          // Check if manifest changed
-          responseClone.json().then(manifest => {
-            const storedVersion = localStorage.getItem('dsog_app_version');
-            if (storedVersion !== manifest.version) {
-              console.log(`Manifest updated from ${storedVersion} to ${manifest.version}`);
-              // Trigger update flow
-              self.registration.update().then(() => {
-                self.skipWaiting();
-              });
-            }
-          });
-          
-          return response;
+        .catch(() => {
+          // If network fails, try cache
+          return caches.match(event.request);
         })
-        .catch(() => caches.match(event.request))
     );
     return;
   }
   
-  // Cache-first for other resources
+  // Cache-first strategy for other resources
   event.respondWith(
     caches.match(event.request)
       .then(cachedResponse => {
+        // Return cached response if found
         if (cachedResponse) {
           return cachedResponse;
         }
         
+        // Otherwise fetch from network
         return fetch(event.request)
           .then(response => {
             // Don't cache if not successful
@@ -123,7 +88,7 @@ self.addEventListener('fetch', event => {
               return response;
             }
             
-            // Cache the new resource
+            // Cache the new response
             const responseToCache = response.clone();
             caches.open(CACHE_NAME)
               .then(cache => {
@@ -131,59 +96,84 @@ self.addEventListener('fetch', event => {
               });
             
             return response;
+          })
+          .catch(error => {
+            console.error('Fetch failed:', error);
+            
+            // For HTML pages, return offline page
+            if (event.request.headers.get('accept').includes('text/html')) {
+              return caches.match('/index.html');
+            }
+            
+            // For images, return placeholder
+            if (event.request.url.match(/\.(jpg|jpeg|png|gif|webp)$/i)) {
+              return caches.match('https://i.postimg.cc/CxNLzQgt/Untitled-design-3.webp');
+            }
+            
+            // Return error response
+            return new Response('Network error occurred', {
+              status: 408,
+              headers: { 'Content-Type': 'text/plain' }
+            });
           });
       })
   );
 });
 
-// Listen for messages from the page
-self.addEventListener('message', event => {
-  if (event.data.type === 'CHECK_UPDATE') {
-    fetch('/manifest.json')
-      .then(response => response.json())
-      .then(manifest => {
-        event.ports[0].postMessage({
-          currentVersion: localStorage.getItem('dsog_app_version'),
-          newVersion: manifest.version
-        });
-      });
-  }
+// Push notifications (optional - keep if you want push notifications)
+self.addEventListener('push', event => {
+  console.log('Service Worker: Push notification received');
   
-  if (event.data.type === 'FORCE_UPDATE') {
-    self.skipWaiting();
-    self.registration.update();
-  }
-});
-
-// Periodically check for updates
-self.addEventListener('periodicsync', event => {
-  if (event.tag === 'check-updates') {
-    event.waitUntil(checkForUpdates());
-  }
-});
-
-async function checkForUpdates() {
-  try {
-    const response = await fetch('/manifest.json');
-    const manifest = await response.json();
-    const storedVersion = localStorage.getItem('dsog_app_version');
-    
-    if (storedVersion !== manifest.version) {
-      console.log(`Update found: ${storedVersion} → ${manifest.version}`);
-      
-      // Notify all clients
-      const clients = await self.clients.matchAll();
-      clients.forEach(client => {
-        client.postMessage({
-          type: 'FORCE_UPDATE_REQUIRED',
-          newVersion: manifest.version
-        });
-      });
-      
-      // Update service worker
-      self.registration.update();
+  const data = event.data ? JSON.parse(event.data.text()) : {
+    title: 'DSOG STORES',
+    body: 'New offers available!',
+    icon: 'https://i.postimg.cc/CxNLzQgt/Untitled-design-3.webp'
+  };
+  
+  const options = {
+    body: data.body,
+    icon: data.icon,
+    badge: data.icon,
+    data: {
+      url: data.url || '/'
     }
-  } catch (error) {
-    console.error('Update check failed:', error);
+  };
+  
+  event.waitUntil(
+    self.registration.showNotification(data.title, options)
+  );
+});
+
+// Notification click handler
+self.addEventListener('notificationclick', event => {
+  console.log('Service Worker: Notification clicked');
+  
+  event.notification.close();
+  
+  event.waitUntil(
+    clients.matchAll({
+      type: 'window',
+      includeUncontrolled: true
+    }).then(clientList => {
+      // Check if there's already a window open
+      for (const client of clientList) {
+        if (client.url === '/' && 'focus' in client) {
+          return client.focus();
+        }
+      }
+      
+      // If no window is open, open a new one
+      if (clients.openWindow) {
+        const url = event.notification.data?.url || '/';
+        return clients.openWindow(url);
+      }
+    })
+  );
+});
+
+// Handle messages from the page (simplified)
+self.addEventListener('message', event => {
+  if (event.data.type === 'SKIP_WAITING') {
+    self.skipWaiting();
   }
-}
+});
