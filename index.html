@@ -438,7 +438,8 @@
             box-shadow: -5px 0 25px rgba(0,0,0,0.2);
             display: flex;
             flex-direction: column;
-            overflow: hidden;
+            overflow-y: auto; 
+            
         }
         
         .cart-modal.active {
@@ -587,6 +588,7 @@
             padding: 1.5rem;
             background: var(--bg-secondary);
             border-top: 2px solid var(--border-color);
+            padding-bottom: env(safe-area-inset-bottom, 20px); /* Accounts for mobile bottom bars */
         }
         
         .cart-summary {
@@ -5043,7 +5045,7 @@
         };
         
         // Convert to string and escape quotes
-        const productJson = JSON.stringify(safeProduct).replace(/'/g, "&#39;").replace(/"/g, "&quot;");
+        const productJson = JSON.stringify(safeProduct).<button class="add-to-cart-btn" onclick="event.stopPropagation(); addToCart(${JSON.stringify(safeProduct)})">replace(/'/g, "&#39;").replace(/"/g, "&quot;");
         
         card.innerHTML = `
             <div class="product-image-wrapper">
