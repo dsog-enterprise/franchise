@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=0.8, maximum-scale=1.0, user-scalable=no">
     
     <!-- App Version -->
-    <meta name="app-version" content="2.1.0">
+    <meta name="app-version" content="2.2.0">
     
     <!-- PWA Meta Tags -->
     <meta name="theme-color" content="#B22222">
@@ -15,7 +15,7 @@
     <meta name="mobile-web-app-capable" content="yes">
     <meta name="application-name" content="DSOG STORES">
     <meta name="msapplication-TileColor" content="#B22222">
-    <meta name="msapplication-starturl" content="/?v=2.1.0">
+    <meta name="msapplication-starturl" content="/?v=2.2.0">
     
     <title>DSOG STORES | Luxury Fashion Store</title>
     
@@ -932,10 +932,11 @@
             border-color: var(--primary-red);
         }
         
+        /* UPDATED: Products Grid with Larger Images */
         .products-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-            gap: 1.5rem;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 2rem;
             opacity: 0;
             transform: translateY(20px);
             transition: opacity 0.5s ease, transform 0.5s ease;
@@ -948,7 +949,7 @@
         
         .product-card {
             background: var(--card-bg);
-            border-radius: 10px;
+            border-radius: 12px;
             overflow: hidden;
             box-shadow: var(--shadow-sm);
             transition: var(--transition);
@@ -970,43 +971,44 @@
         }
         
         .product-card:hover {
-            transform: translateY(-5px);
-            box-shadow: var(--shadow-md);
+            transform: translateY(-8px);
+            box-shadow: var(--shadow-lg);
             border-color: var(--primary-red);
         }
         
+        /* UPDATED: Larger Image Wrapper */
         .product-image-wrapper {
             position: relative;
             width: 100%;
-            height: 280px;
+            height: 350px; /* Increased from 280px */
             overflow: hidden;
             background: var(--bg-secondary);
             display: flex;
             align-items: center;
             justify-content: center;
+            padding: 0; /* Removed padding for larger images */
         }
         
         .product-image {
             width: 100%;
             height: 100%;
-            object-fit: contain;
-            transition: transform 0.5s ease;
-            padding: 1rem;
+            object-fit: cover; /* Changed from contain to cover for better image usage */
+            transition: transform 0.6s ease;
         }
         
         .product-card:hover .product-image {
-            transform: scale(1.05);
+            transform: scale(1.08); /* Increased scale for better hover effect */
         }
         
         .view-image-btn {
             position: absolute;
-            top: 10px;
-            right: 10px;
-            background: rgba(0,0,0,0.7);
+            top: 15px;
+            right: 15px;
+            background: rgba(0,0,0,0.8);
             color: white;
             border: none;
-            width: 36px;
-            height: 36px;
+            width: 40px;
+            height: 40px;
             border-radius: 50%;
             cursor: pointer;
             display: flex;
@@ -1016,6 +1018,7 @@
             transform: translateY(-10px);
             transition: var(--transition);
             z-index: 2;
+            font-size: 1.1rem;
         }
         
         .product-image-wrapper:hover .view-image-btn {
@@ -1023,105 +1026,61 @@
             transform: translateY(0);
         }
         
+        .view-image-btn:hover {
+            background: var(--primary-red);
+            transform: scale(1.1);
+        }
+        
+        /* UPDATED: Product Info - Cleaner Layout */
         .product-info {
             padding: 1.5rem;
             flex-grow: 1;
             display: flex;
             flex-direction: column;
+            border-top: 1px solid var(--border-color);
         }
         
         .product-badge {
             background: var(--primary-red);
             color: var(--white);
-            padding: 0.3rem 0.8rem;
+            padding: 0.4rem 1rem;
             border-radius: 20px;
             font-size: 0.75rem;
             font-weight: 600;
             align-self: flex-start;
-            margin-bottom: 0.8rem;
+            margin-bottom: 1rem;
             text-transform: uppercase;
             letter-spacing: 0.5px;
         }
         
         .product-title {
-            font-size: 1.1rem;
+            font-size: 1.2rem; /* Increased from 1.1rem */
             font-weight: 600;
-            margin-bottom: 0.5rem;
+            margin-bottom: 0.8rem;
             color: var(--text-primary);
-            line-height: 1.3;
+            line-height: 1.4;
+            height: 3.4em; /* Fixed height for consistent layout */
+            overflow: hidden;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
         }
         
         .product-price {
-            font-size: 1.25rem;
+            font-size: 1.5rem; /* Increased from 1.25rem */
             font-weight: bold;
             color: var(--primary-red);
             margin-bottom: 1rem;
         }
         
+        /* REMOVED: Product description from cards */
         .product-description {
-            color: var(--gray);
-            font-size: 0.9rem;
-            margin-bottom: 1.5rem;
-            line-height: 1.5;
-            display: -webkit-box;
-            -webkit-line-clamp: 2;
-            -webkit-box-orient: vertical;
-            overflow: hidden;
-            flex-grow: 1;
+            display: none; /* Hide description on cards */
         }
         
+        /* REMOVED: Product actions (Add to Cart & WhatsApp buttons) from cards */
         .product-actions {
-            display: flex;
-            gap: 0.5rem;
-            margin-top: auto;
-        }
-        
-        .add-to-cart-btn {
-            background: var(--primary-black);
-            color: var(--white);
-            border: none;
-            padding: 0.8rem 1.5rem;
-            border-radius: 0;
-            font-weight: 600;
-            cursor: pointer;
-            width: 100%;
-            transition: var(--transition);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 0.5rem;
-            font-size: 0.9rem;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-        }
-        
-        .add-to-cart-btn:hover {
-            background: var(--primary-red);
-            transform: translateY(-2px);
-        }
-        
-        .whatsapp-btn {
-            background: var(--whatsapp-green);
-            color: var(--white);
-            border: none;
-            padding: 0.8rem 1.5rem;
-            border-radius: 0;
-            font-weight: 600;
-            cursor: pointer;
-            width: 100%;
-            transition: var(--transition);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 0.5rem;
-            font-size: 0.9rem;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-        }
-        
-        .whatsapp-btn:hover {
-            background: var(--whatsapp-dark);
-            transform: translateY(-2px);
+            display: none; /* Hide action buttons on cards */
         }
         
         /* Collections Section */
@@ -1449,6 +1408,7 @@
             font-weight: 600;
         }
         
+        /* UPDATED: Modal Actions - Keep buttons only in modal */
         .modal-actions {
             display: flex;
             gap: 1rem;
@@ -1477,6 +1437,7 @@
         .modal-add-to-cart-btn:hover {
             background: var(--primary-red);
             transform: translateY(-3px);
+            box-shadow: 0 4px 15px rgba(178, 34, 34, 0.3);
         }
         
         .modal-whatsapp-btn {
@@ -2607,7 +2568,7 @@
         
         .skeleton-image {
             width: 100%;
-            height: 280px;
+            height: 350px; /* Updated to match new image height */
             background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
             background-size: 200% 100%;
         }
@@ -2650,7 +2611,6 @@
         }
         
         /* FIX: Better click handling */
-        .whatsapp-btn *,
         .view-image-btn *,
         .image-zoom-btn *,
         .modal-whatsapp-btn *,
@@ -2658,9 +2618,53 @@
             pointer-events: none;
         }
         
+        /* Product Quick View Overlay */
+        .product-quick-view {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.7);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            opacity: 0;
+            transition: var(--transition);
+            pointer-events: none;
+        }
+        
+        .product-card:hover .product-quick-view {
+            opacity: 1;
+            pointer-events: all;
+        }
+        
+        .quick-view-text {
+            color: white;
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin-top: 1rem;
+            text-align: center;
+            padding: 0 1rem;
+        }
+        
+        .quick-view-icon {
+            width: 60px;
+            height: 60px;
+            background: var(--primary-red);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            color: white;
+            border: 3px solid var(--primary-gold);
+            animation: pulse 2s infinite;
+        }
+        
         /* FIX: Ensure buttons are clickable on mobile */
         @media (max-width: 768px) {
-            .whatsapp-btn,
             .view-image-btn,
             .modal-whatsapp-btn,
             .image-control-btn,
@@ -2787,7 +2791,7 @@
             }
             
             .product-image-wrapper {
-                height: 200px;
+                height: 250px; /* Adjusted for mobile */
             }
             
             .product-info {
@@ -2795,11 +2799,12 @@
             }
             
             .product-title {
-                font-size: 0.95rem;
+                font-size: 1rem;
+                height: 2.8em;
             }
             
             .product-price {
-                font-size: 1.1rem;
+                font-size: 1.3rem;
             }
             
             .modal-body {
@@ -2904,6 +2909,7 @@
             
             .products-grid {
                 grid-template-columns: 1fr;
+                gap: 1.5rem;
             }
             
             .product-filters {
@@ -2914,6 +2920,10 @@
             .filter-btn {
                 padding: 0.5rem 1rem;
                 font-size: 0.8rem;
+            }
+            
+            .product-image-wrapper {
+                height: 280px; /* Maintain good size on mobile */
             }
             
             .modal-body {
@@ -2997,7 +3007,7 @@
             }
             
             .product-image-wrapper {
-                height: 180px;
+                height: 240px;
             }
             
             .chat-bot-container {
@@ -3024,7 +3034,7 @@
     // App Update Manager
     class AppUpdateManager {
         constructor() {
-            this.currentVersion = '2.1.0';
+            this.currentVersion = '2.2.0';
             this.checkInterval = null;
             
             // Check if app is installed as PWA
@@ -3059,11 +3069,11 @@
                 const manifest = await response.json();
                 
                 // Store current version from manifest
-                this.currentVersion = manifest.version || '2.1.0';
+                this.currentVersion = manifest.version || '2.2.0';
                 localStorage.setItem('dsog_app_version', this.currentVersion);
                 
                 // Check against stored version
-                const storedVersion = localStorage.getItem('dsog_previous_version') || '2.0.0';
+                const storedVersion = localStorage.getItem('dsog_previous_version') || '2.1.0';
                 
                 if (this.currentVersion !== storedVersion) {
                     console.log(`App update available: ${storedVersion} → ${this.currentVersion}`);
@@ -3433,7 +3443,7 @@
     <section class="products" id="products">
         <div class="section-title">
             <h2>Featured Products</h2>
-            <p>Premium fashion items with direct WhatsApp ordering</p>
+            <p>Premium fashion items - Click to view details and order</p>
         </div>
         
         <!-- Product Filters -->
@@ -3456,7 +3466,6 @@
                         <div class="skeleton-text short"></div>
                         <div class="skeleton-text medium"></div>
                         <div class="skeleton-text" style="width: 40%;"></div>
-                        <div class="skeleton-btn"></div>
                     </div>
                 </div>
                 <div class="skeleton-card">
@@ -3465,7 +3474,6 @@
                         <div class="skeleton-text short"></div>
                         <div class="skeleton-text medium"></div>
                         <div class="skeleton-text" style="width: 40%;"></div>
-                        <div class="skeleton-btn"></div>
                     </div>
                 </div>
                 <div class="skeleton-card">
@@ -3474,7 +3482,6 @@
                         <div class="skeleton-text short"></div>
                         <div class="skeleton-text medium"></div>
                         <div class="skeleton-text" style="width: 40%;"></div>
-                        <div class="skeleton-btn"></div>
                     </div>
                 </div>
                 <div class="skeleton-card">
@@ -3483,7 +3490,6 @@
                         <div class="skeleton-text short"></div>
                         <div class="skeleton-text medium"></div>
                         <div class="skeleton-text" style="width: 40%;"></div>
-                        <div class="skeleton-btn"></div>
                     </div>
                 </div>
             </div>
@@ -3708,7 +3714,7 @@
 
     <!-- Enhanced JavaScript with Cart System, Checkout, and Optimizations -->
     <script>
-    // Google Apps Script URL - UPDATE THIS
+    // Google Apps Script URL
     const scriptUrl = 'https://script.google.com/macros/s/AKfycby-iIbv89AN4tXwB1bxdw3GC4CPHDSFkkwrS9apdMH0ZLYBaY4aKYESnAZGUqGNmEmorA/exec';
     
     // WhatsApp number
@@ -3841,7 +3847,7 @@
 
     // Initialize the page
     document.addEventListener('DOMContentLoaded', function() {
-        console.log('🚀 DSOG STORES App - Home Page v2.1.0');
+        console.log('🚀 DSOG STORES App - Home Page v2.2.0');
         
         // Initialize App Update Manager
         window.appUpdateManager = new AppUpdateManager();
@@ -4787,7 +4793,7 @@
                                 console.log('🔄 New content is available; please refresh.');
                                 // Show update notification
                                 window.appUpdateManager.showUpdateNotification(
-                                    localStorage.getItem('dsog_app_version') || '2.1.0',
+                                    localStorage.getItem('dsog_app_version') || '2.2.0',
                                     'New version'
                                 );
                             }
@@ -5250,7 +5256,7 @@
         });
     }
     
-    // Create product card with optimized image loading - FIXED VERSION
+    // Create product card with optimized image loading - UPDATED VERSION (NO BUTTONS)
     function createProductCard(product) {
         try {
             const card = document.createElement('div');
@@ -5265,52 +5271,31 @@
             const escapedProductName = product.name.replace(/'/g, "\\'").replace(/"/g, '\\"');
             const imageUrlsString = productImages.join(',').replace(/'/g, "\\'");
             
-            // Create a safe product object for the addToCart function
-            const safeProduct = {
-                id: product.id || 'prod_' + Date.now() + Math.random().toString(36).substr(2, 9),
-                name: product.name,
-                basePrice: product.basePrice,
-                image: mainImage,
-                category: product.category || product.collectionName
-            };
-            
-            // Convert safeProduct to a string for the onclick attribute
-            const safeProductString = JSON.stringify(safeProduct).replace(/"/g, '&quot;');
-            
             card.innerHTML = `
                 <div class="product-image-wrapper">
                     <img src="${mainImage}" alt="${product.name}" class="product-image" loading="lazy">
                     <button class="view-image-btn" onclick="event.stopPropagation(); openFullImageView('${imageUrlsString}', '${escapedProductName}')">
                         <i class="fas fa-expand"></i>
                     </button>
+                    <div class="product-quick-view">
+                        <div class="quick-view-icon">
+                            <i class="fas fa-eye"></i>
+                        </div>
+                        <div class="quick-view-text">Click to View Details & Order</div>
+                    </div>
                 </div>
                 <div class="product-info">
                     <div class="product-badge">${product.collectionName || product.category}</div>
                     <h3 class="product-title">${product.name}</h3>
                     <div class="product-price">KSh ${product.basePrice}</div>
-                    <p class="product-description">${product.description || 'Premium quality product from DSOG STORES. Crafted with attention to detail.'}</p>
-                    <div class="product-actions">
-                        <button class="add-to-cart-btn" onclick="event.stopPropagation(); addToCartSafe(${safeProductString})">
-                            <i class="fas fa-cart-plus"></i> Add to Cart
-                        </button>
-                        <button class="whatsapp-btn" onclick="event.stopPropagation(); orderViaWhatsApp('${escapedProductName}', ${product.basePrice}, event)">
-                            <i class="fab fa-whatsapp"></i> WhatsApp
-                        </button>
-                    </div>
                 </div>
             `;
             
             // Add click event to open modal
             card.addEventListener('click', function(e) {
-                // Only open modal if click is not on buttons or their children
-                if (!e.target.closest('.add-to-cart-btn') && 
-                    !e.target.closest('.whatsapp-btn') &&
-                    !e.target.closest('.view-image-btn') &&
-                    !e.target.matches('.add-to-cart-btn') &&
-                    !e.target.matches('.whatsapp-btn') &&
+                // Only open modal if click is not on view image button or its children
+                if (!e.target.closest('.view-image-btn') &&
                     !e.target.matches('.view-image-btn') &&
-                    !e.target.closest('.fa-cart-plus') &&
-                    !e.target.closest('.fa-whatsapp') &&
                     !e.target.closest('.fa-expand')) {
                     openModal(product);
                 }
@@ -5331,35 +5316,31 @@
             const fallbackCard = document.createElement('div');
             fallbackCard.className = 'product-card';
             
-            // Create safe product for fallback
-            const safeProduct = {
-                id: product.id || 'prod_' + Date.now(),
-                name: product.name || 'Product',
-                basePrice: product.basePrice || 0,
-                image: product.image || 'https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80',
-                category: product.category || 'General'
-            };
-            
-            const safeProductString = JSON.stringify(safeProduct).replace(/"/g, '&quot;');
-            
             fallbackCard.innerHTML = `
                 <div class="product-image-wrapper">
-                    <img src="${safeProduct.image}" alt="${safeProduct.name}" class="product-image" loading="lazy">
-                </div>
-                <div class="product-info">
-                    <div class="product-badge">${safeProduct.category}</div>
-                    <h3 class="product-title">${safeProduct.name}</h3>
-                    <div class="product-price">KSh ${safeProduct.basePrice}</div>
-                    <div class="product-actions">
-                        <button class="add-to-cart-btn" onclick="addToCartSafe(${safeProductString})">
-                            <i class="fas fa-cart-plus"></i> Add to Cart
-                        </button>
-                        <button class="whatsapp-btn" onclick="orderViaWhatsApp('${safeProduct.name}', ${safeProduct.basePrice}, event)">
-                            <i class="fab fa-whatsapp"></i> WhatsApp
-                        </button>
+                    <img src="${product.image || 'https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80'}" 
+                         alt="${product.name || 'Product'}" 
+                         class="product-image" 
+                         loading="lazy">
+                    <div class="product-quick-view">
+                        <div class="quick-view-icon">
+                            <i class="fas fa-eye"></i>
+                        </div>
+                        <div class="quick-view-text">Click to View Details & Order</div>
                     </div>
                 </div>
+                <div class="product-info">
+                    <div class="product-badge">${product.category || 'General'}</div>
+                    <h3 class="product-title">${product.name || 'Product'}</h3>
+                    <div class="product-price">KSh ${product.basePrice || 0}</div>
+                </div>
             `;
+            
+            // Add click event
+            fallbackCard.addEventListener('click', function() {
+                openModal(product);
+            });
+            
             return fallbackCard;
         }
     }
@@ -6254,12 +6235,10 @@
         }
         
         /* FIX: Ensure proper pointer events */
-        .whatsapp-btn,
         .view-image-btn,
         .image-zoom-btn,
         .modal-whatsapp-btn,
         .chat-option-btn,
-        .add-to-cart-btn,
         .modal-add-to-cart-btn {
             cursor: pointer !important;
         }
