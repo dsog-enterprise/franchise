@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=0.7, maximum-scale=1.0, user-scalable=no">
     
     <!-- App Version -->
-    <meta name="app-version" content="2.2.1">
+    <meta name="app-version" content="2.3.0">
     
     <!-- PWA Meta Tags -->
     <meta name="theme-color" content="#B22222">
@@ -15,7 +15,14 @@
     <meta name="mobile-web-app-capable" content="yes">
     <meta name="application-name" content="DSOG STORES">
     <meta name="msapplication-TileColor" content="#B22222">
-    <meta name="msapplication-starturl" content="/?v=2.2.1">
+    <meta name="msapplication-starturl" content="/?v=2.3.0">
+    
+    <!-- Open Graph Meta Tags for Sharing -->
+    <meta property="og:title" content="DSOG STORES | Luxury Fashion Store">
+    <meta property="og:description" content="Premium fashion items for men, women, and kids">
+    <meta property="og:image" content="https://i.postimg.cc/CxNLzQgt/Untitled-design-3.webp">
+    <meta property="og:url" content="https://dsogstores.com">
+    <meta property="og:type" content="website">
     
     <title>DSOG STORES | Luxury Fashion Store</title>
     
@@ -62,6 +69,7 @@
             --success: #25D366;
             --whatsapp-green: #25D366;
             --whatsapp-dark: #128C7E;
+            --share-blue: #4285F4;
             --shadow-sm: 0 2px 8px rgba(0,0,0,0.05);
             --shadow-md: 0 4px 12px rgba(178, 34, 34, 0.1);
             --shadow-lg: 0 10px 25px rgba(178, 34, 34, 0.15);
@@ -817,7 +825,7 @@
             border-color: var(--primary-gold);
         }
         
-        /* UPDATED: Product Loading Indicator */
+        /* UPDATED: Enhanced Product Loading System */
         .products-loading {
             text-align: center;
             padding: 3rem;
@@ -826,7 +834,45 @@
         }
         
         .products-loading.visible {
-            display: block;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 400px;
+        }
+        
+        .loading-spinner-container {
+            position: relative;
+            width: 80px;
+            height: 80px;
+            margin-bottom: 1.5rem;
+        }
+        
+        .loading-spinner {
+            width: 100%;
+            height: 100%;
+            border: 3px solid rgba(178, 34, 34, 0.1);
+            border-top: 3px solid var(--primary-red);
+            border-right: 3px solid var(--primary-red);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+        
+        .loading-logo {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 40px;
+            height: 40px;
+            background: var(--primary-black);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--primary-gold);
+            font-weight: bold;
+            font-size: 1.2rem;
         }
         
         .loading-message {
@@ -839,14 +885,20 @@
             gap: 10px;
         }
         
-        .loading-progress {
-            width: 200px;
-            height: 6px;
-            background: var(--bg-secondary);
-            border-radius: 3px;
+        .loading-progress-container {
+            width: 100%;
+            max-width: 300px;
             margin: 0 auto;
+        }
+        
+        .loading-progress {
+            width: 100%;
+            height: 8px;
+            background: var(--bg-secondary);
+            border-radius: 4px;
             overflow: hidden;
             position: relative;
+            margin-bottom: 0.5rem;
         }
         
         .loading-progress-bar {
@@ -856,14 +908,66 @@
             height: 100%;
             background: linear-gradient(90deg, var(--primary-red), var(--primary-gold));
             width: 0%;
-            transition: width 0.3s ease;
-            border-radius: 3px;
+            transition: width 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+            border-radius: 4px;
         }
         
         .loading-count {
             font-size: 0.9rem;
             color: var(--gray);
-            margin-top: 10px;
+            text-align: center;
+        }
+        
+        .loading-error {
+            text-align: center;
+            padding: 3rem;
+            grid-column: 1 / -1;
+            display: none;
+        }
+        
+        .loading-error.visible {
+            display: block;
+        }
+        
+        .error-content {
+            background: var(--white);
+            padding: 2rem;
+            border-radius: 10px;
+            border: 1px solid var(--light-red);
+            max-width: 400px;
+            margin: 0 auto;
+        }
+        
+        .error-content i {
+            font-size: 2.5rem;
+            color: var(--light-red);
+            margin-bottom: 1rem;
+        }
+        
+        .error-content h3 {
+            color: var(--primary-red);
+            margin-bottom: 0.5rem;
+        }
+        
+        .retry-btn {
+            background: var(--primary-red);
+            color: var(--white);
+            border: none;
+            padding: 0.8rem 2rem;
+            border-radius: 30px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+            margin-top: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin: 1rem auto 0;
+        }
+        
+        .retry-btn:hover {
+            background: var(--secondary-red);
+            transform: translateY(-2px);
         }
         
         .products-loaded {
@@ -882,6 +986,11 @@
             color: var(--primary-red);
             margin-bottom: 1rem;
             animation: bounce 2s infinite;
+        }
+        
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
         }
         
         @keyframes bounce {
@@ -1462,7 +1571,7 @@
             font-weight: 600;
         }
         
-        /* UPDATED: Modal Actions - Keep buttons only in modal */
+        /* UPDATED: Modal Actions - Enhanced Add to Cart & Share buttons */
         .modal-actions {
             display: flex;
             gap: 1rem;
@@ -1470,7 +1579,7 @@
         }
         
         .modal-add-to-cart-btn {
-            background: var(--primary-black);
+            background: linear-gradient(135deg, var(--primary-red) 0%, var(--secondary-red) 100%);
             color: var(--white);
             border: none;
             padding: 1.2rem 2rem;
@@ -1486,16 +1595,49 @@
             flex: 1;
             text-transform: uppercase;
             letter-spacing: 0.5px;
+            position: relative;
+            overflow: hidden;
+            z-index: 1;
+        }
+        
+        .modal-add-to-cart-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, var(--primary-gold) 0%, var(--primary-red) 100%);
+            transition: all 0.5s ease;
+            z-index: -1;
+        }
+        
+        .modal-add-to-cart-btn:hover::before {
+            left: 0;
         }
         
         .modal-add-to-cart-btn:hover {
-            background: var(--primary-red);
             transform: translateY(-3px);
-            box-shadow: 0 4px 15px rgba(178, 34, 34, 0.3);
+            box-shadow: 0 8px 20px rgba(178, 34, 34, 0.4);
         }
         
-        .modal-whatsapp-btn {
-            background: var(--whatsapp-green);
+        .modal-add-to-cart-btn.added {
+            background: linear-gradient(135deg, #25D366 0%, #128C7E 100%);
+            animation: cartAdded 0.5s ease;
+        }
+        
+        .modal-add-to-cart-btn.added::before {
+            display: none;
+        }
+        
+        @keyframes cartAdded {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+        
+        .modal-share-btn {
+            background: linear-gradient(135deg, var(--share-blue) 0%, #1a73e8 100%);
             color: var(--white);
             border: none;
             padding: 1.2rem 2rem;
@@ -1511,13 +1653,31 @@
             flex: 1;
             text-transform: uppercase;
             letter-spacing: 0.5px;
-            box-shadow: 0 4px 15px rgba(37, 211, 102, 0.3);
+            position: relative;
+            overflow: hidden;
+            z-index: 1;
+            box-shadow: 0 4px 15px rgba(66, 133, 244, 0.3);
         }
         
-        .modal-whatsapp-btn:hover {
-            background: var(--whatsapp-dark);
+        .modal-share-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, #34A853 0%, var(--share-blue) 100%);
+            transition: all 0.5s ease;
+            z-index: -1;
+        }
+        
+        .modal-share-btn:hover::before {
+            left: 0;
+        }
+        
+        .modal-share-btn:hover {
             transform: translateY(-3px);
-            box-shadow: 0 6px 20px rgba(37, 211, 102, 0.4);
+            box-shadow: 0 8px 20px rgba(66, 133, 244, 0.4);
         }
         
         /* Full Image View Modal */
@@ -2180,21 +2340,6 @@
             grid-column: 1 / -1;
         }
         
-        .loading-spinner {
-            width: 40px;
-            height: 40px;
-            border: 4px solid var(--bg-secondary);
-            border-top: 4px solid var(--primary-red);
-            border-radius: 50%;
-            animation: spin 1s linear infinite;
-            margin: 0 auto 1rem;
-        }
-        
-        @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
-        }
-        
         /* Enhanced Floating Bottom Navigation */
         .bottom-nav {
             position: fixed;
@@ -2667,7 +2812,8 @@
         /* FIX: Better click handling */
         .view-image-btn *,
         .image-zoom-btn *,
-        .modal-whatsapp-btn *,
+        .modal-share-btn *,
+        .modal-add-to-cart-btn *,
         .chat-option-btn * {
             pointer-events: none;
         }
@@ -2720,7 +2866,8 @@
         /* FIX: Ensure buttons are clickable on mobile */
         @media (max-width: 768px) {
             .view-image-btn,
-            .modal-whatsapp-btn,
+            .modal-share-btn,
+            .modal-add-to-cart-btn,
             .image-control-btn,
             .image-nav-btn {
                 min-height: 44px;
@@ -3088,7 +3235,7 @@
     // App Update Manager
     class AppUpdateManager {
         constructor() {
-            this.currentVersion = '2.2.1';
+            this.currentVersion = '2.3.0';
             this.checkInterval = null;
             
             // Check if app is installed as PWA
@@ -3123,11 +3270,11 @@
                 const manifest = await response.json();
                 
                 // Store current version from manifest
-                this.currentVersion = manifest.version || '2.2.1';
+                this.currentVersion = manifest.version || '2.3.0';
                 localStorage.setItem('dsog_app_version', this.currentVersion);
                 
                 // Check against stored version
-                const storedVersion = localStorage.getItem('dsog_previous_version') || '2.1.0';
+                const storedVersion = localStorage.getItem('dsog_previous_version') || '2.2.1';
                 
                 if (this.currentVersion !== storedVersion) {
                     console.log(`App update available: ${storedVersion} → ${this.currentVersion}`);
@@ -3510,18 +3657,37 @@
             <button class="filter-btn" data-filter="gifts">Gifts</button>
         </div>
         
-        <!-- UPDATED: Products Grid with Loading Indicator -->
+        <!-- UPDATED: Products Grid with Enhanced Loading System -->
         <div class="products-grid" id="productsContainer">
-            <!-- Loading Indicator -->
+            <!-- Enhanced Loading Indicator -->
             <div class="products-loading" id="productsLoading">
+                <div class="loading-spinner-container">
+                    <div class="loading-spinner"></div>
+                    <div class="loading-logo">DSOG</div>
+                </div>
                 <div class="loading-message">
                     <i class="fas fa-spinner fa-spin"></i>
                     Loading Products...
                 </div>
-                <div class="loading-progress">
-                    <div class="loading-progress-bar" id="loadingProgressBar"></div>
+                <div class="loading-progress-container">
+                    <div class="loading-progress">
+                        <div class="loading-progress-bar" id="loadingProgressBar"></div>
+                    </div>
+                    <div class="loading-count" id="loadingCount">0 products loaded</div>
                 </div>
-                <div class="loading-count" id="loadingCount">0 products loaded</div>
+            </div>
+            
+            <!-- Error State -->
+            <div class="loading-error" id="productsError">
+                <div class="error-content">
+                    <i class="fas fa-exclamation-triangle"></i>
+                    <h3>Unable to Load Products</h3>
+                    <p>There was an error loading the products. Please check your connection and try again.</p>
+                    <button class="retry-btn" onclick="retryLoadingProducts()">
+                        <i class="fas fa-redo"></i>
+                        Retry
+                    </button>
+                </div>
             </div>
             
             <!-- Products will be populated by JavaScript -->
@@ -3868,13 +4034,15 @@
     let isInstallPromptShown = false;
     
     // Product management variables
-    let currentProduct = null;
     let allProducts = [];
     let filteredProducts = [];
     let currentFilter = 'all';
     let isLoadingProducts = false;
+    let hasLoadingError = false;
     let currentPage = 1;
     const productsPerPage = 12;
+    let loadedProductsCount = 0;
+    let totalProductsCount = 0;
     
     // Image modal variables
     let currentImageIndex = 0;
@@ -3911,7 +4079,7 @@
 
     // Initialize the page
     document.addEventListener('DOMContentLoaded', function() {
-        console.log('🚀 DSOG STORES App - Home Page v2.2.1');
+        console.log('🚀 DSOG STORES App - Home Page v2.3.0');
         
         // Initialize App Update Manager
         window.appUpdateManager = new AppUpdateManager();
@@ -3941,7 +4109,7 @@
         // UPDATED: Show loading indicator immediately
         showProductLoading();
         
-        // Load products with optimized loading
+        // Load products with optimized loading from URL parameters
         setTimeout(() => {
             loadFeaturedProducts();
         }, 500);
@@ -3954,20 +4122,59 @@
         });
     });
 
-    // UPDATED: Product loading indicator functions
+    // UPDATED: Enhanced Product loading indicator functions
     function showProductLoading() {
         const loadingElement = document.getElementById('productsLoading');
+        const errorElement = document.getElementById('productsError');
+        const skeletonLoader = document.getElementById('skeletonLoader');
+        
         if (loadingElement) {
             loadingElement.classList.add('visible');
         }
+        if (errorElement) {
+            errorElement.classList.remove('visible');
+        }
+        if (skeletonLoader) {
+            skeletonLoader.style.display = 'grid';
+        }
         updateLoadingProgress(0);
+        updateLoadingCount(0, '...');
     }
     
     function hideProductLoading() {
         const loadingElement = document.getElementById('productsLoading');
+        const skeletonLoader = document.getElementById('skeletonLoader');
+        
         if (loadingElement) {
             loadingElement.classList.remove('visible');
         }
+        if (skeletonLoader) {
+            skeletonLoader.style.display = 'none';
+        }
+    }
+    
+    function showProductError() {
+        const loadingElement = document.getElementById('productsLoading');
+        const errorElement = document.getElementById('productsError');
+        
+        hideProductLoading();
+        
+        if (errorElement) {
+            errorElement.classList.add('visible');
+        }
+    }
+    
+    function hideProductError() {
+        const errorElement = document.getElementById('productsError');
+        if (errorElement) {
+            errorElement.classList.remove('visible');
+        }
+    }
+    
+    function retryLoadingProducts() {
+        hideProductError();
+        showProductLoading();
+        loadFeaturedProducts();
     }
     
     function showProductsLoaded(count) {
@@ -3994,7 +4201,11 @@
     function updateLoadingCount(count, total) {
         const countElement = document.getElementById('loadingCount');
         if (countElement) {
-            countElement.textContent = `${count} of ${total} products loaded`;
+            if (total === '...') {
+                countElement.textContent = `${count} products loaded`;
+            } else {
+                countElement.textContent = `${count} of ${total} products loaded`;
+            }
         }
     }
 
@@ -4048,8 +4259,8 @@
         }
     }
     
-    // Safe add to cart function (exposed globally)
-    window.addToCartSafe = function(product) {
+    // Enhanced add to cart function with visual feedback
+    window.addToCartSafe = function(product, buttonElement = null) {
         try {
             console.log('addToCartSafe called with:', product);
             
@@ -4063,14 +4274,14 @@
                 category: product.category || product.collectionName || 'General'
             };
             
-            addToCart(cartProduct);
+            addToCart(cartProduct, buttonElement);
         } catch (error) {
             console.error('Error in addToCartSafe:', error);
             showNotification('Error adding item to cart');
         }
     };
     
-    function addToCart(product) {
+    function addToCart(product, buttonElement = null) {
         try {
             console.log('addToCart called with:', product);
             
@@ -4100,6 +4311,18 @@
             
             // Update cart badge
             updateCartBadge();
+            
+            // Show visual feedback on button
+            if (buttonElement) {
+                const originalText = buttonElement.innerHTML;
+                buttonElement.classList.add('added');
+                buttonElement.innerHTML = '<i class="fas fa-check"></i> Added to Cart';
+                
+                setTimeout(() => {
+                    buttonElement.classList.remove('added');
+                    buttonElement.innerHTML = originalText;
+                }, 2000);
+            }
             
             // Show notification
             showNotification(`Added ${product.name} to cart!`);
@@ -4899,7 +5122,7 @@
                                 console.log('🔄 New content is available; please refresh.');
                                 // Show update notification
                                 window.appUpdateManager.showUpdateNotification(
-                                    localStorage.getItem('dsog_app_version') || '2.2.1',
+                                    localStorage.getItem('dsog_app_version') || '2.3.0',
                                     'New version'
                                 );
                             }
@@ -5208,7 +5431,7 @@
         }
     }
     
-    // UPDATED: Load featured products with loading indicator
+    // UPDATED: Load featured products with optimized loading from URL
     async function loadFeaturedProducts() {
         if (isLoadingProducts) return;
         
@@ -5224,16 +5447,44 @@
             updateLoadingProgress(10);
             updateLoadingCount(0, '...');
             
-            // Load all products at once for better performance
-            const products = await fetchAllProducts();
+            // Check for URL parameters to optimize loading
+            const urlParams = new URLSearchParams(window.location.search);
+            const collectionParam = urlParams.get('collection');
+            const searchParam = urlParams.get('search');
+            const productIdParam = urlParams.get('product');
+            
+            // Load products based on URL parameters
+            let products = [];
+            
+            if (collectionParam) {
+                // Load specific collection from URL
+                products = await fetchCollectionProducts(collectionParam);
+                currentFilter = collectionParam;
+                
+                // Update active filter button
+                const filterButtons = document.querySelectorAll('.filter-btn');
+                filterButtons.forEach(btn => {
+                    btn.classList.remove('active');
+                    if (btn.dataset.filter === collectionParam) {
+                        btn.classList.add('active');
+                    }
+                });
+                
+                // Show notification
+                showNotification(`Loaded ${collectionParam} collection`);
+            } else if (searchParam) {
+                // Set search input value
+                document.getElementById('searchInput').value = searchParam;
+                performSearch(searchParam);
+            } else {
+                // Load all products
+                products = await fetchAllProducts();
+            }
             
             if (products.length > 0) {
                 console.log(`✅ Loaded ${products.length} products`);
                 allProducts = products;
-                
-                // Update loading progress as products are processed
-                updateLoadingProgress(50);
-                updateLoadingCount(products.length, products.length);
+                totalProductsCount = products.length;
                 
                 // Filter and display products
                 filterProducts();
@@ -5243,14 +5494,37 @@
                 
                 // Add event listener for load more button
                 loadMoreBtn.addEventListener('click', loadMoreProducts);
+                
+                // Check if specific product ID is in URL
+                if (productIdParam) {
+                    const targetProduct = products.find(p => p.id === productIdParam);
+                    if (targetProduct) {
+                        // Scroll to products section and open modal
+                        setTimeout(() => {
+                            document.getElementById('products').scrollIntoView({
+                                behavior: 'smooth'
+                            });
+                            setTimeout(() => {
+                                openModal(targetProduct);
+                            }, 500);
+                        }, 1000);
+                    }
+                }
             } else {
                 throw new Error('No products found');
             }
             
         } catch (error) {
             console.error('❌ Error loading products:', error);
-            // Fallback to sample products
-            loadSampleProducts();
+            showProductError();
+            hasLoadingError = true;
+            
+            // Fallback to sample products after 3 seconds if error persists
+            setTimeout(() => {
+                if (hasLoadingError) {
+                    loadSampleProducts();
+                }
+            }, 3000);
         } finally {
             isLoadingProducts = false;
             loadMoreIcon.style.display = 'none';
@@ -5260,15 +5534,35 @@
             hideProductLoading();
             updateLoadingProgress(100);
             
-            // Hide skeleton loader
-            const skeletonLoader = document.getElementById('skeletonLoader');
-            if (skeletonLoader) {
-                skeletonLoader.style.display = 'none';
-            }
-            
             // Show products grid
             container.classList.add('loaded');
         }
+    }
+    
+    // Fetch products from a specific collection
+    async function fetchCollectionProducts(collection) {
+        try {
+            const response = await fetch(`${scriptUrl}?action=getProducts&collection=${collection}`);
+            const result = await response.json();
+            
+            if (result.success && result.data) {
+                // Update loading progress
+                updateLoadingProgress(50);
+                updateLoadingCount(result.data.length, result.data.length);
+                
+                // Add collection info to each product
+                const productsWithCollection = result.data.map(product => ({
+                    ...product,
+                    collectionName: collection,
+                    category: product.category || collection
+                }));
+                return productsWithCollection;
+            }
+        } catch (error) {
+            console.error(`Error loading ${collection}:`, error);
+            throw error;
+        }
+        return [];
     }
     
     // Fetch all products from all collections with progress updates
@@ -5326,6 +5620,7 @@
         if (moreProducts.length > 0) {
             displayMoreProducts(moreProducts);
             currentPage++;
+            loadedProductsCount += moreProducts.length;
             
             // Hide load more button if no more products
             if (endIndex >= filteredProducts.length) {
@@ -5341,7 +5636,9 @@
         
         // Clear existing content except skeleton and loading indicator
         Array.from(container.children).forEach(child => {
-            if (child.id !== 'skeletonLoader' && child.id !== 'productsLoading') {
+            if (child.id !== 'skeletonLoader' && 
+                child.id !== 'productsLoading' && 
+                child.id !== 'productsError') {
                 container.removeChild(child);
             }
         });
@@ -5362,6 +5659,8 @@
                 }
             }, index * 50); // Stagger animation
         });
+        
+        loadedProductsCount = products.length;
     }
     
     // Display more products for pagination
@@ -5541,17 +5840,13 @@
         
         allProducts = sampleProducts;
         filteredProducts = [...sampleProducts];
+        totalProductsCount = sampleProducts.length;
         displayProducts(filteredProducts.slice(0, productsPerPage));
         
         // Update loading indicator
         hideProductLoading();
         showProductsLoaded(sampleProducts.length);
-        
-        // Hide skeleton loader
-        const skeletonLoader = document.getElementById('skeletonLoader');
-        if (skeletonLoader) {
-            skeletonLoader.style.display = 'none';
-        }
+        hasLoadingError = false;
         
         // Show products grid
         const container = document.getElementById('productsContainer');
@@ -5581,7 +5876,6 @@
     
     function openModal(product) {
         try {
-            currentProduct = product;
             const modal = document.getElementById('productModal');
             const modalBody = document.getElementById('modalBody');
             
@@ -5589,6 +5883,9 @@
             const productImages = product.images || [product.image];
             const escapedProductName = product.name.replace(/'/g, "\\'").replace(/"/g, '\\"');
             const imageUrlsString = productImages.join(',').replace(/'/g, "\\'");
+            
+            // Create shareable product URL
+            const shareableUrl = createShareableProductUrl(product);
             
             // Create safe product object for modal
             const safeProduct = {
@@ -5650,11 +5947,11 @@
                     </div>
                     
                     <div class="modal-actions">
-                        <button class="modal-add-to-cart-btn" onclick="addToCartSafe(${safeProductString}); closeModal();">
+                        <button class="modal-add-to-cart-btn" onclick="addToCartSafe(${safeProductString}, this);">
                             <i class="fas fa-cart-plus"></i> Add to Cart
                         </button>
-                        <button class="modal-whatsapp-btn" onclick="orderViaWhatsApp('${escapedProductName}', ${product.basePrice})">
-                            <i class="fab fa-whatsapp"></i> WhatsApp Order
+                        <button class="modal-share-btn" onclick="shareProduct('${product.name}', '${product.basePrice}', '${productImages[0]}', '${shareableUrl}')">
+                            <i class="fas fa-share-alt"></i> Share Product
                         </button>
                     </div>
                 </div>
@@ -5665,6 +5962,57 @@
             hideBottomNav();
         } catch (error) {
             console.error('Error opening modal:', error, product);
+        }
+    }
+    
+    // Create shareable product URL
+    function createShareableProductUrl(product) {
+        const baseUrl = window.location.origin + window.location.pathname;
+        const urlParams = new URLSearchParams();
+        
+        // Add product ID if available
+        if (product.id) {
+            urlParams.set('product', product.id);
+        }
+        
+        // Add franchisee if available
+        if (currentFranchisee) {
+            const franchiseeCode = Object.keys(franchisees).find(key => franchisees[key].phone === currentFranchisee.phone);
+            if (franchiseeCode) {
+                urlParams.set('franchisee', franchiseeCode);
+            }
+        }
+        
+        // Add product name for SEO
+        urlParams.set('name', encodeURIComponent(product.name.toLowerCase().replace(/\s+/g, '-')));
+        
+        return `${baseUrl}?${urlParams.toString()}`;
+    }
+    
+    // Share product function
+    async function shareProduct(productName, price, imageUrl, productUrl) {
+        const shareData = {
+            title: `${productName} - DSOG STORES`,
+            text: `Check out ${productName} for KSh ${price} on DSOG STORES!`,
+            url: productUrl
+        };
+        
+        try {
+            // Try Web Share API first
+            if (navigator.share && navigator.canShare(shareData)) {
+                await navigator.share(shareData);
+                showNotification('Product shared successfully!');
+            } else {
+                // Fallback: Copy to clipboard
+                await navigator.clipboard.writeText(`${shareData.text}\n\n${shareData.url}`);
+                showNotification('Product link copied to clipboard!');
+            }
+        } catch (error) {
+            console.error('Error sharing:', error);
+            
+            // Alternative fallback: Open share dialog
+            const fallbackUrl = `https://api.whatsapp.com/send?text=${encodeURIComponent(shareData.text + '\n\n' + shareData.url)}`;
+            window.open(fallbackUrl, '_blank');
         }
     }
     
@@ -5689,7 +6037,6 @@
         const modal = document.getElementById('productModal');
         modal.classList.remove('active');
         document.body.style.overflow = 'auto';
-        currentProduct = null;
         setTimeout(showBottomNav, 300);
     }
     
@@ -5965,36 +6312,6 @@
         document.body.style.overflow = 'auto';
         currentImages = [];
         setTimeout(showBottomNav, 300);
-    }
-    
-    // WhatsApp ordering function - UPDATED VERSION
-    function orderViaWhatsApp(productName, price, event = null) {
-        if (event) event.stopPropagation();
-        
-        try {
-            // Determine which WhatsApp number to use
-            const whatsappNumber = currentFranchisee ? currentFranchisee.phone : mainWhatsAppNumber;
-            const contactName = currentFranchisee ? currentFranchisee.name : 'DSOG STORES';
-            
-            let message = `Hello ${contactName}! I would like to order:\n\n` +
-                         `Product: ${productName}\n` +
-                         `Price: KSh ${price}\n\n` +
-                         `Please guide me through the ordering process.`;
-            
-            // Add franchisee info
-            if (currentFranchisee) {
-                message += `\n\n---\nOrder placed through ${currentFranchisee.name} (${currentFranchisee.location})`;
-            }
-            
-            const encodedMessage = encodeURIComponent(message);
-            const whatsappUrl = `https://wa.me/${whatsappNumber}?text=${encodedMessage}`;
-            
-            window.open(whatsappUrl, '_blank');
-            showNotification(`Opening WhatsApp to order ${productName}`);
-        } catch (error) {
-            console.error('Error in WhatsApp ordering:', error);
-            showNotification('Error opening WhatsApp');
-        }
     }
     
     // Initialize scroll behavior - UPDATED VERSION
@@ -6365,9 +6682,9 @@
         /* FIX: Ensure proper pointer events */
         .view-image-btn,
         .image-zoom-btn,
-        .modal-whatsapp-btn,
-        .chat-option-btn,
-        .modal-add-to-cart-btn {
+        .modal-share-btn,
+        .modal-add-to-cart-btn,
+        .chat-option-btn {
             cursor: pointer !important;
         }
         
@@ -6405,6 +6722,29 @@
                 padding-bottom: calc(120px + env(safe-area-inset-bottom));
             }
         }
+        
+        /* Loading states */
+        .loading-spinner-container {
+            position: relative;
+        }
+        
+        .loading-spinner {
+            animation: spin 1s linear infinite;
+        }
+        
+        .loading-logo {
+            animation: pulse 2s ease-in-out infinite;
+        }
+        
+        .modal-add-to-cart-btn.added {
+            animation: cartAdded 0.5s ease;
+        }
+        
+        @keyframes cartAdded {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
     `;
     document.head.appendChild(style);
     
@@ -6416,6 +6756,10 @@
     window.addEventListener('unhandledrejection', function(e) {
         console.error('Unhandled promise rejection:', e.reason);
     });
+    
+    // Export functions to global scope
+    window.retryLoadingProducts = retryLoadingProducts;
+    window.shareProduct = shareProduct;
 </script>
 </body>
 </html>
