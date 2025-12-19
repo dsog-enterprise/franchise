@@ -46,6 +46,9 @@
     <link rel="icon" type="image/webp" sizes="16x16" href="https://i.postimg.cc/CxNLzQgt/Untitled-design-3.webp">
     <link rel="shortcut icon" href="https://i.postimg.cc/CxNLzQgt/Untitled-design-3.webp">
     
+    <!-- Font Awesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
     <!-- Main DSOG Theme Colors -->
     <style>
         :root {
@@ -236,7 +239,7 @@
         /* FIXED: Search Suggestions Dropdown - Only show on focus */
         .search-suggestions {
             position: absolute;
-            top: calc(100% + 10px); /* Position below search bar */
+            top: calc(100% + 10px);
             left: 0;
             right: 0;
             background: rgba(255, 255, 255, 0.98);
@@ -255,7 +258,7 @@
             max-height: 400px;
             overflow-y: auto;
             transform-origin: top center;
-            display: none; /* Hidden by default */
+            display: none;
         }
         
         .search-suggestions.visible {
@@ -1109,7 +1112,7 @@
             max-width: 1400px;
             margin: 3rem auto;
             padding: 0 1.5rem;
-            padding-bottom: 120px; /* Space for bottom nav */
+            padding-bottom: 120px;
         }
         
         .section-title {
@@ -3267,251 +3270,248 @@
             from { transform: translateX(100%); opacity: 0; }
             to { transform: translateX(0); opacity: 1; }
         }
-            </style>
-    
-    <!-- Font Awesome for icons -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    </style>
     
     <!-- App Update Manager Script -->
     <script>
-    // App Update Manager
-    class AppUpdateManager {
-        constructor() {
-            this.currentVersion = '2.4.0';
-            this.checkInterval = null;
-            this.isStandalone = window.matchMedia('(display-mode: standalone)').matches;
-            this.init();
-        }
-        
-        init() {
-            this.checkForUpdates();
-            this.checkInterval = setInterval(() => this.checkForUpdates(), 5 * 60 * 1000);
-            
-            if ('serviceWorker' in navigator) {
-                navigator.serviceWorker.addEventListener('message', this.handleServiceWorkerMessage.bind(this));
+        // App Update Manager
+        class AppUpdateManager {
+            constructor() {
+                this.currentVersion = '2.4.0';
+                this.checkInterval = null;
+                this.isStandalone = window.matchMedia('(display-mode: standalone)').matches;
+                this.init();
             }
             
-            window.addEventListener('online', () => this.checkForUpdates());
-            this.checkStoredUpdate();
-        }
-        
-        async checkForUpdates() {
-            try {
-                const response = await fetch('/manifest.json?v=' + Date.now());
-                const manifest = await response.json();
-                this.currentVersion = manifest.version || '2.4.0';
-                localStorage.setItem('dsog_app_version', this.currentVersion);
+            init() {
+                this.checkForUpdates();
+                this.checkInterval = setInterval(() => this.checkForUpdates(), 5 * 60 * 1000);
                 
-                const storedVersion = localStorage.getItem('dsog_previous_version') || '2.3.0';
-                
-                if (this.currentVersion !== storedVersion) {
-                    this.showUpdateNotification(storedVersion, this.currentVersion);
+                if ('serviceWorker' in navigator) {
+                    navigator.serviceWorker.addEventListener('message', this.handleServiceWorkerMessage.bind(this));
                 }
-            } catch (error) {
-                console.error('Update check failed:', error);
+                
+                window.addEventListener('online', () => this.checkForUpdates());
+                this.checkStoredUpdate();
             }
-        }
-        
-        showUpdateNotification(oldVersion, newVersion) {
-            const notification = document.createElement('div');
-            notification.id = 'app-update-notification';
-            notification.innerHTML = `
-                <div style="
-                    position: fixed;
-                    bottom: 100px;
-                    left: 50%;
-                    transform: translateX(-50%);
-                    background: linear-gradient(135deg, #B22222, #8B0000);
-                    color: white;
-                    padding: 20px;
-                    border-radius: 15px;
-                    box-shadow: 0 10px 30px rgba(178, 34, 34, 0.3);
-                    z-index: 9999;
-                    max-width: 400px;
-                    width: 90%;
-                    text-align: center;
-                    border: 3px solid #D4AF37;
-                    animation: slideUp 0.3s ease;
-                ">
-                    <h3 style="margin: 0 0 10px 0; color: #D4AF37;">
-                        <i class="fas fa-sync-alt"></i> App Update Available
-                    </h3>
-                    <p style="margin: 0 0 15px 0; font-size: 14px;">
-                        New version ${newVersion} is available!
-                    </p>
-                    <div style="display: flex; gap: 10px; justify-content: center;">
-                        <button onclick="window.appUpdateManager.applyUpdate()" 
-                            style="
-                                background: #D4AF37;
-                                color: #000;
-                                border: none;
-                                padding: 10px 20px;
-                                border-radius: 25px;
-                                font-weight: bold;
-                                cursor: pointer;
-                                flex: 1;
-                                transition: all 0.3s;
-                            "
-                            onmouseover="this.style.background='#ffd700'; this.style.transform='translateY(-2px)'"
-                            onmouseout="this.style.background='#D4AF37'; this.style.transform='translateY(0)'">
-                            <i class="fas fa-download"></i> Update Now
-                        </button>
+            
+            async checkForUpdates() {
+                try {
+                    const response = await fetch('/manifest.json?v=' + Date.now());
+                    const manifest = await response.json();
+                    this.currentVersion = manifest.version || '2.4.0';
+                    localStorage.setItem('dsog_app_version', this.currentVersion);
+                    
+                    const storedVersion = localStorage.getItem('dsog_previous_version') || '2.3.0';
+                    
+                    if (this.currentVersion !== storedVersion) {
+                        this.showUpdateNotification(storedVersion, this.currentVersion);
+                    }
+                } catch (error) {
+                    console.error('Update check failed:', error);
+                }
+            }
+            
+            showUpdateNotification(oldVersion, newVersion) {
+                const notification = document.createElement('div');
+                notification.id = 'app-update-notification';
+                notification.innerHTML = `
+                    <div style="
+                        position: fixed;
+                        bottom: 100px;
+                        left: 50%;
+                        transform: translateX(-50%);
+                        background: linear-gradient(135deg, #B22222, #8B0000);
+                        color: white;
+                        padding: 20px;
+                        border-radius: 15px;
+                        box-shadow: 0 10px 30px rgba(178, 34, 34, 0.3);
+                        z-index: 9999;
+                        max-width: 400px;
+                        width: 90%;
+                        text-align: center;
+                        border: 3px solid #D4AF37;
+                        animation: slideUp 0.3s ease;
+                    ">
+                        <h3 style="margin: 0 0 10px 0; color: #D4AF37;">
+                            <i class="fas fa-sync-alt"></i> App Update Available
+                        </h3>
+                        <p style="margin: 0 0 15px 0; font-size: 14px;">
+                            New version ${newVersion} is available!
+                        </p>
+                        <div style="display: flex; gap: 10px; justify-content: center;">
+                            <button onclick="window.appUpdateManager.applyUpdate()" 
+                                style="
+                                    background: #D4AF37;
+                                    color: #000;
+                                    border: none;
+                                    padding: 10px 20px;
+                                    border-radius: 25px;
+                                    font-weight: bold;
+                                    cursor: pointer;
+                                    flex: 1;
+                                    transition: all 0.3s;
+                                "
+                                onmouseover="this.style.background='#ffd700'; this.style.transform='translateY(-2px)'"
+                                onmouseout="this.style.background='#D4AF37'; this.style.transform='translateY(0)'">
+                                <i class="fas fa-download"></i> Update Now
+                            </button>
+                            <button onclick="window.appUpdateManager.hideNotification()" 
+                                style="
+                                    background: transparent;
+                                    color: white;
+                                    border: 1px solid rgba(255,255,255,0.3);
+                                    padding: 10px 20px;
+                                    border-radius: 25px;
+                                    cursor: pointer;
+                                    transition: all 0.3s;
+                                "
+                                onmouseover="this.style.background='rgba(255,255,255,0.1)';"
+                                onmouseout="this.style.background='transparent';">
+                                Later
+                            </button>
+                        </div>
                         <button onclick="window.appUpdateManager.hideNotification()" 
                             style="
+                                position: absolute;
+                                top: 10px;
+                                right: 10px;
                                 background: transparent;
                                 color: white;
-                                border: 1px solid rgba(255,255,255,0.3);
-                                padding: 10px 20px;
-                                border-radius: 25px;
+                                border: none;
+                                font-size: 20px;
                                 cursor: pointer;
-                                transition: all 0.3s;
+                                opacity: 0.7;
+                                transition: opacity 0.3s;
                             "
-                            onmouseover="this.style.background='rgba(255,255,255,0.1)';"
-                            onmouseout="this.style.background='transparent';">
-                            Later
+                            onmouseover="this.style.opacity='1';"
+                            onmouseout="this.style.opacity='0.7';">
+                            ×
                         </button>
                     </div>
-                    <button onclick="window.appUpdateManager.hideNotification()" 
-                        style="
-                            position: absolute;
-                            top: 10px;
-                            right: 10px;
-                            background: transparent;
-                            color: white;
-                            border: none;
-                            font-size: 20px;
-                            cursor: pointer;
-                            opacity: 0.7;
-                            transition: opacity 0.3s;
-                        "
-                        onmouseover="this.style.opacity='1';"
-                        onmouseout="this.style.opacity='0.7';">
-                        ×
-                    </button>
-                </div>
-            `;
-            
-            const style = document.createElement('style');
-            style.textContent = `
-                @keyframes slideUp {
-                    from { 
-                        transform: translateX(-50%) translateY(100px); 
-                        opacity: 0; 
-                    }
-                    to { 
-                        transform: translateX(-50%) translateY(0); 
-                        opacity: 1; 
-                    }
-                }
-            `;
-            document.head.appendChild(style);
-            
-            const existing = document.getElementById('app-update-notification');
-            if (existing) existing.remove();
-            
-            document.body.appendChild(notification);
-            
-            setTimeout(() => {
-                if (document.getElementById('app-update-notification')) {
-                    this.hideNotification();
-                }
-            }, 30000);
-        }
-        
-        hideNotification() {
-            const notification = document.getElementById('app-update-notification');
-            if (notification) {
-                notification.style.animation = 'slideUp 0.3s ease reverse';
-                setTimeout(() => notification.remove(), 300);
-            }
-        }
-        
-        async applyUpdate() {
-            this.hideNotification();
-            
-            if ('serviceWorker' in navigator) {
-                try {
-                    const registration = await navigator.serviceWorker.ready;
-                    await registration.update();
-                    
-                    this.showUpdateSuccess();
-                    
-                    setTimeout(() => {
-                        localStorage.setItem('dsog_previous_version', this.currentVersion);
-                        window.location.reload();
-                    }, 2000);
-                    
-                } catch (error) {
-                    console.error('Update failed:', error);
-                    this.showUpdateError();
-                }
-            } else {
-                localStorage.setItem('dsog_previous_version', this.currentVersion);
-                window.location.reload();
-            }
-        }
-        
-        showUpdateSuccess() {
-            alert('✅ App updated successfully! The app will restart in a moment.');
-        }
-        
-        showUpdateError() {
-            alert('⚠️ Update failed. Please close and reopen the app.');
-        }
-        
-        checkStoredUpdate() {
-            const storedVersion = localStorage.getItem('dsog_app_version');
-            const previousVersion = localStorage.getItem('dsog_previous_version');
-            
-            if (storedVersion && previousVersion && storedVersion !== previousVersion) {
-                this.showUpdateBadge();
-            }
-        }
-        
-        showUpdateBadge() {
-            const installBtn = document.getElementById('installAppBtn');
-            if (installBtn) {
-                const badge = document.createElement('span');
-                badge.innerHTML = '<i class="fas fa-exclamation-circle"></i> UPDATE';
-                badge.style.cssText = `
-                    position: absolute;
-                    top: -5px;
-                    right: -5px;
-                    background: #D4AF37;
-                    color: #000;
-                    padding: 2px 6px;
-                    border-radius: 10px;
-                    font-size: 10px;
-                    font-weight: bold;
-                    animation: pulse 2s infinite;
                 `;
-                installBtn.style.position = 'relative';
-                installBtn.appendChild(badge);
                 
                 const style = document.createElement('style');
                 style.textContent = `
-                    @keyframes pulse {
-                        0% { box-shadow: 0 0 0 0 rgba(212, 175, 55, 0.7); }
-                        70% { box-shadow: 0 0 0 6px rgba(212, 175, 55, 0); }
-                        100% { box-shadow: 0 0 0 0 rgba(212, 175, 55, 0); }
+                    @keyframes slideUp {
+                        from { 
+                            transform: translateX(-50%) translateY(100px); 
+                            opacity: 0; 
+                        }
+                        to { 
+                            transform: translateX(-50%) translateY(0); 
+                            opacity: 1; 
+                        }
                     }
                 `;
                 document.head.appendChild(style);
-            }
-        }
-        
-        handleServiceWorkerMessage(event) {
-            if (event.data.type === 'APP_UPDATE_AVAILABLE') {
-                this.showUpdateNotification(event.data.oldVersion, event.data.version);
+                
+                const existing = document.getElementById('app-update-notification');
+                if (existing) existing.remove();
+                
+                document.body.appendChild(notification);
+                
+                setTimeout(() => {
+                    if (document.getElementById('app-update-notification')) {
+                        this.hideNotification();
+                    }
+                }, 30000);
             }
             
-            if (event.data.type === 'FORCE_UPDATE_REQUIRED') {
-                if (confirm(`New app version ${event.data.newVersion} is ready! Update now?`)) {
-                    this.applyUpdate();
+            hideNotification() {
+                const notification = document.getElementById('app-update-notification');
+                if (notification) {
+                    notification.style.animation = 'slideUp 0.3s ease reverse';
+                    setTimeout(() => notification.remove(), 300);
+                }
+            }
+            
+            async applyUpdate() {
+                this.hideNotification();
+                
+                if ('serviceWorker' in navigator) {
+                    try {
+                        const registration = await navigator.serviceWorker.ready;
+                        await registration.update();
+                        
+                        this.showUpdateSuccess();
+                        
+                        setTimeout(() => {
+                            localStorage.setItem('dsog_previous_version', this.currentVersion);
+                            window.location.reload();
+                        }, 2000);
+                        
+                    } catch (error) {
+                        console.error('Update failed:', error);
+                        this.showUpdateError();
+                    }
+                } else {
+                    localStorage.setItem('dsog_previous_version', this.currentVersion);
+                    window.location.reload();
+                }
+            }
+            
+            showUpdateSuccess() {
+                alert('✅ App updated successfully! The app will restart in a moment.');
+            }
+            
+            showUpdateError() {
+                alert('⚠️ Update failed. Please close and reopen the app.');
+            }
+            
+            checkStoredUpdate() {
+                const storedVersion = localStorage.getItem('dsog_app_version');
+                const previousVersion = localStorage.getItem('dsog_previous_version');
+                
+                if (storedVersion && previousVersion && storedVersion !== previousVersion) {
+                    this.showUpdateBadge();
+                }
+            }
+            
+            showUpdateBadge() {
+                const installBtn = document.getElementById('installAppBtn');
+                if (installBtn) {
+                    const badge = document.createElement('span');
+                    badge.innerHTML = '<i class="fas fa-exclamation-circle"></i> UPDATE';
+                    badge.style.cssText = `
+                        position: absolute;
+                        top: -5px;
+                        right: -5px;
+                        background: #D4AF37;
+                        color: #000;
+                        padding: 2px 6px;
+                        border-radius: 10px;
+                        font-size: 10px;
+                        font-weight: bold;
+                        animation: pulse 2s infinite;
+                    `;
+                    installBtn.style.position = 'relative';
+                    installBtn.appendChild(badge);
+                    
+                    const style = document.createElement('style');
+                    style.textContent = `
+                        @keyframes pulse {
+                            0% { box-shadow: 0 0 0 0 rgba(212, 175, 55, 0.7); }
+                            70% { box-shadow: 0 0 0 6px rgba(212, 175, 55, 0); }
+                            100% { box-shadow: 0 0 0 0 rgba(212, 175, 55, 0); }
+                        }
+                    `;
+                    document.head.appendChild(style);
+                }
+            }
+            
+            handleServiceWorkerMessage(event) {
+                if (event.data.type === 'APP_UPDATE_AVAILABLE') {
+                    this.showUpdateNotification(event.data.oldVersion, event.data.version);
+                }
+                
+                if (event.data.type === 'FORCE_UPDATE_REQUIRED') {
+                    if (confirm(`New app version ${event.data.newVersion} is ready! Update now?`)) {
+                        this.applyUpdate();
+                    }
                 }
             }
         }
-    }
     </script>
 </head>
 <body>
@@ -6755,257 +6755,6 @@
                 }
             }, 3000);
         }
-        
-        // App Update Manager
-        class AppUpdateManager {
-            constructor() {
-                this.currentVersion = '2.4.0';
-                this.checkInterval = null;
-                this.isStandalone = window.matchMedia('(display-mode: standalone)').matches;
-                this.init();
-            }
-            
-            init() {
-                this.checkForUpdates();
-                this.checkInterval = setInterval(() => this.checkForUpdates(), 5 * 60 * 1000);
-                
-                if ('serviceWorker' in navigator) {
-                    navigator.serviceWorker.addEventListener('message', this.handleServiceWorkerMessage.bind(this));
-                }
-                
-                window.addEventListener('online', () => this.checkForUpdates());
-                this.checkStoredUpdate();
-            }
-            
-            async checkForUpdates() {
-                try {
-                    const response = await fetch('/manifest.json?v=' + Date.now());
-                    const manifest = await response.json();
-                    this.currentVersion = manifest.version || '2.4.0';
-                    localStorage.setItem('dsog_app_version', this.currentVersion);
-                    
-                    const storedVersion = localStorage.getItem('dsog_previous_version') || '2.3.0';
-                    
-                    if (this.currentVersion !== storedVersion) {
-                        this.showUpdateNotification(storedVersion, this.currentVersion);
-                    }
-                } catch (error) {
-                    console.error('Update check failed:', error);
-                }
-            }
-            
-            showUpdateNotification(oldVersion, newVersion) {
-                const notification = document.createElement('div');
-                notification.id = 'app-update-notification';
-                notification.innerHTML = `
-                    <div style="
-                        position: fixed;
-                        bottom: 100px;
-                        left: 50%;
-                        transform: translateX(-50%);
-                        background: linear-gradient(135deg, #B22222, #8B0000);
-                        color: white;
-                        padding: 20px;
-                        border-radius: 15px;
-                        box-shadow: 0 10px 30px rgba(178, 34, 34, 0.3);
-                        z-index: 9999;
-                        max-width: 400px;
-                        width: 90%;
-                        text-align: center;
-                        border: 3px solid #D4AF37;
-                        animation: slideUp 0.3s ease;
-                    ">
-                        <h3 style="margin: 0 0 10px 0; color: #D4AF37;">
-                            <i class="fas fa-sync-alt"></i> App Update Available
-                        </h3>
-                        <p style="margin: 0 0 15px 0; font-size: 14px;">
-                            New version ${newVersion} is available!
-                        </p>
-                        <div style="display: flex; gap: 10px; justify-content: center;">
-                            <button onclick="window.appUpdateManager.applyUpdate()" 
-                                style="
-                                    background: #D4AF37;
-                                    color: #000;
-                                    border: none;
-                                    padding: 10px 20px;
-                                    border-radius: 25px;
-                                    font-weight: bold;
-                                    cursor: pointer;
-                                    flex: 1;
-                                    transition: all 0.3s;
-                                "
-                                onmouseover="this.style.background='#ffd700'; this.style.transform='translateY(-2px)'"
-                                onmouseout="this.style.background='#D4AF37'; this.style.transform='translateY(0)'">
-                                <i class="fas fa-download"></i> Update Now
-                            </button>
-                            <button onclick="window.appUpdateManager.hideNotification()" 
-                                style="
-                                    background: transparent;
-                                    color: white;
-                                    border: 1px solid rgba(255,255,255,0.3);
-                                    padding: 10px 20px;
-                                    border-radius: 25px;
-                                    cursor: pointer;
-                                    transition: all 0.3s;
-                                "
-                                onmouseover="this.style.background='rgba(255,255,255,0.1)';"
-                                onmouseout="this.style.background='transparent';">
-                                Later
-                            </button>
-                        </div>
-                        <button onclick="window.appUpdateManager.hideNotification()" 
-                            style="
-                                position: absolute;
-                                top: 10px;
-                                right: 10px;
-                                background: transparent;
-                                color: white;
-                                border: none;
-                                font-size: 20px;
-                                cursor: pointer;
-                                opacity: 0.7;
-                                transition: opacity 0.3s;
-                            "
-                            onmouseover="this.style.opacity='1';"
-                            onmouseout="this.style.opacity='0.7';">
-                            ×
-                        </button>
-                    </div>
-                `;
-                
-                const style = document.createElement('style');
-                style.textContent = `
-                    @keyframes slideUp {
-                        from { 
-                            transform: translateX(-50%) translateY(100px); 
-                            opacity: 0; 
-                        }
-                        to { 
-                            transform: translateX(-50%) translateY(0); 
-                            opacity: 1; 
-                        }
-                    }
-                `;
-                document.head.appendChild(style);
-                
-                const existing = document.getElementById('app-update-notification');
-                if (existing) existing.remove();
-                
-                document.body.appendChild(notification);
-                
-                setTimeout(() => {
-                    if (document.getElementById('app-update-notification')) {
-                        this.hideNotification();
-                    }
-                }, 30000);
-            }
-            
-            hideNotification() {
-                const notification = document.getElementById('app-update-notification');
-                if (notification) {
-                    notification.style.animation = 'slideUp 0.3s ease reverse';
-                    setTimeout(() => notification.remove(), 300);
-                }
-            }
-            
-            async applyUpdate() {
-                this.hideNotification();
-                
-                if ('serviceWorker' in navigator) {
-                    try {
-                        const registration = await navigator.serviceWorker.ready;
-                        await registration.update();
-                        
-                        this.showUpdateSuccess();
-                        
-                        setTimeout(() => {
-                            localStorage.setItem('dsog_previous_version', this.currentVersion);
-                            window.location.reload();
-                        }, 2000);
-                        
-                    } catch (error) {
-                        console.error('Update failed:', error);
-                        this.showUpdateError();
-                    }
-                } else {
-                    localStorage.setItem('dsog_previous_version', this.currentVersion);
-                    window.location.reload();
-                }
-            }
-            
-            showUpdateSuccess() {
-                alert('✅ App updated successfully! The app will restart in a moment.');
-            }
-            
-            showUpdateError() {
-                alert('⚠️ Update failed. Please close and reopen the app.');
-            }
-            
-            checkStoredUpdate() {
-                const storedVersion = localStorage.getItem('dsog_app_version');
-                const previousVersion = localStorage.getItem('dsog_previous_version');
-                
-                if (storedVersion && previousVersion && storedVersion !== previousVersion) {
-                    this.showUpdateBadge();
-                }
-            }
-            
-            showUpdateBadge() {
-                const installBtn = document.getElementById('installAppBtn');
-                if (installBtn) {
-                    const badge = document.createElement('span');
-                    badge.innerHTML = '<i class="fas fa-exclamation-circle"></i> UPDATE';
-                    badge.style.cssText = `
-                        position: absolute;
-                        top: -5px;
-                        right: -5px;
-                        background: #D4AF37;
-                        color: #000;
-                        padding: 2px 6px;
-                        border-radius: 10px;
-                        font-size: 10px;
-                        font-weight: bold;
-                        animation: pulse 2s infinite;
-                    `;
-                    installBtn.style.position = 'relative';
-                    installBtn.appendChild(badge);
-                    
-                    const style = document.createElement('style');
-                    style.textContent = `
-                        @keyframes pulse {
-                            0% { box-shadow: 0 0 0 0 rgba(212, 175, 55, 0.7); }
-                            70% { box-shadow: 0 0 0 6px rgba(212, 175, 55, 0); }
-                            100% { box-shadow: 0 0 0 0 rgba(212, 175, 55, 0); }
-                        }
-                    `;
-                    document.head.appendChild(style);
-                }
-            }
-            
-            handleServiceWorkerMessage(event) {
-                if (event.data.type === 'APP_UPDATE_AVAILABLE') {
-                    this.showUpdateNotification(event.data.oldVersion, event.data.version);
-                }
-                
-                if (event.data.type === 'FORCE_UPDATE_REQUIRED') {
-                    if (confirm(`New app version ${event.data.newVersion} is ready! Update now?`)) {
-                        this.applyUpdate();
-                    }
-                }
-            }
-        }
-        
-        // Export functions to global scope
-        window.retryLoadingProducts = retryLoadingProducts;
-        window.shareProduct = shareProduct;
-        window.openFullImageView = openFullImageView;
-        window.addToCartSafe = addToCartSafe;
-        window.shareViaWhatsApp = shareViaWhatsApp;
-        window.shareViaFacebook = shareViaFacebook;
-        window.shareViaTwitter = shareViaTwitter;
-        window.copyToClipboard = copyToClipboard;
-        window.shareViaEmail = shareViaEmail;
-        window.shareViaSMS = shareViaSMS;
     </script>
 </body>
 </html>
