@@ -4105,7 +4105,7 @@
             console.log('🚀 DSOG STORES App - Home Page v2.4.0');
             
             // Initialize App Update Manager
-            window.appUpdateManager = new AppUpdateManager();
+            // window.appUpdateManager = new AppUpdateManager();
             
             detectFranchiseeFromURL();
             initMobileMenu();
@@ -4138,7 +4138,7 @@
             }, 500);
             
             // Check for updates on page visibility change
-            document.addEventListener('visibilitychange', () => {
+            // document.addEventListener('visibilitychange', () => {
                 if (!document.hidden) {
                     window.appUpdateManager.checkForUpdates();
                 }
