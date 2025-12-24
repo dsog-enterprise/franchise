@@ -17,14 +17,14 @@
     <meta name="msapplication-TileColor" content="#B22222">
     <meta name="msapplication-starturl" content="/?v=3.1.0">
     
-    <!-- Open Graph Meta Tags -->
-    <meta property="og:title" content="DSOG Enterprise | Online Fashion Franchise Opportunity">
-    <meta property="og:description" content="Join Kenya's Premier Online Fashion Franchise Network. Start your digital fashion business today.">
+    <!-- Updated Open Graph Meta Tags -->
+    <meta property="og:title" content="DSOG Enterprise | Online Franchise Platform">
+    <meta property="og:description" content="Kenya's Premier Online Franchise Platform. Currently launching with Fashion - expanding to multiple verticals soon.">
     <meta property="og:image" content="https://i.postimg.cc/CxNLzQgt/Untitled-design-3.webp">
     <meta property="og:url" content="https://dsogenterprise.com/franchise">
     <meta property="og:type" content="website">
     
-    <title>DSOG Enterprise | Online Fashion Franchise Opportunity</title>
+    <title>DSOG Enterprise | Online Franchise Platform</title>
     
     <!-- Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -72,6 +72,103 @@
             color: var(--text-primary);
             line-height: 1.6;
             overflow-x: hidden;
+        }
+        
+        /* Platform Badge */
+        .platform-badge {
+            display: inline-block;
+            background: linear-gradient(135deg, var(--primary-gold), #FFD700);
+            color: var(--primary-black);
+            padding: 0.4rem 1.2rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 1rem;
+            border: 2px solid var(--primary-red);
+        }
+        
+        /* Current Project Banner */
+        .current-project-banner {
+            background: linear-gradient(90deg, rgba(178, 34, 34, 0.1), rgba(212, 175, 55, 0.1));
+            border-left: 4px solid var(--primary-red);
+            padding: 1rem 1.5rem;
+            margin: 1.5rem 0;
+            border-radius: 0 10px 10px 0;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+        
+        .current-project-banner i {
+            color: var(--primary-red);
+            font-size: 1.5rem;
+        }
+        
+        /* Vertical Cards */
+        .vertical-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin-top: 2rem;
+        }
+        
+        .vertical-card {
+            background: var(--card-bg);
+            border-radius: 10px;
+            padding: 1.5rem;
+            text-align: center;
+            box-shadow: var(--shadow-sm);
+            transition: var(--transition);
+            border: 2px solid var(--border-color);
+            position: relative;
+        }
+        
+        .vertical-card.active {
+            border-color: var(--primary-red);
+            box-shadow: var(--shadow-md);
+            transform: translateY(-5px);
+        }
+        
+        .vertical-card.active::before {
+            content: 'CURRENT PROJECT';
+            position: absolute;
+            top: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: var(--primary-red);
+            color: white;
+            padding: 0.3rem 1rem;
+            border-radius: 15px;
+            font-size: 0.7rem;
+            font-weight: bold;
+            white-space: nowrap;
+        }
+        
+        .vertical-icon {
+            font-size: 2rem;
+            color: var(--primary-red);
+            margin-bottom: 1rem;
+        }
+        
+        .vertical-card h4 {
+            font-size: 1.1rem;
+            margin-bottom: 0.5rem;
+        }
+        
+        .vertical-card.coming-soon {
+            opacity: 0.7;
+        }
+        
+        .coming-soon-badge {
+            background: var(--gray);
+            color: white;
+            padding: 0.2rem 0.8rem;
+            border-radius: 12px;
+            font-size: 0.7rem;
+            margin-top: 0.5rem;
+            display: inline-block;
         }
         
         /* Header */
@@ -169,7 +266,7 @@
         
         /* Hero Section */
         .hero {
-            background: linear-gradient(rgba(255,255,255,0.9), rgba(255,255,255,0.9)), url('https://images.unsplash.com/photo-1441986300917-64674bd600d8?ixlib=rb-4.0.3&auto=format&fit=crop&w=1600&q=80');
+            background: linear-gradient(rgba(255,255,255,0.9), rgba(255,255,255,0.9)), url('https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?ixlib=rb-4.0.3&auto=format&fit=crop&w=1600&q=80');
             background-size: cover;
             background-position: center;
             color: var(--text-primary);
@@ -192,6 +289,12 @@
         
         .hero h1 span {
             color: var(--primary-red);
+        }
+        
+        .hero .subtitle {
+            font-size: 1.4rem;
+            color: var(--text-secondary);
+            margin-bottom: 0.5rem;
         }
         
         .hero p {
@@ -274,6 +377,32 @@
             max-width: 700px;
             margin: 1.5rem auto 0;
             font-size: 1.1rem;
+        }
+        
+        /* Platform Introduction */
+        .platform-intro {
+            text-align: center;
+            padding: 4rem 1.5rem;
+            background: var(--bg-secondary);
+            border-radius: 20px;
+            margin-bottom: 3rem;
+        }
+        
+        .platform-intro h2 {
+            font-size: 2.5rem;
+            margin-bottom: 1.5rem;
+            color: var(--text-primary);
+        }
+        
+        .platform-intro h2 span {
+            color: var(--primary-red);
+        }
+        
+        .platform-intro p {
+            font-size: 1.2rem;
+            max-width: 800px;
+            margin: 0 auto 2rem;
+            color: var(--text-secondary);
         }
         
         /* Franchise Workflow */
@@ -703,6 +832,10 @@
                 font-size: 2.5rem;
             }
             
+            .hero .subtitle {
+                font-size: 1.1rem;
+            }
+            
             .hero-buttons {
                 flex-direction: column;
                 align-items: center;
@@ -721,6 +854,10 @@
             .benefits-container,
             .opportunities-container {
                 grid-template-columns: 1fr;
+            }
+            
+            .vertical-cards {
+                grid-template-columns: repeat(2, 1fr);
             }
             
             .contact-info {
@@ -755,6 +892,10 @@
                 font-size: 2rem;
             }
             
+            .hero .subtitle {
+                font-size: 1rem;
+            }
+            
             .hero p {
                 font-size: 1rem;
             }
@@ -766,6 +907,10 @@
             .workflow-step,
             .opportunity-card {
                 padding: 2rem 1.5rem;
+            }
+            
+            .vertical-cards {
+                grid-template-columns: 1fr;
             }
         }
         
@@ -801,8 +946,8 @@
             
             <nav class="nav-links">
                 <a href="#workflow" class="active">Workflow</a>
+                <a href="#platform">Our Platform</a>
                 <a href="#benefits">Benefits</a>
-                <a href="#online">Online Franchise</a>
                 <a href="#opportunities">Opportunities</a>
                 <a href="#contact" class="cta-button">Get Started</a>
             </nav>
@@ -812,11 +957,27 @@
     <!-- Hero Section -->
     <section class="hero">
         <div class="hero-content">
+            <div class="platform-badge">
+                <i class="fas fa-layer-group"></i> MULTI-VERTICAL FRANCHISE PLATFORM
+            </div>
+            
             <div class="online-badge">
                 <i class="fas fa-globe"></i> 100% ONLINE FRANCHISE SYSTEM
             </div>
-            <h1>Own a <span>DSOG Fashion</span> Franchise</h1>
-            <p>Join Kenya's premier online fashion retail network. Start your digital fashion business today with our proven e-commerce model. No physical store required - operate fully online with our comprehensive support system.</p>
+            
+            <h1>DSOG <span>Online Franchise</span> Platform</h1>
+            <div class="subtitle">Currently Launching with Fashion · Expanding to Multiple Verticals</div>
+            <p>Kenya's premier online franchise platform. Start your digital business today with our proven e-commerce model. No physical store required - operate fully online with our comprehensive support system.</p>
+            
+            <div class="current-project-banner">
+                <i class="fas fa-tshirt"></i>
+                <div>
+                    <strong>Current Launch Project:</strong> DSOG Fashion Franchise
+                    <br>
+                    <small>Next verticals coming soon: Home Goods, Electronics, Groceries, and more</small>
+                </div>
+            </div>
+            
             <div class="hero-buttons">
                 <a href="#contact" class="cta-button">Apply for Franchise</a>
                 <a href="#workflow" class="cta-button secondary-button">Learn How It Works</a>
@@ -824,11 +985,55 @@
         </div>
     </section>
 
+    <!-- Platform Introduction -->
+    <section id="platform" class="platform-intro">
+        <h2>One Platform, <span>Multiple Opportunities</span></h2>
+        <p>DSOG Enterprise is building Kenya's first comprehensive online franchise platform. We're starting with fashion and will expand to other verticals, creating a diverse network of online businesses.</p>
+        
+        <div class="vertical-cards">
+            <div class="vertical-card active animate-on-scroll">
+                <div class="vertical-icon">
+                    <i class="fas fa-tshirt"></i>
+                </div>
+                <h4>Fashion & Apparel</h4>
+                <p>Our current launch project - clothing, shoes, and accessories</p>
+                <div class="coming-soon-badge" style="background: var(--primary-red);">ACTIVE NOW</div>
+            </div>
+            
+            <div class="vertical-card coming-soon animate-on-scroll">
+                <div class="vertical-icon">
+                    <i class="fas fa-home"></i>
+                </div>
+                <h4>Home Goods</h4>
+                <p>Furniture, decor, and household items</p>
+                <div class="coming-soon-badge">Q2 2024</div>
+            </div>
+            
+            <div class="vertical-card coming-soon animate-on-scroll">
+                <div class="vertical-icon">
+                    <i class="fas fa-mobile-alt"></i>
+                </div>
+                <h4>Electronics</h4>
+                <p>Gadgets, accessories, and tech products</p>
+                <div class="coming-soon-badge">Q3 2024</div>
+            </div>
+            
+            <div class="vertical-card coming-soon animate-on-scroll">
+                <div class="vertical-icon">
+                    <i class="fas fa-shopping-basket"></i>
+                </div>
+                <h4>Grocery & Food</h4>
+                <p>Essential groceries and specialty foods</p>
+                <div class="coming-soon-badge">Q4 2024</div>
+            </div>
+        </div>
+    </section>
+
     <!-- Franchise Workflow Section -->
     <section id="workflow">
         <div class="section-header">
-            <h2>The DSOG Franchise Workflow</h2>
-            <p>Our structured online process ensures your success from day one</p>
+            <h2>The DSOG Franchise Platform Workflow</h2>
+            <p>Our structured online process ensures your success across all verticals</p>
         </div>
         
         <div class="workflow-container">
@@ -837,8 +1042,8 @@
                 <div class="step-icon">
                     <i class="fas fa-handshake"></i>
                 </div>
-                <h3>Online Application</h3>
-                <p>Submit your franchise application through our digital platform. Our team reviews your suitability and provides virtual consultation.</p>
+                <h3>Platform Onboarding</h3>
+                <p>Join our franchise platform and select your preferred vertical. Our team guides you through digital onboarding.</p>
             </div>
             
             <div class="workflow-step animate-on-scroll">
@@ -846,8 +1051,8 @@
                 <div class="step-icon">
                     <i class="fas fa-graduation-cap"></i>
                 </div>
-                <h3>Digital Training</h3>
-                <p>Complete comprehensive online training on our e-commerce systems, products, and customer service. Access training materials anytime, anywhere.</p>
+                <h3>Vertical-Specific Training</h3>
+                <p>Complete online training for your chosen vertical - currently fashion. Future verticals will have specialized training.</p>
             </div>
             
             <div class="workflow-step animate-on-scroll">
@@ -855,8 +1060,8 @@
                 <div class="step-icon">
                     <i class="fas fa-truck-loading"></i>
                 </div>
-                <h3>Digital Inventory</h3>
-                <p>Access our extensive digital catalog with products from trusted suppliers. We maintain strict quality control across all product categories.</p>
+                <h3>Digital Inventory Access</h3>
+                <p>Access our extensive digital catalog. Currently fashion-focused, expanding to other product categories soon.</p>
             </div>
             
             <div class="workflow-step animate-on-scroll">
@@ -865,7 +1070,7 @@
                     <i class="fas fa-store"></i>
                 </div>
                 <h3>Online Store Setup</h3>
-                <p>Get your personalized online store with our e-commerce platform. We handle the technical setup so you can focus on sales.</p>
+                <p>Get your personalized online store on our platform, ready for your chosen vertical's products.</p>
             </div>
             
             <div class="workflow-step animate-on-scroll">
@@ -873,8 +1078,8 @@
                 <div class="step-icon">
                     <i class="fas fa-chart-line"></i>
                 </div>
-                <h3>Ongoing Digital Support</h3>
-                <p>Receive continuous online support including inventory management, digital marketing, and business development guidance.</p>
+                <h3>Platform Support</h3>
+                <p>Receive continuous support including inventory management, digital marketing, and business development.</p>
             </div>
             
             <div class="workflow-step animate-on-scroll">
@@ -883,21 +1088,21 @@
                     <i class="fas fa-shipping-fast"></i>
                 </div>
                 <h3>Delivery System</h3>
-                <p>Utilize our proprietary DSOG Delivery System to ship products to customers across Kenya with reliable logistics support.</p>
+                <p>Utilize our proprietary DSOG Delivery System to ship products across Kenya with reliable logistics.</p>
             </div>
         </div>
     </section>
 
     <!-- Online Franchise Section -->
     <section id="online" class="online-store-section">
-        <h2>100% Online Franchise System</h2>
-        <p>Our stores operate fully online - no physical location needed. Run your fashion business from anywhere with internet access.</p>
+        <h2>100% Online Franchise Platform</h2>
+        <p>Our platform operates fully online - no physical location needed. Run your business from anywhere with internet access.</p>
         
         <div class="online-features">
             <div class="online-feature animate-on-scroll">
-                <i class="fas fa-laptop-house"></i>
-                <h3>Work From Anywhere</h3>
-                <p>Manage your franchise from home, office, or on the go. All you need is an internet connection.</p>
+                <i class="fas fa-layer-group"></i>
+                <h3>Multi-Vertical Platform</h3>
+                <p>Start with fashion, expand to other verticals as our platform grows. One system for all your online businesses.</p>
             </div>
             
             <div class="online-feature animate-on-scroll">
@@ -907,9 +1112,9 @@
             </div>
             
             <div class="online-feature animate-on-scroll">
-                <i class="fas fa-shopping-cart"></i>
-                <h3>E-Commerce Ready</h3>
-                <p>Your online store comes pre-configured with product catalogs, payment systems, and customer management tools.</p>
+                <i class="fas fa-sync-alt"></i>
+                <h3>Scalable System</h3>
+                <p>Start with one vertical, add more as we expand. Grow your business portfolio on our platform.</p>
             </div>
         </div>
     </section>
@@ -917,17 +1122,17 @@
     <!-- Franchise Benefits -->
     <section id="benefits">
         <div class="section-header">
-            <h2>Why Choose DSOG Franchise?</h2>
-            <p>We focus on quality service delivery and partner success with trusted suppliers</p>
+            <h2>Why Choose DSOG Platform?</h2>
+            <p>We focus on quality service delivery and partner success across all verticals</p>
         </div>
         
         <div class="benefits-container">
             <div class="benefit-card animate-on-scroll">
                 <div class="benefit-icon">
-                    <i class="fas fa-award"></i>
+                    <i class="fas fa-layer-group"></i>
                 </div>
-                <h3>Quality Guaranteed</h3>
-                <p>All products are sourced from trusted suppliers with strict quality control measures. We partner with reputable manufacturers to ensure premium quality.</p>
+                <h3>Multi-Vertical Platform</h3>
+                <p>Join a growing platform, not just a single business. Start with fashion, expand to other verticals as we grow.</p>
             </div>
             
             <div class="benefit-card animate-on-scroll">
@@ -942,8 +1147,8 @@
                 <div class="benefit-icon">
                     <i class="fas fa-tools"></i>
                 </div>
-                <h3>Digital Training</h3>
-                <p>Receive thorough online training in inventory management, digital marketing, customer service, and business operations.</p>
+                <h3>Vertical-Specific Training</h3>
+                <p>Receive thorough online training specific to your chosen vertical, with more training modules coming.</p>
             </div>
             
             <div class="benefit-card animate-on-scroll">
@@ -958,16 +1163,16 @@
                 <div class="benefit-icon">
                     <i class="fas fa-bullhorn"></i>
                 </div>
-                <h3>Digital Marketing Support</h3>
-                <p>Benefit from social media campaigns, SEO optimization, email marketing, and promotional assistance.</p>
+                <h3>Platform Marketing</h3>
+                <p>Benefit from platform-wide marketing campaigns plus vertical-specific promotional assistance.</p>
             </div>
             
             <div class="benefit-card animate-on-scroll">
                 <div class="benefit-icon">
                     <i class="fas fa-headset"></i>
                 </div>
-                <h3>24/7 Online Support</h3>
-                <p>Round-the-clock support from our franchise team for any operational, technical, or business-related queries.</p>
+                <h3>24/7 Platform Support</h3>
+                <p>Round-the-clock support from our platform team for any operational, technical, or business queries.</p>
             </div>
         </div>
     </section>
@@ -975,8 +1180,8 @@
     <!-- Opportunities Section -->
     <section id="opportunities">
         <div class="section-header">
-            <h2>Multiple Opportunities Available</h2>
-            <p>Join the DSOG Enterprise family in various capacities</p>
+            <h2>Multiple Platform Opportunities</h2>
+            <p>Join the DSOG Platform in various capacities across multiple verticals</p>
         </div>
         
         <div class="opportunities-container">
@@ -984,17 +1189,17 @@
                 <div class="opportunity-icon">
                     <i class="fas fa-store-alt"></i>
                 </div>
-                <h3>Online Franchise Owners</h3>
-                <p>Run your own DSOG online fashion store with our complete digital support system and proven e-commerce model.</p>
-                <a href="#contact" class="cta-button">Apply Now</a>
+                <h3>Platform Franchise Owners</h3>
+                <p>Run your own DSOG online store on our platform. Start with fashion, expand to other verticals as we grow.</p>
+                <a href="#contact" class="cta-button">Join Platform</a>
             </div>
             
             <div class="opportunity-card animate-on-scroll">
                 <div class="opportunity-icon">
                     <i class="fas fa-boxes"></i>
                 </div>
-                <h3>Product Suppliers</h3>
-                <p>Supply quality products to our franchise network. We're always looking for reputable suppliers in fashion and accessories.</p>
+                <h3>Vertical Suppliers</h3>
+                <p>Supply quality products to our platform across different verticals. We need suppliers for current and future verticals.</p>
                 <a href="#contact" class="cta-button">Become a Supplier</a>
             </div>
             
@@ -1003,7 +1208,7 @@
                     <i class="fas fa-shipping-fast"></i>
                 </div>
                 <h3>Delivery Partners</h3>
-                <p>Join our DSOG Delivery System network. We need reliable delivery partners across Kenya to serve our online customers.</p>
+                <p>Join our DSOG Delivery System network. We need reliable delivery partners across Kenya to serve our platform customers.</p>
                 <a href="#contact" class="cta-button">Partner with Us</a>
             </div>
             
@@ -1011,9 +1216,9 @@
                 <div class="opportunity-icon">
                     <i class="fas fa-user-tie"></i>
                 </div>
-                <h3>Career Opportunities</h3>
-                <p>Join our corporate team in various roles - digital marketing, e-commerce operations, franchise support, and management.</p>
-                <a href="#contact" class="cta-button">View Careers</a>
+                <h3>Platform Team</h3>
+                <p>Join our platform team in various roles - platform development, vertical expansion, franchise support, and management.</p>
+                <a href="#contact" class="cta-button">View Platform Careers</a>
             </div>
         </div>
     </section>
@@ -1021,8 +1226,8 @@
     <!-- CTA Section -->
     <section id="contact" class="cta-section">
         <div class="section-header">
-            <h2>Start Your DSOG Journey Today</h2>
-            <p>Take the first step toward owning a successful online fashion franchise or partnering with us in other capacities</p>
+            <h2>Join Our Platform Today</h2>
+            <p>Take the first step toward owning a successful online business on our multi-vertical franchise platform</p>
         </div>
         
         <div class="hero-buttons">
@@ -1057,11 +1262,11 @@
             
             <div class="contact-item">
                 <div class="contact-icon">
-                    <i class="fas fa-clock"></i>
+                    <i class="fas fa-layer-group"></i>
                 </div>
                 <div>
-                    <strong>Business Hours</strong>
-                    <div>Mon-Sat: 8:00 AM - 7:00 PM</div>
+                    <strong>Current Vertical</strong>
+                    <div>Fashion & Apparel</div>
                 </div>
             </div>
         </div>
@@ -1071,17 +1276,17 @@
     <section class="brands-section">
         <div class="brands-container">
             <div class="section-header">
-                <h2>Our Trusted Brands</h2>
-                <p>We source quality products from reputable suppliers and brands</p>
+                <h2>Our Platform Partners</h2>
+                <p>We source quality products from reputable suppliers across different verticals</p>
             </div>
             
             <div class="brands-scroll">
                 <div class="brands-track">
-                    <!-- Duplicate brands for seamless scrolling -->
+                    <!-- Current fashion partners -->
                     <div class="brand-item">
                         <img src="https://i.postimg.cc/c4zFGFxn/COLLECTIONS-removebg-preview.png" alt="HOG Creations" class="brand-logo">
                         <h4>HOG Creations</h4>
-                        <small>Primary Supplier</small>
+                        <small>Fashion Partner</small>
                     </div>
                     
                     <div class="brand-item">
@@ -1103,28 +1308,29 @@
                     <div class="brand-item">
                         <img src="https://i.postimg.cc/bNy1yZ5x/logo-(3).png" alt="HOG Creations" class="brand-logo">
                         <h4>Fitare Sports</h4>
-                        <small>Sports Supplier</small>
+                        <small>Sports Partner</small>
                     </div>
                     
+                    <!-- Future vertical partners -->
                     <div class="brand-item">
                         <div class="brand-icon" style="font-size: 3rem; color: var(--primary-red);">
                             <i class="fas fa-home"></i>
                         </div>
-                        <h4>Home Decor</h4>
-                        <small>Household Items</small>
+                        <h4>Home Goods</h4>
+                        <small>Coming Soon</small>
                     </div>
 
                     <div class="brand-item">
                          <img src="https://i.postimg.cc/15JrVm4g/Teleioo-Fusion-removebg-preview.png" alt="HOG Creations" class="brand-logo">
                          <h4>Fusion Foods</h4>
-                         <small>Grocery Store</small>
+                         <small>Food Partner (Coming)</small>
                     </div>
                     
                     <!-- Duplicate for seamless loop -->
                     <div class="brand-item">
                         <img src="https://i.postimg.cc/c4zFGFxn/COLLECTIONS-removebg-preview.png" alt="HOG Creations" class="brand-logo">
                         <h4>HOG Creations</h4>
-                        <small>Primary Supplier</small>
+                        <small>Fashion Partner</small>
                     </div>
                     
                     <div class="brand-item">
@@ -1146,21 +1352,21 @@
                     <div class="brand-item">
                         <img src="https://i.postimg.cc/bNy1yZ5x/logo-(3).png" alt="HOG Creations" class="brand-logo">
                         <h4>Fitare Sports</h4>
-                        <small>Sports Supplier</small>
+                        <small>Sports Partner</small>
                     </div>
                     
                     <div class="brand-item">
                         <div class="brand-icon" style="font-size: 3rem; color: var(--primary-red);">
                             <i class="fas fa-home"></i>
                         </div>
-                        <h4>Home Decor</h4>
-                        <small>Household Items</small>
+                        <h4>Home Goods</h4>
+                        <small>Coming Soon</small>
                     </div>
 
                      <div class="brand-item">
                          <img src="https://i.postimg.cc/15JrVm4g/Teleioo-Fusion-removebg-preview.png" alt="HOG Creations" class="brand-logo">
                          <h4>Fusion Foods</h4>
-                         <small>Grocery Store</small>
+                         <small>Food Partner (Coming)</small>
                     </div>
                 </div>
             </div>
@@ -1172,16 +1378,19 @@
         <div class="footer-content">
             <div class="footer-section">
                 <img src="https://i.postimg.cc/kMZ1jTww/Untitled-design-4-removebg-preview.png" alt="DSOG Enterprise" class="footer-logo">
-                <p>Kenya's premier online fashion franchise network, delivering quality products through trusted suppliers and dedicated franchise partners.</p>
+                <p>Kenya's premier online franchise platform. Currently launching with Fashion - expanding to multiple verticals soon.</p>
+                <div class="platform-badge" style="margin-top: 1rem;">
+                    MULTI-VERTICAL PLATFORM
+                </div>
             </div>
             
             <div class="footer-section">
-                <h3>Quick Links</h3>
+                <h3>Platform Verticals</h3>
                 <ul>
-                    <li><a href="#workflow">Franchise Workflow</a></li>
-                    <li><a href="#benefits">Franchise Benefits</a></li>
-                    <li><a href="#online">Online Franchise</a></li>
-                    <li><a href="#opportunities">Opportunities</a></li>
+                    <li><strong>• Fashion & Apparel</strong> (Active Now)</li>
+                    <li>• Home Goods (Coming Soon)</li>
+                    <li>• Electronics (Coming Soon)</li>
+                    <li>• Grocery & Food (Coming Soon)</li>
                 </ul>
             </div>
             
@@ -1195,19 +1404,20 @@
             </div>
             
             <div class="footer-section">
-                <h3>Brand Partners</h3>
+                <h3>Platform Partners</h3>
                 <ul>
-                    <li>HOG Creations</li>
-                    <li>Visha Apparel</li>
-                    <li>Yarnxe Shoes</li>
-                    <li>Fitare Sports</li>
-                    <li>Home Decor</li>
+                    <li>HOG Creations (Fashion)</li>
+                    <li>Visha Apparel (Fashion)</li>
+                    <li>Yarnxe Shoes (Fashion)</li>
+                    <li>Fitare Sports (Sports)</li>
+                    <li>More partners coming...</li>
                 </ul>
             </div>
         </div>
         
         <div class="copyright">
-            <p>&copy; <span id="currentYear"></span> DSOG Enterprise. All rights reserved. | Online Fashion Franchise Network</p>
+            <p>&copy; <span id="currentYear"></span> DSOG Enterprise Online Franchise Platform. All rights reserved.</p>
+            <p style="margin-top: 0.5rem; font-size: 0.8rem;">Current Project: DSOG Fashion Franchise | Platform Expansion in Progress</p>
         </div>
     </footer>
 
@@ -1218,7 +1428,7 @@
         
         // Scroll animations
         document.addEventListener('DOMContentLoaded', function() {
-            console.log('🚀 DSOG Online Franchise Landing Page');
+            console.log('🚀 DSOG Online Franchise Platform');
             
             // Animate elements on scroll
             const animateOnScroll = () => {
@@ -1283,16 +1493,28 @@
             });
             
             // Card hover effects
-            const cards = document.querySelectorAll('.workflow-step, .benefit-card, .opportunity-card');
+            const cards = document.querySelectorAll('.workflow-step, .benefit-card, .opportunity-card, .vertical-card');
             cards.forEach(card => {
                 card.addEventListener('mouseenter', function() {
-                    this.style.transform = 'translateY(-10px)';
+                    if (!this.classList.contains('coming-soon')) {
+                        this.style.transform = 'translateY(-10px)';
+                    }
                 });
                 
                 card.addEventListener('mouseleave', function() {
-                    this.style.transform = 'translateY(0)';
+                    if (!this.classList.contains('coming-soon')) {
+                        this.style.transform = 'translateY(0)';
+                    }
                 });
             });
+            
+            // Platform messaging
+            const platformMessage = `
+                Welcome to DSOG Online Franchise Platform!
+                We're building Kenya's first multi-vertical online franchise system.
+                Currently launching with Fashion - more verticals coming soon!
+            `;
+            console.log(platformMessage);
         });
     </script>
 </body>
